@@ -164,16 +164,16 @@ export default function Orientation() {
   const probleme = reponses[1]?.[0] || 'Stress, anxiété ou burn-out'
   const resultat = resultats.find((r) => r.probleme === probleme) || resultats[0]
 
-  if (termine) {
+if (termine) {
     return (
       <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
         <nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-          <a href="/" className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
+          <button onClick={() => { window.location.href = '/' }} className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
             🌿 Holistia
-          </a>
-          <a href="/" className="text-sm" style={{ color: '#78716c' }}>
+          </button>
+          <button onClick={() => { window.location.href = '/' }} className="text-sm" style={{ color: '#78716c' }}>
             Retour à l accueil
-          </a>
+          </button>
         </nav>
 
         <div className="max-w-3xl mx-auto px-6 py-16 text-center">
@@ -243,13 +243,13 @@ export default function Orientation() {
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
-      <nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-        <a href="/" className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
+<nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
+        <button onClick={() => { window.location.href = '/' }} className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
           🌿 Holistia
-        </a>
-        <a href="/" className="text-sm" style={{ color: '#78716c' }}>
+        </button>
+        <button onClick={() => { window.location.href = '/' }} className="text-sm" style={{ color: '#78716c' }}>
           Retour à l accueil
-        </a>
+        </button>
       </nav>
 
       <section

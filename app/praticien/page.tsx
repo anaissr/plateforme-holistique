@@ -1,4 +1,11 @@
+'use client'
+
+import { useState } from 'react'
+
 export default function FichePraticien() {
+  const [jourSelectionne, setJourSelectionne] = useState('Lun 28')
+  const [creneauSelectionne, setCreneauSelectionne] = useState('')
+
   const praticien = {
     nom: 'Sophie Laurent',
     photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=600&fit=crop&crop=face',
@@ -14,19 +21,19 @@ Je suis spécialisée dans les troubles digestifs (ballonnements, intestin irrit
 Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre histoire, vos habitudes et vos objectifs. Nous construisons ensemble un protocole sur-mesure, progressif et réaliste.`,
     prestations: [
       { nom: 'Bilan initial', duree: '1h30', tarif: '110€', description: 'Premier rendez-vous complet — anamnèse, bilan de vitalité, protocole personnalisé' },
-      { nom: 'Consultation de suivi', duree: '45min', tarif: '70€', description: 'Ajustement du protocole, bilan d\'étape, nouvelles recommandations' },
-      { nom: 'Consultation visio', duree: '45min', tarif: '65€', description: 'Consultation de suivi à distance, même qualité d\'accompagnement' },
-      { nom: 'Bilan enfant / adolescent', duree: '1h', tarif: '85€', description: 'Consultation adaptée aux moins de 18 ans, en présence d\'un parent' },
+      { nom: 'Consultation de suivi', duree: '45min', tarif: '70€', description: 'Ajustement du protocole, bilan d étape, nouvelles recommandations' },
+      { nom: 'Consultation visio', duree: '45min', tarif: '65€', description: 'Consultation de suivi à distance, même qualité d accompagnement' },
+      { nom: 'Bilan enfant / adolescent', duree: '1h', tarif: '85€', description: 'Consultation adaptée aux moins de 18 ans, en présence d un parent' },
     ],
-    public: ['Adultes', 'Adolescents', 'Femmes enceintes', 'PMA & fertilité', 'Seniors'],
-    specialites: ['Troubles digestifs', 'Fatigue chronique', 'Déséquilibres hormonaux', 'PMA & fertilité', 'Rééquilibrage alimentaire', 'Stress & anxiété'],
+    public: ['Adultes', 'Adolescents', 'Femmes enceintes', 'PMA et fertilité', 'Seniors'],
+    specialites: ['Troubles digestifs', 'Fatigue chronique', 'Déséquilibres hormonaux', 'PMA et fertilité', 'Rééquilibrage alimentaire', 'Stress et anxiété'],
     formations: [
       { titre: 'Diplôme de Naturopathie', ecole: 'ISUPNAT Paris', annee: '2016' },
       { titre: 'Formation en Micronutrition', ecole: 'IEDM', annee: '2018' },
       { titre: 'Certification Phytothérapie', ecole: 'ELPM Lyon', annee: '2020' },
     ],
     medias: [
-      { type: 'video', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', titre: 'Présentation de ma pratique' },
+      { type: 'video', titre: 'Présentation de ma pratique' },
       { type: 'photo', url: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=300&fit=crop', titre: 'Mon cabinet' },
       { type: 'photo', url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop', titre: 'Espace de consultation' },
     ],
@@ -35,7 +42,7 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
       'Mar 29': ['10h00', '15h00', '17h00'],
       'Mer 30': [],
       'Jeu 31': ['9h00', '13h00', '14h00', '16h00'],
-      'Ven 1':  ['11h00', '14h00', '16h00'],
+      'Ven 1': ['11h00', '14h00', '16h00'],
     },
     avisClients: [
       {
@@ -45,7 +52,7 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
         ponctualite: 5,
         ecoute: 5,
         clarte: 5,
-        texte: "Sophie a transformé mon rapport à l'alimentation. Après des années de troubles digestifs sans solution, j'ai enfin trouvé ce qui me convient.",
+        texte: "Sophie a transformé mon rapport à l alimentation. Après des années de troubles digestifs sans solution, j ai enfin trouvé ce qui me convient.",
       },
       {
         prenom: 'Julie R.',
@@ -54,7 +61,7 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
         ponctualite: 5,
         ecoute: 5,
         clarte: 4,
-        texte: 'Consultation en visio depuis Singapour, très facile à mettre en place. Sophie est à l\'écoute, bienveillante et ses conseils sont concrets.',
+        texte: 'Consultation en visio depuis Singapour, très facile à mettre en place. Sophie est à l écoute, bienveillante et ses conseils sont concrets.',
       },
       {
         prenom: 'Thomas B.',
@@ -68,23 +75,37 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
     ],
   }
 
+  const creneauxDuJour = praticien.agenda[jourSelectionne as keyof typeof praticien.agenda] || []
+
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
 
       {/* NAVIGATION */}
       <nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-        <a href="/" className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
+        <button
+          onClick={() => { window.location.href = '/' }}
+          className="text-2xl font-semibold"
+          style={{ color: '#6b21a8' }}
+        >
           🌿 Holistia
-        </a>
-        <a href="/recherche" className="text-sm hover:opacity-70 transition" style={{ color: '#78716c' }}>
-          ← Retour aux résultats
-        </a>
-        <button className="text-white text-sm px-4 py-2 rounded-full" style={{ backgroundColor: '#6b21a8' }}>
-          Connexion
+        </button>
+        <button
+          onClick={() => { window.location.href = '/recherche' }}
+          className="text-sm hover:opacity-70 transition"
+          style={{ color: '#78716c' }}
+        >
+          Retour aux résultats
+        </button>
+        <button
+          className="text-white text-sm px-4 py-2 rounded-full"
+          style={{ backgroundColor: '#6b21a8' }}
+          onClick={() => { window.location.href = '/inscription' }}
+        >
+          Vous êtes praticien ?
         </button>
       </nav>
 
-      {/* HERO PRATICIEN — PLEINE LARGEUR */}
+      {/* HERO PRATICIEN */}
       <section
         className="w-full px-12 py-12"
         style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}
@@ -97,10 +118,16 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
           />
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-2 flex-wrap">
-              <h1 className="text-3xl font-medium text-white" style={{ fontFamily: 'var(--font-lora)' }}>
+              <h1
+                className="text-3xl font-medium text-white"
+                style={{ fontFamily: 'var(--font-lora)' }}
+              >
                 {praticien.nom}
               </h1>
-              <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
+              <span
+                className="text-xs px-3 py-1 rounded-full font-medium"
+                style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}
+              >
                 ✓ Profil vérifié
               </span>
             </div>
@@ -116,7 +143,11 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
               </div>
               <div className="flex gap-2 flex-wrap">
                 {praticien.public.map((p) => (
-                  <span key={p} className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
+                  <span
+                    key={p}
+                    className="text-xs px-3 py-1 rounded-full"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}
+                  >
                     {p}
                   </span>
                 ))}
@@ -124,17 +155,23 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
             </div>
           </div>
           <div className="flex flex-col gap-3 flex-shrink-0">
-            <button className="px-8 py-3 rounded-2xl font-medium text-sm transition shadow-lg" style={{ backgroundColor: '#ffffff', color: '#6b21a8' }}>
+            <button
+              className="px-8 py-3 rounded-2xl font-medium text-sm transition shadow-lg"
+              style={{ backgroundColor: '#ffffff', color: '#6b21a8' }}
+            >
               Prendre RDV
             </button>
-            <button className="px-8 py-3 rounded-2xl font-medium text-sm transition" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)' }}>
+            <button
+              className="px-8 py-3 rounded-2xl font-medium text-sm transition"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)' }}
+            >
               💬 Contacter
             </button>
           </div>
         </div>
       </section>
 
-      {/* CONTENU PRINCIPAL */}
+      {/* CONTENU */}
       <div className="max-w-7xl mx-auto px-12 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         {/* COLONNE GAUCHE */}
@@ -142,18 +179,22 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
 
           {/* À PROPOS */}
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-            <h2 className="text-lg font-medium mb-4" style={{ color: '#1c1917' }}>À propos</h2>
+            <h2 className="text-lg font-medium mb-4" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>À propos</h2>
             {praticien.description.split('\n\n').map((para, i) => (
               <p key={i} className="text-sm leading-relaxed mb-3" style={{ color: '#57534e' }}>{para}</p>
             ))}
           </div>
 
-          {/* PRESTATIONS ET TARIFS */}
+          {/* PRESTATIONS */}
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-            <h2 className="text-lg font-medium mb-4" style={{ color: '#1c1917' }}>Prestations & tarifs</h2>
+            <h2 className="text-lg font-medium mb-4" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Prestations et tarifs</h2>
             <div className="flex flex-col gap-3">
               {praticien.prestations.map((p) => (
-                <div key={p.nom} className="flex items-center justify-between p-4 rounded-2xl" style={{ backgroundColor: '#faf9f7', border: '1px solid #e7e5e4' }}>
+                <div
+                  key={p.nom}
+                  className="flex items-center justify-between p-4 rounded-2xl"
+                  style={{ backgroundColor: '#faf9f7', border: '1px solid #e7e5e4' }}
+                >
                   <div className="flex-1">
                     <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{p.nom}</p>
                     <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>{p.description}</p>
@@ -169,10 +210,14 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
 
           {/* SPÉCIALITÉS */}
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-            <h2 className="text-lg font-medium mb-4" style={{ color: '#1c1917' }}>Spécialités</h2>
+            <h2 className="text-lg font-medium mb-4" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Spécialités</h2>
             <div className="flex flex-wrap gap-2">
               {praticien.specialites.map((s) => (
-                <span key={s} className="text-sm px-4 py-2 rounded-full" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
+                <span
+                  key={s}
+                  className="text-sm px-4 py-2 rounded-full"
+                  style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
+                >
                   {s}
                 </span>
               ))}
@@ -181,18 +226,24 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
 
           {/* FORMATIONS */}
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-            <h2 className="text-lg font-medium mb-4" style={{ color: '#1c1917' }}>Formations & diplômes vérifiés</h2>
+            <h2 className="text-lg font-medium mb-4" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Formations et diplômes vérifiés</h2>
             <div className="flex flex-col gap-4">
               {praticien.formations.map((f) => (
                 <div key={f.titre} className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm flex-shrink-0" style={{ backgroundColor: '#f5f3ff' }}>
+                  <div
+                    className="w-9 h-9 rounded-xl flex items-center justify-center text-sm flex-shrink-0"
+                    style={{ backgroundColor: '#f5f3ff' }}
+                  >
                     🎓
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{f.titre}</p>
                     <p className="text-xs" style={{ color: '#a8a29e' }}>{f.ecole} · {f.annee}</p>
                   </div>
-                  <span className="text-xs px-3 py-1 rounded-full flex-shrink-0" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>
+                  <span
+                    className="text-xs px-3 py-1 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}
+                  >
                     ✓ Vérifié
                   </span>
                   <button className="text-xs underline flex-shrink-0" style={{ color: '#6b21a8' }}>
@@ -205,12 +256,12 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
 
           {/* MÉDIAS */}
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-            <h2 className="text-lg font-medium mb-4" style={{ color: '#1c1917' }}>Photos & vidéos</h2>
+            <h2 className="text-lg font-medium mb-4" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Photos et vidéos</h2>
             <div className="grid grid-cols-3 gap-3">
               {praticien.medias.map((m) => (
                 <div key={m.titre} className="rounded-2xl overflow-hidden aspect-video bg-gray-100 relative">
                   {m.type === 'video' ? (
-                    <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: '#f5f3ff' }}>
+                    <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: '#f5f3ff', minHeight: '80px' }}>
                       <span className="text-3xl">▶️</span>
                     </div>
                   ) : (
@@ -225,12 +276,12 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
           {/* AVIS */}
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-medium" style={{ color: '#1c1917' }}>Avis patients</h2>
+              <h2 className="text-lg font-medium" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Avis patients</h2>
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-light" style={{ color: '#6b21a8' }}>{praticien.note}</span>
                 <div>
                   <div className="flex gap-0.5">
-                    {[1,2,3,4,5].map((i) => (
+                    {[1, 2, 3, 4, 5].map((i) => (
                       <span key={i} className="text-sm">{i <= Math.round(praticien.note) ? '⭐' : '☆'}</span>
                     ))}
                   </div>
@@ -247,7 +298,7 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
                       <span className="text-xs ml-2" style={{ color: '#a8a29e' }}>{avis.date}</span>
                     </div>
                     <div className="flex gap-0.5">
-                      {[1,2,3,4,5].map((i) => (
+                      {[1, 2, 3, 4, 5].map((i) => (
                         <span key={i} className="text-xs">{i <= avis.note ? '⭐' : '☆'}</span>
                       ))}
                     </div>
@@ -272,15 +323,21 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
 
         </div>
 
-        {/* COLONNE DROITE STICKY */}
+        {/* COLONNE DROITE */}
         <div className="flex flex-col gap-4">
 
-          {/* CHOISIR PRESTATION */}
-          <div className="bg-white rounded-3xl p-6 shadow-sm sticky top-6" style={{ border: '1px solid #e7e5e4' }}>
-            <h2 className="text-base font-medium mb-4" style={{ color: '#1c1917' }}>Prendre rendez-vous</h2>
+          {/* RÉSERVATION */}
+          <div
+            className="bg-white rounded-3xl p-6 shadow-sm sticky top-6"
+            style={{ border: '1px solid #e7e5e4' }}
+          >
+            <h2 className="text-base font-medium mb-4" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+              Prendre rendez-vous
+            </h2>
 
-            {/* Sélection prestation */}
-            <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>1. Choisissez une prestation</label>
+            <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>
+              1. Choisissez une prestation
+            </label>
             <select
               className="w-full text-sm rounded-xl p-3 mb-4 outline-none"
               style={{ border: '1px solid #e7e5e4', color: '#44403c', backgroundColor: '#faf9f7' }}
@@ -290,16 +347,18 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
               ))}
             </select>
 
-            {/* Sélection jour */}
-            <label className="text-xs font-medium block mb-2" style={{ color: '#a8a29e' }}>2. Choisissez un jour</label>
+            <label className="text-xs font-medium block mb-2" style={{ color: '#a8a29e' }}>
+              2. Choisissez un jour
+            </label>
             <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
-              {Object.keys(praticien.agenda).map((jour, i) => (
+              {Object.keys(praticien.agenda).map((jour) => (
                 <button
                   key={jour}
+                  onClick={() => { setJourSelectionne(jour); setCreneauSelectionne('') }}
                   className="flex-shrink-0 px-3 py-2 rounded-xl text-xs font-medium transition"
                   style={{
-                    backgroundColor: i === 0 ? '#6b21a8' : '#faf9f7',
-                    color: i === 0 ? '#ffffff' : '#44403c',
+                    backgroundColor: jour === jourSelectionne ? '#6b21a8' : '#faf9f7',
+                    color: jour === jourSelectionne ? '#ffffff' : '#44403c',
                     border: '1px solid #e7e5e4',
                   }}
                 >
@@ -308,25 +367,35 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
               ))}
             </div>
 
-            {/* Créneaux du jour sélectionné */}
-            <label className="text-xs font-medium block mb-2" style={{ color: '#a8a29e' }}>3. Choisissez un créneau</label>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {praticien.agenda['Lun 28'].map((c) => (
-                <button
-                  key={c}
-                  className="text-xs px-3 py-2 rounded-xl border transition hover:border-purple-400"
-                  style={{ borderColor: '#e7e5e4', color: '#44403c' }}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
+            <label className="text-xs font-medium block mb-2" style={{ color: '#a8a29e' }}>
+              3. Choisissez un créneau
+            </label>
+            {creneauxDuJour.length === 0 ? (
+              <p className="text-xs mb-4" style={{ color: '#d6d3d1' }}>Aucun créneau disponible ce jour</p>
+            ) : (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {creneauxDuJour.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCreneauSelectionne(c)}
+                    className="text-xs px-3 py-2 rounded-xl border transition"
+                    style={{
+                      borderColor: c === creneauSelectionne ? '#6b21a8' : '#e7e5e4',
+                      color: c === creneauSelectionne ? '#6b21a8' : '#44403c',
+                      backgroundColor: c === creneauSelectionne ? '#f5f3ff' : 'white',
+                    }}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+            )}
 
             <button
               className="w-full text-white py-3 rounded-2xl text-sm font-medium transition"
-              style={{ backgroundColor: '#6b21a8' }}
+              style={{ backgroundColor: creneauSelectionne ? '#6b21a8' : '#d8b4fe' }}
             >
-              Confirmer le RDV
+              {creneauSelectionne ? `Confirmer — ${jourSelectionne} à ${creneauSelectionne}` : 'Choisissez un créneau'}
             </button>
             <p className="text-xs text-center mt-2" style={{ color: '#a8a29e' }}>
               Annulation gratuite jusqu'à 24h avant
@@ -335,7 +404,9 @@ Chaque accompagnement commence par un bilan complet d'1h30 pour comprendre votre
 
           {/* CONTACTER */}
           <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-            <h2 className="text-base font-medium mb-1" style={{ color: '#1c1917' }}>Une question ?</h2>
+            <h2 className="text-base font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+              Une question ?
+            </h2>
             <p className="text-xs mb-3" style={{ color: '#a8a29e' }}>
               Échangez avec Sophie avant de vous engager
             </p>

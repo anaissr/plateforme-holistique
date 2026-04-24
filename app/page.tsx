@@ -17,23 +17,19 @@ const specialitesRotatives = [
 const photosRotatives = [
   {
     url: 'https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=900&h=900&fit=crop&crop=center',
-    label: 'Consultation en cabinet',
+    label: 'Consultation naturopathie',
   },
   {
-    url: 'https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=900&h=900&fit=crop&crop=center',
-    label: 'Consultation en visio',
+    url: 'https://images.unsplash.com/photo-1714976694810-85add1a29c96?w=900&h=900&fit=crop&crop=center',
+    label: 'Thérapie brève',
   },
   {
-    url: 'https://images.unsplash.com/photo-1491014196894-d8a5d9fc8fc5?w=900&h=900&fit=crop&crop=center',
-    label: 'Kinésiologie enfant',
+    url: 'https://images.unsplash.com/photo-1699523229257-76f576d27eed?w=900&h=900&fit=crop&crop=center',
+    label: 'Soin thérapeutique',
   },
   {
-    url: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=900&h=900&fit=crop&crop=center',
-    label: 'Ostéopathie senior',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=900&h=900&fit=crop&crop=center',
-    label: 'Thérapie de couple',
+    url: 'https://images.unsplash.com/photo-1591343395082-e120087004b4?w=900&h=900&fit=crop&crop=center',
+    label: 'Ostéopathie',
   },
 ]
 
@@ -94,8 +90,8 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO — 55% violet / 45% photo */}
-      <section className="w-full flex flex-col lg:flex-row relative" style={{ minHeight: '680px' }}>
+      {/* HERO */}
+      <section className="w-full flex flex-col lg:flex-row" style={{ minHeight: '680px' }}>
 
         {/* Colonne texte — 55% */}
         <div
@@ -107,15 +103,14 @@ export default function Home() {
         >
           {/* Courbe HAUT */}
           <div className="absolute top-0 left-0 w-full overflow-hidden z-10" style={{ marginTop: '-1px' }}>
-            <svg viewBox="0 0 800 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '50px', width: '100%' }}>
-              <path d="M0,0 C200,50 600,0 800,30 L800,0 L0,0 Z" fill="#ffffff" />
+            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+              <path d="M0,30 C480,60 960,0 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
             </svg>
           </div>
-
           {/* Courbe BAS */}
           <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10" style={{ marginBottom: '-1px' }}>
-            <svg viewBox="0 0 800 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '50px', width: '100%' }}>
-              <path d="M0,50 C200,0 600,50 800,20 L800,50 L0,50 Z" fill="#faf9f7" />
+            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+              <path d="M0,30 C480,0 960,60 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
             </svg>
           </div>
 
@@ -124,22 +119,19 @@ export default function Home() {
           </p>
 
           <h1 className="font-light text-white leading-tight mb-2" style={{ fontFamily: 'var(--font-lora)', fontSize: '3.5rem' }}>
-            <span
-              style={{
-                color: '#e9d5ff',
-                display: 'inline-block',
-                opacity: visible ? 1 : 0,
-                transform: visible ? 'translateY(0px)' : 'translateY(-8px)',
-                transition: 'opacity 0.4s ease, transform 0.4s ease',
-              }}
-            >
+            <span style={{
+              color: '#e9d5ff',
+              display: 'inline-block',
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateY(0px)' : 'translateY(-8px)',
+              transition: 'opacity 0.4s ease, transform 0.4s ease',
+            }}>
               {specialitesRotatives[index]}
             </span>
           </h1>
 
           <div className="w-16 h-0.5 my-6 mx-auto" style={{ backgroundColor: '#a855f7' }} />
 
-          {/* Promesse ligne 1 — grande et grasse */}
           <p className="font-bold mb-2 whitespace-nowrap" style={{ fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: '1.5rem' }}>
             <span style={{ color: '#ffffff' }}>Votre </span>
             <span style={{ color: '#f0abfc' }}>allié</span>
@@ -147,7 +139,6 @@ export default function Home() {
             <span style={{ color: '#f0abfc' }}>accompagnement</span>
           </p>
 
-          {/* Promesse ligne 2 — sur une seule ligne */}
           <p className="font-bold mb-10 whitespace-nowrap" style={{ color: '#e9d5ff', fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: '1.2rem' }}>
             un praticien, ou plusieurs, qui travaillent ensemble pour vous.
           </p>
@@ -172,18 +163,16 @@ export default function Home() {
 
         {/* Colonne photo — 45% */}
         <div className="relative hidden lg:block overflow-hidden" style={{ flex: '0 0 45%', minHeight: '680px' }}>
-
-          {/* Courbe HAUT photo */}
+          {/* Courbe HAUT */}
           <div className="absolute top-0 left-0 w-full overflow-hidden z-10" style={{ marginTop: '-1px' }}>
-            <svg viewBox="0 0 600 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '50px', width: '100%' }}>
-              <path d="M0,30 C150,0 450,50 600,0 L600,0 L0,0 Z" fill="#ffffff" />
+            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+              <path d="M0,30 C480,60 960,0 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
             </svg>
           </div>
-
-          {/* Courbe BAS photo */}
+          {/* Courbe BAS */}
           <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10" style={{ marginBottom: '-1px' }}>
-            <svg viewBox="0 0 600 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '50px', width: '100%' }}>
-              <path d="M0,20 C150,50 450,0 600,50 L600,50 L0,50 Z" fill="#faf9f7" />
+            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+              <path d="M0,30 C480,0 960,60 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
             </svg>
           </div>
 

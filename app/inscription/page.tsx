@@ -16,10 +16,10 @@ export default function Inscription() {
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
 
-      <nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-        <span className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
+<nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
+        <button onClick={() => { window.location.href = '/' }} className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
           🌿 Holistia
-        </span>
+        </button>
         <p className="text-sm" style={{ color: '#a8a29e' }}>
           Inscription praticien — 100% gratuit
         </p>

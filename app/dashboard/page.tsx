@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 export default function Dashboard() {
   const [onglet, setOnglet] = useState('apercu')
+  const [recherchePat, setRecherchePat] = useState('')
 
   const stats = {
     rdvCeMois: 24,
@@ -53,6 +54,35 @@ export default function Dashboard() {
     { label: 'Déséquilibres hormonaux', pct: 16 },
   ]
 
+  const tousPatients = [
+    { nom: 'Marie L.', age: '38 ans', problematique: 'Troubles digestifs', dernierRdv: "Aujourd'hui", rdvTotal: 4, frequence: 'Mensuel', statut: 'Actif' },
+    { nom: 'Julie R.', age: '42 ans', problematique: 'Fatigue chronique', dernierRdv: 'Il y a 2 semaines', rdvTotal: 7, frequence: 'Bimensuel', statut: 'Actif' },
+    { nom: 'Thomas B.', age: '35 ans', problematique: 'Stress et anxiété', dernierRdv: 'Il y a 1 mois', rdvTotal: 2, frequence: 'Ponctuel', statut: 'Nouveau' },
+    { nom: 'Sophie M.', age: '29 ans', problematique: 'PMA et fertilité', dernierRdv: "Aujourd'hui", rdvTotal: 3, frequence: 'Mensuel', statut: 'Actif' },
+    { nom: 'Claire D.', age: '51 ans', problematique: 'Déséquilibres hormonaux', dernierRdv: 'Il y a 3 mois', rdvTotal: 12, frequence: 'Trimestriel', statut: 'Fidèle' },
+    { nom: 'Emma P.', age: '33 ans', problematique: 'Troubles digestifs', dernierRdv: 'Il y a 3 semaines', rdvTotal: 5, frequence: 'Bimensuel', statut: 'Actif' },
+    { nom: 'Lucas M.', age: '45 ans', problematique: 'Stress et anxiété', dernierRdv: 'Il y a 2 mois', rdvTotal: 3, frequence: 'Ponctuel', statut: 'Actif' },
+  ]
+
+  const frequenceData = [
+    { label: 'Mensuel', nb: 12, pct: 48, color: '#6b21a8' },
+    { label: 'Bimensuel', nb: 7, pct: 28, color: '#a855f7' },
+    { label: 'Trimestriel', nb: 4, pct: 16, color: '#d8b4fe' },
+    { label: 'Ponctuel', nb: 2, pct: 8, color: '#ede9fe' },
+  ]
+
+  const frequenceParProbleme = [
+    { probleme: 'Troubles digestifs', mensuel: 60, bimensuel: 30, trimestriel: 10 },
+    { probleme: 'Fatigue chronique', mensuel: 40, bimensuel: 45, trimestriel: 15 },
+    { probleme: 'Stress et anxiété', mensuel: 30, bimensuel: 20, trimestriel: 50 },
+    { probleme: 'Déséquilibres hormonaux', mensuel: 55, bimensuel: 35, trimestriel: 10 },
+  ]
+
+  const patientsFiltres = tousPatients.filter(p =>
+    p.nom.toLowerCase().includes(recherchePat.toLowerCase()) ||
+    p.problematique.toLowerCase().includes(recherchePat.toLowerCase())
+  )
+
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
 
@@ -60,14 +90,13 @@ export default function Dashboard() {
 
       <div className="max-w-7xl mx-auto px-8 py-8">
 
-        {/* EN-TÊTE */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-2xl font-light" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
               Bonjour Sophie 👋
             </h1>
             <p className="text-sm mt-1" style={{ color: '#a8a29e' }}>
-              Voici votre tableau de bord — jeudi 24 avril 2026
+              Voici votre tableau de bord — vendredi 25 avril 2026
             </p>
           </div>
           <button
@@ -79,7 +108,7 @@ export default function Dashboard() {
         </div>
 
         {/* ONGLETS */}
-        <div className="flex gap-2 mb-8 border-b" style={{ borderColor: '#e7e5e4' }}>
+        <div className="flex gap-2 mb-8 border-b overflow-x-auto" style={{ borderColor: '#e7e5e4' }}>
           {[
             { id: 'apercu', label: 'Aperçu' },
             { id: 'agenda', label: 'Mon agenda' },
@@ -90,7 +119,7 @@ export default function Dashboard() {
             <button
               key={o.id}
               onClick={() => setOnglet(o.id)}
-              className="px-4 py-3 text-sm font-medium transition border-b-2 -mb-px"
+              className="px-4 py-3 text-sm font-medium transition border-b-2 -mb-px whitespace-nowrap"
               style={{
                 color: onglet === o.id ? '#6b21a8' : '#a8a29e',
                 borderBottomColor: onglet === o.id ? '#6b21a8' : 'transparent',
@@ -101,10 +130,9 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* ONGLET APERÇU */}
+        {/* APERÇU */}
         {onglet === 'apercu' && (
           <div className="flex flex-col gap-6">
-
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
                 { label: 'RDV ce mois', value: stats.rdvCeMois, emoji: '📅', color: '#6b21a8' },
@@ -116,24 +144,17 @@ export default function Dashboard() {
               ].map((stat) => (
                 <div key={stat.label} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
                   <p className="text-xl mb-1">{stat.emoji}</p>
-                  <p className="text-2xl font-light mb-1" style={{ color: stat.color, fontFamily: 'var(--font-lora)' }}>
-                    {stat.value}
-                  </p>
+                  <p className="text-2xl font-light mb-1" style={{ color: stat.color, fontFamily: 'var(--font-lora)' }}>{stat.value}</p>
                   <p className="text-xs" style={{ color: '#a8a29e' }}>{stat.label}</p>
                 </div>
               ))}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
               <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="font-medium" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
-                    RDV aujourd'hui
-                  </h2>
-                  <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
-                    {prochainRdv.length} RDV
-                  </span>
+                  <h2 className="font-medium" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>RDV aujourd'hui</h2>
+                  <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>{prochainRdv.length} RDV</span>
                 </div>
                 <div className="flex flex-col gap-3">
                   {prochainRdv.map((rdv) => (
@@ -143,13 +164,10 @@ export default function Dashboard() {
                         <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{rdv.patient}</p>
                         <p className="text-xs" style={{ color: '#a8a29e' }}>{rdv.type} · {rdv.duree}</p>
                       </div>
-                      <span
-                        className="text-xs px-2 py-1 rounded-full flex-shrink-0"
-                        style={{
-                          backgroundColor: rdv.mode === 'Visio' ? '#eff6ff' : '#f0fdf4',
-                          color: rdv.mode === 'Visio' ? '#3b82f6' : '#16a34a',
-                        }}
-                      >
+                      <span className="text-xs px-2 py-1 rounded-full flex-shrink-0" style={{
+                        backgroundColor: rdv.mode === 'Visio' ? '#eff6ff' : '#f0fdf4',
+                        color: rdv.mode === 'Visio' ? '#3b82f6' : '#16a34a',
+                      }}>
                         {rdv.mode === 'Visio' ? '🖥 Visio' : '🏥 Cabinet'}
                       </span>
                     </div>
@@ -158,21 +176,16 @@ export default function Dashboard() {
               </div>
 
               <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
-                  Activité de la semaine
-                </h2>
+                <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Activité de la semaine</h2>
                 <div className="flex items-end gap-2 h-32">
                   {rdvSemaine.map((jour) => (
                     <div key={jour.jour} className="flex-1 flex flex-col items-center gap-1">
                       <div className="w-full flex flex-col justify-end" style={{ height: '96px' }}>
-                        <div
-                          className="w-full rounded-t-lg transition-all"
-                          style={{
-                            height: jour.max > 0 ? `${(jour.rdv / jour.max) * 96}px` : '4px',
-                            backgroundColor: jour.rdv > 0 ? '#6b21a8' : '#e7e5e4',
-                            opacity: jour.jour === 'Jeu' ? 1 : 0.6,
-                          }}
-                        />
+                        <div className="w-full rounded-t-lg" style={{
+                          height: jour.max > 0 ? `${(jour.rdv / jour.max) * 96}px` : '4px',
+                          backgroundColor: jour.rdv > 0 ? '#6b21a8' : '#e7e5e4',
+                          opacity: jour.jour === 'Jeu' ? 1 : 0.6,
+                        }} />
                       </div>
                       <p className="text-xs" style={{ color: jour.jour === 'Jeu' ? '#6b21a8' : '#a8a29e' }}>{jour.jour}</p>
                       <p className="text-xs font-medium" style={{ color: '#1c1917' }}>{jour.rdv}</p>
@@ -181,11 +194,9 @@ export default function Dashboard() {
                 </div>
                 <p className="text-xs mt-3 text-center" style={{ color: '#a8a29e' }}>20 RDV cette semaine · objectif 30</p>
               </div>
-
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
               <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
                 <h2 className="font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Profil de votre patientèle</h2>
                 <p className="text-xs mb-4" style={{ color: '#a8a29e' }}>Basé sur vos 3 derniers mois</p>
@@ -221,15 +232,12 @@ export default function Dashboard() {
                   ))}
                 </div>
               </div>
-
             </div>
 
             <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
               <div className="flex justify-between items-center mb-4">
                 <h2 className="font-medium" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Avis récents</h2>
-                <button className="text-xs underline" style={{ color: '#6b21a8' }} onClick={() => setOnglet('avis')}>
-                  Voir tous mes avis
-                </button>
+                <button className="text-xs underline" style={{ color: '#6b21a8' }} onClick={() => setOnglet('avis')}>Voir tous mes avis</button>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {avisRecents.map((avis) => (
@@ -249,9 +257,7 @@ export default function Dashboard() {
 
             <div className="rounded-3xl p-6" style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}>
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-                  💡
-                </div>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>💡</div>
                 <div>
                   <p className="font-medium text-white mb-1">Conseil Holistia</p>
                   <p className="text-sm" style={{ color: '#e9d5ff' }}>
@@ -264,11 +270,10 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-
           </div>
         )}
 
-        {/* ONGLET AGENDA */}
+        {/* AGENDA */}
         {onglet === 'agenda' && (
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
             <div className="flex justify-between items-center mb-6">
@@ -285,11 +290,9 @@ export default function Dashboard() {
             <div className="grid grid-cols-7 gap-2 text-center">
               {Array.from({ length: 30 }, (_, i) => i + 1).map((jour) => {
                 const aRdv = [1,3,4,7,8,10,11,14,15,17,18,21,22,24,25,28].includes(jour)
-                const estAujourdhui = jour === 24
+                const estAujourdhui = jour === 25
                 return (
-                  <div
-                    key={jour}
-                    className="aspect-square rounded-xl flex flex-col items-center justify-center cursor-pointer transition hover:shadow-sm"
+                  <div key={jour} className="aspect-square rounded-xl flex flex-col items-center justify-center cursor-pointer transition hover:shadow-sm"
                     style={{
                       backgroundColor: estAujourdhui ? '#6b21a8' : aRdv ? '#f5f3ff' : '#faf9f7',
                       border: `1px solid ${estAujourdhui ? '#6b21a8' : '#e7e5e4'}`,
@@ -307,23 +310,32 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* ONGLET PATIENTS */}
+        {/* PATIENTS */}
         {onglet === 'patients' && (
-          <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-            <h2 className="font-medium mb-6" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Mes patients</h2>
+          <div className="flex flex-col gap-4">
+            {/* Barre de recherche */}
+            <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3" style={{ border: '1px solid #e7e5e4' }}>
+              <span className="text-lg">🔍</span>
+              <input
+                type="text"
+                value={recherchePat}
+                onChange={(e) => setRecherchePat(e.target.value)}
+                placeholder="Rechercher un patient par nom ou problématique..."
+                className="flex-1 text-sm outline-none bg-transparent"
+                style={{ color: '#1c1917' }}
+              />
+              {recherchePat && (
+                <button onClick={() => setRecherchePat('')} className="text-xs" style={{ color: '#a8a29e' }}>✕</button>
+              )}
+            </div>
+
+            <p className="text-xs" style={{ color: '#a8a29e' }}>
+              {patientsFiltres.length} patient{patientsFiltres.length > 1 ? 's' : ''} trouvé{patientsFiltres.length > 1 ? 's' : ''}
+            </p>
+
             <div className="flex flex-col gap-3">
-              {[
-                { nom: 'Marie L.', age: '38 ans', problematique: 'Troubles digestifs', dernierRdv: "Aujourd'hui", rdvTotal: 4, statut: 'Actif' },
-                { nom: 'Julie R.', age: '42 ans', problematique: 'Fatigue chronique', dernierRdv: 'Il y a 2 semaines', rdvTotal: 7, statut: 'Actif' },
-                { nom: 'Thomas B.', age: '35 ans', problematique: 'Stress et anxiété', dernierRdv: 'Il y a 1 mois', rdvTotal: 2, statut: 'Nouveau' },
-                { nom: 'Sophie M.', age: '29 ans', problematique: 'PMA et fertilité', dernierRdv: "Aujourd'hui", rdvTotal: 3, statut: 'Actif' },
-                { nom: 'Claire D.', age: '51 ans', problematique: 'Déséquilibres hormonaux', dernierRdv: 'Il y a 3 mois', rdvTotal: 12, statut: 'Fidèle' },
-              ].map((patient) => (
-                <div
-                  key={patient.nom}
-                  className="flex items-center justify-between p-4 rounded-2xl hover:shadow-sm transition cursor-pointer"
-                  style={{ border: '1px solid #e7e5e4', backgroundColor: '#faf9f7' }}
-                >
+              {patientsFiltres.map((patient) => (
+                <div key={patient.nom} className="bg-white rounded-2xl p-4 flex items-center justify-between hover:shadow-sm transition cursor-pointer" style={{ border: '1px solid #e7e5e4' }}>
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
                       {patient.nom[0]}
@@ -333,22 +345,23 @@ export default function Dashboard() {
                       <p className="text-xs" style={{ color: '#a8a29e' }}>{patient.age} · {patient.problematique}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-4">
                     <div className="text-right hidden sm:block">
                       <p className="text-xs" style={{ color: '#a8a29e' }}>Dernier RDV</p>
                       <p className="text-sm" style={{ color: '#57534e' }}>{patient.dernierRdv}</p>
                     </div>
                     <div className="text-right hidden sm:block">
+                      <p className="text-xs" style={{ color: '#a8a29e' }}>Fréquence</p>
+                      <p className="text-xs font-medium" style={{ color: '#6b21a8' }}>{patient.frequence}</p>
+                    </div>
+                    <div className="text-right hidden sm:block">
                       <p className="text-xs" style={{ color: '#a8a29e' }}>Total RDV</p>
                       <p className="text-sm font-medium" style={{ color: '#6b21a8' }}>{patient.rdvTotal}</p>
                     </div>
-                    <span
-                      className="text-xs px-3 py-1 rounded-full"
-                      style={{
-                        backgroundColor: patient.statut === 'Fidèle' ? '#f0fdf4' : patient.statut === 'Nouveau' ? '#eff6ff' : '#f5f3ff',
-                        color: patient.statut === 'Fidèle' ? '#16a34a' : patient.statut === 'Nouveau' ? '#3b82f6' : '#6b21a8',
-                      }}
-                    >
+                    <span className="text-xs px-3 py-1 rounded-full" style={{
+                      backgroundColor: patient.statut === 'Fidèle' ? '#f0fdf4' : patient.statut === 'Nouveau' ? '#eff6ff' : '#f5f3ff',
+                      color: patient.statut === 'Fidèle' ? '#16a34a' : patient.statut === 'Nouveau' ? '#3b82f6' : '#6b21a8',
+                    }}>
                       {patient.statut}
                     </span>
                   </div>
@@ -358,7 +371,7 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* ONGLET STATS */}
+        {/* STATS */}
         {onglet === 'stats' && (
           <div className="flex flex-col gap-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -406,10 +419,61 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
+
+            {/* FRÉQUENCE PATIENTS */}
+            <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
+              <h2 className="font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
+                Fréquence de consultation de vos patients
+              </h2>
+              <p className="text-xs mb-6" style={{ color: '#a8a29e' }}>
+                Comprendre la fréquence vous aide à mieux anticiper votre activité et fidéliser votre patientèle
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {/* Répartition globale */}
+                <div>
+                  <p className="text-xs font-medium mb-3" style={{ color: '#57534e' }}>Répartition globale</p>
+                  <div className="flex flex-col gap-3">
+                    {frequenceData.map((f) => (
+                      <div key={f.label}>
+                        <div className="flex justify-between mb-1">
+                          <span className="text-xs" style={{ color: '#57534e' }}>{f.label}</span>
+                          <span className="text-xs font-medium" style={{ color: '#6b21a8' }}>{f.nb} patients ({f.pct}%)</span>
+                        </div>
+                        <div className="w-full h-3 rounded-full" style={{ backgroundColor: '#f5f3ff' }}>
+                          <div className="h-full rounded-full" style={{ width: `${f.pct}%`, backgroundColor: f.color }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Par problématique */}
+                <div>
+                  <p className="text-xs font-medium mb-3" style={{ color: '#57534e' }}>Par problématique</p>
+                  <div className="flex flex-col gap-4">
+                    {frequenceParProbleme.map((item) => (
+                      <div key={item.probleme}>
+                        <p className="text-xs mb-1 font-medium" style={{ color: '#1c1917' }}>{item.probleme}</p>
+                        <div className="flex h-4 rounded-full overflow-hidden gap-0.5">
+                          <div style={{ width: `${item.mensuel}%`, backgroundColor: '#6b21a8' }} title={`Mensuel: ${item.mensuel}%`} />
+                          <div style={{ width: `${item.bimensuel}%`, backgroundColor: '#a855f7' }} title={`Bimensuel: ${item.bimensuel}%`} />
+                          <div style={{ width: `${item.trimestriel}%`, backgroundColor: '#e9d5ff' }} title={`Trimestriel: ${item.trimestriel}%`} />
+                        </div>
+                        <div className="flex gap-3 mt-1">
+                          <span className="text-xs" style={{ color: '#6b21a8' }}>■ Mensuel {item.mensuel}%</span>
+                          <span className="text-xs" style={{ color: '#a855f7' }}>■ Bimensuel {item.bimensuel}%</span>
+                          <span className="text-xs" style={{ color: '#c4b5fd' }}>■ Trim. {item.trimestriel}%</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
-        {/* ONGLET AVIS */}
+        {/* AVIS */}
         {onglet === 'avis' && (
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
             <div className="flex items-center gap-6 mb-8">

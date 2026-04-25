@@ -125,6 +125,18 @@ const specialites = [
     visio: true,
   },
   {
+    slug: 'medecine-chinoise',
+    emoji: '☯️',
+    nom: 'Médecine traditionnelle chinoise',
+    categorie: 'energie',
+    accroche: 'Rééquilibrez votre énergie vitale grâce à 3000 ans de sagesse médicale chinoise.',
+    problematiques: ['Douleurs chroniques', 'Troubles digestifs', 'Stress et anxiété', 'Fertilité', 'Troubles du sommeil'],
+    praticiens: 76,
+    satisfaction: 4.7,
+    tarif_depuis: '65€',
+    visio: false,
+  },
+  {
     slug: 'psychopraticien',
     emoji: '💙',
     nom: 'Psychopraticien',

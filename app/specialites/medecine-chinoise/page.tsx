@@ -2,76 +2,76 @@
 
 import Nav from '@/app/components/Nav'
 
-export default function Naturopathie() {
+export default function MedecineChinoise() {
   const specialite = {
-    nom: 'Naturopathie',
-    emoji: '🌿',
-    photo: 'https://images.unsplash.com/photo-1611241893603-3c359704e0ee?w=1400&h=500&fit=crop&crop=center',
-    accroche: 'Une approche globale de votre santé par l alimentation, les plantes et l hygiène de vie.',
-    description_longue: `La naturopathie est une médecine naturelle qui considère l être humain dans sa globalité — corps, esprit et environnement. Elle s appuie sur la capacité innée du corps à s autoguérir et vise à identifier et traiter les causes profondes des déséquilibres plutôt que leurs symptômes.
+    nom: 'Médecine traditionnelle chinoise',
+    emoji: '☯️',
+    photo: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1400&h=500&fit=crop&crop=center',
+    accroche: 'Rééquilibrez votre énergie vitale grâce à 3000 ans de sagesse médicale chinoise.',
+    description_longue: `La médecine traditionnelle chinoise (MTC) est un système médical complet développé en Chine depuis plus de 3000 ans. Elle repose sur le concept d énergie vitale — le Qi — qui circule dans le corps à travers des méridiens. Lorsque cette circulation est perturbée, des déséquilibres et des maladies apparaissent.
 
-Le naturopathe dispose d un large éventail d outils : nutrition et micronutrition, phytothérapie, aromathérapie, gestion du stress, exercice physique adapté et hygiène de vie. Chaque protocole est entièrement personnalisé en fonction de votre bilan de vitalité.
+La MTC englobe plusieurs disciplines complémentaires : l acupuncture, la pharmacopée chinoise (plantes médicinales), le massage Tui Na, les exercices énergétiques (Qi Gong, Tai Chi) et la diététique chinoise. Le praticien choisit les outils les plus adaptés à votre situation et à votre constitution.
 
-La naturopathie est particulièrement efficace pour les troubles chroniques que la médecine conventionnelle peine à résoudre — troubles digestifs, fatigue chronique, déséquilibres hormonaux ou accompagnement en PMA. Elle peut s utiliser seule ou en complément d un traitement médical.`,
+Contrairement à la médecine occidentale qui traite les symptômes, la MTC cherche à identifier et corriger le déséquilibre sous-jacent. Elle considère chaque patient comme unique et adapte son approche en conséquence — deux personnes avec les mêmes symptômes peuvent recevoir des traitements très différents.`,
     pour_qui: [
       { label: 'Adultes', emoji: '🧑' },
       { label: 'Femmes enceintes', emoji: '🤰' },
       { label: 'PMA et fertilité', emoji: '🌱' },
-      { label: 'Enfants', emoji: '👶' },
       { label: 'Seniors', emoji: '👴' },
+      { label: 'Sportifs', emoji: '🏃' },
     ],
     problematiques: [
-      { label: 'Troubles digestifs', description: 'Ballonnements, intestin irritable, SIBO, reflux — la naturopathie identifie les causes et rééquilibre le microbiote.' },
-      { label: 'Fatigue chronique', description: 'Bilan de vitalité complet pour identifier les carences, les toxines accumulées et restaurer l énergie naturelle.' },
-      { label: 'Déséquilibres hormonaux', description: 'Syndrome prémenstruel, ménopause, thyroïde — une approche naturelle pour retrouver l équilibre hormonal.' },
-      { label: 'PMA et fertilité', description: 'Préparation du terrain avant une FIV ou une grossesse naturelle — alimentation, compléments, gestion du stress.' },
-      { label: 'Rééquilibrage alimentaire', description: 'Pas de régime, mais une alimentation adaptée à votre constitution, vos besoins et votre mode de vie.' },
-      { label: 'Immunité et prévention', description: 'Renforcement des défenses naturelles, accompagnement des changements de saison et prévention des maladies chroniques.' },
+      { label: 'Douleurs chroniques', description: 'L acupuncture libère les blocages énergétiques et stimule la production d endorphines pour soulager durablement la douleur.' },
+      { label: 'Troubles digestifs', description: 'La MTC régule le système digestif en rééquilibrant les organes responsables de la digestion selon la médecine chinoise.' },
+      { label: 'Stress et anxiété', description: 'En agissant sur les méridiens liés au cœur et aux reins, la MTC apaise le système nerveux et favorise la sérénité.' },
+      { label: 'Fertilité et PMA', description: 'La MTC prépare le terrain hormonal et énergétique pour favoriser la conception naturelle ou améliorer les résultats d une FIV.' },
+      { label: 'Troubles du sommeil', description: 'Des points d acupuncture spécifiques régulent le cycle veille-sommeil et apaisent l agitation mentale nocturne.' },
+      { label: 'Immunité et prévention', description: 'En renforçant l énergie défensive du corps, la MTC améliore la résistance aux infections et prévient les déséquilibres saisonniers.' },
     ],
     deroulement: [
-      { etape: '1', titre: 'Le bilan de vitalité', description: 'Une première consultation longue (1h30) pour faire le point sur votre histoire, vos habitudes, vos symptômes et vos objectifs. Le naturopathe évalue votre terrain et vos déficiences.' },
-      { etape: '2', titre: 'Le protocole personnalisé', description: 'Le naturopathe vous remet un protocole détaillé — alimentation, compléments naturels, plantes, conseils d hygiène de vie. Tout est adapté à votre quotidien et à vos contraintes.' },
-      { etape: '3', titre: 'Le suivi et les ajustements', description: 'Des consultations de suivi régulières (45 min) pour évaluer les progrès, ajuster le protocole et répondre à vos questions. L objectif est une autonomie progressive.' },
+      { etape: '1', titre: 'Le diagnostic chinois', description: 'Le praticien réalise un bilan complet selon les 4 examens traditionnels : observation (teint, langue), auscultation, interrogatoire et palpation des pouls. Chaque pouls donne des informations précieuses sur l état des organes.' },
+      { etape: '2', titre: 'Le traitement', description: 'En fonction du diagnostic, le praticien choisit ses outils : acupuncture, moxibustion (chaleur), ventouses, massage Tui Na ou prescription de plantes médicinales. Les séances durent généralement 45 min à 1h.' },
+      { etape: '3', titre: 'Le suivi', description: 'La MTC agit progressivement. Un suivi régulier est recommandé, surtout pour les affections chroniques. Le praticien adapte le traitement à chaque séance selon l évolution de votre état.' },
     ],
-    praticiens: 156,
-    satisfaction: 4.8,
+    praticiens: 76,
+    satisfaction: 4.7,
     tarif_depuis: '65€',
-    tarif_jusqua: '120€',
-    duree_seance: '45 min à 1h30',
-    nb_seances: '3 à 6 séances en moyenne',
-    visio: true,
+    tarif_jusqua: '110€',
+    duree_seance: '45 min à 1h',
+    nb_seances: '4 à 10 séances selon la problématique',
+    visio: false,
     praticiens_vedette: [
       {
-        nom: 'Sophie Laurent',
-        photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&h=200&fit=crop&crop=face',
-        ville: 'Paris — aussi en visio',
+        nom: 'Li Wei Chen',
+        photo: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=200&h=200&fit=crop&crop=face',
+        ville: 'Paris 13ème',
         note: '4.9',
-        avis: 47,
-        specialisation: 'Troubles digestifs, PMA, hormones',
+        avis: 67,
+        specialisation: 'Acupuncture, fertilité, douleurs',
       },
       {
-        nom: 'Lucie Bernard',
-        photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face',
+        nom: 'Sophie Marchand',
+        photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&h=200&fit=crop&crop=face',
         ville: 'Lyon — aussi en visio',
         note: '4.8',
-        avis: 38,
-        specialisation: 'Fatigue chronique, immunité',
+        avis: 43,
+        specialisation: 'MTC, plantes, troubles digestifs',
       },
       {
-        nom: 'Emma Rousseau',
-        photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
-        ville: 'Visio uniquement',
-        note: '4.9',
-        avis: 52,
-        specialisation: 'Alimentation, microbiote, enfants',
+        nom: 'Marc Nguyen',
+        photo: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&h=200&fit=crop&crop=face',
+        ville: 'Bordeaux',
+        note: '4.7',
+        avis: 38,
+        specialisation: 'Acupuncture, stress, sommeil',
       },
     ],
     faq: [
-      { question: 'La naturopathie est-elle remboursée ?', reponse: 'La naturopathie n est pas remboursée par la Sécurité sociale. Certaines mutuelles proposent un remboursement partiel — renseignez-vous auprès de la vôtre.' },
-      { question: 'Peut-on combiner naturopathie et traitement médical ?', reponse: 'Oui, la naturopathie est complémentaire à la médecine conventionnelle. Le naturopathe travaille en coordination avec votre médecin et ne substitue jamais à un traitement prescrit.' },
-      { question: 'Combien de temps avant de voir des résultats ?', reponse: 'Les premiers effets se font généralement sentir après 3 à 4 semaines de suivi du protocole. Pour des troubles chroniques, un accompagnement de 3 à 6 mois est souvent nécessaire.' },
-      { question: 'La naturopathie fonctionne-t-elle en visio ?', reponse: 'Oui, la grande majorité des consultations se font très bien en visio. Le bilan et le protocole sont tout aussi complets qu en cabinet.' },
-      { question: 'Faut-il arrêter ses médicaments ?', reponse: 'Non, jamais sans avis médical. Le naturopathe adapte son protocole à vos traitements en cours et vous accompagne en parallèle.' },
+      { question: 'L acupuncture fait-elle mal ?', reponse: 'Les aiguilles d acupuncture sont très fines — bien plus que les aiguilles médicales. La plupart des patients ressentent une légère sensation de chaleur ou de picotement, mais pas de douleur. Beaucoup s endorment pendant la séance.' },
+      { question: 'La MTC est-elle remboursée ?', reponse: 'En France, l acupuncture pratiquée par un médecin est partiellement remboursée. Pour les praticiens non médecins, certaines mutuelles proposent un remboursement partiel — vérifiez votre contrat.' },
+      { question: 'Peut-on faire de la MTC pendant la grossesse ?', reponse: 'Oui, avec un praticien formé. Certains points sont contre-indiqués pendant la grossesse, mais la MTC est reconnue pour soulager les nausées, les douleurs et préparer l accouchement.' },
+      { question: 'Combien de séances sont nécessaires ?', reponse: 'Pour une affection aiguë, 2 à 4 séances suffisent souvent. Pour les troubles chroniques, un suivi de 8 à 12 séances est généralement recommandé, puis des séances d entretien saisonnières.' },
+      { question: 'Quelle est la différence entre MTC et acupuncture ?', reponse: 'L acupuncture est l une des techniques de la MTC. La MTC englobe aussi les plantes médicinales, le massage Tui Na, la diététique et les exercices énergétiques. Un praticien MTC peut combiner plusieurs approches.' },
     ],
   }
 
@@ -102,7 +102,7 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
           <span style={{ color: '#57534e' }}>👩‍⚕️ <strong style={{ color: '#6b21a8' }}>{specialite.praticiens}</strong> praticiens vérifiés</span>
           <span style={{ color: '#57534e' }}>⭐ <strong style={{ color: '#6b21a8' }}>{specialite.satisfaction}/5</strong> de satisfaction</span>
           <span style={{ color: '#57534e' }}>À partir de <strong style={{ color: '#6b21a8' }}>{specialite.tarif_depuis}</strong></span>
-          <span style={{ color: '#57534e' }}>🖥 <strong style={{ color: '#6b21a8' }}>Visio disponible</strong></span>
+          <span style={{ color: '#57534e' }}>🏥 <strong style={{ color: '#6b21a8' }}>Cabinet uniquement</strong></span>
         </div>
       </section>
 
@@ -121,7 +121,7 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
               { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
               { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
-              { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
+              { label: 'Format', value: 'Cabinet uniquement', emoji: '🏥' },
             ].map((info) => (
               <div key={info.label} className="text-center p-4 rounded-2xl" style={{ backgroundColor: '#f5f3ff' }}>
                 <p className="text-xl mb-1">{info.emoji}</p>
@@ -148,7 +148,7 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
         {/* PROBLÉMATIQUES */}
         <section>
           <h2 className="text-2xl font-light mb-6" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-            Quand consulter un naturopathe ?
+            Quand consulter un praticien en MTC ?
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {specialite.problematiques.map((pb) => (
@@ -163,7 +163,7 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
         {/* DÉROULEMENT */}
         <section className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
           <h2 className="text-2xl font-light mb-6" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-            Comment se déroule un accompagnement ?
+            Comment se déroule une consultation ?
           </h2>
           <div className="flex flex-col gap-4">
             {specialite.deroulement.map((etape) => (
@@ -184,7 +184,7 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
         <section>
           <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
             <h2 className="text-2xl font-light" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-              Nos naturopathes vérifiés
+              Nos praticiens MTC vérifiés
             </h2>
             <div className="flex gap-3">
               <button
@@ -192,7 +192,7 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
                 style={{ backgroundColor: '#6b21a8' }}
                 onClick={() => { window.location.href = '/recherche' }}
               >
-                Voir les {specialite.praticiens} naturopathes
+                Voir les {specialite.praticiens} praticiens
               </button>
               <button
                 className="px-5 py-2 rounded-xl text-sm font-medium"
@@ -244,10 +244,10 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
         {/* CTA */}
         <section className="rounded-3xl p-10 text-center" style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}>
           <h2 className="text-2xl font-light text-white mb-3" style={{ fontFamily: 'var(--font-lora)' }}>
-            Prêt à consulter un naturopathe ?
+            Prêt à consulter un praticien en MTC ?
           </h2>
           <p className="text-sm mb-8" style={{ color: '#d8b4fe' }}>
-            {specialite.praticiens} naturopathes vérifiés vous attendent — en cabinet ou en visio.
+            {specialite.praticiens} praticiens vérifiés vous attendent — près de chez vous.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <button
@@ -255,7 +255,7 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
               style={{ backgroundColor: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)' }}
               onClick={() => { window.location.href = '/recherche' }}
             >
-              Voir les naturopathes
+              Voir les praticiens MTC
             </button>
             <button
               className="px-8 py-4 rounded-2xl font-medium shadow-lg"

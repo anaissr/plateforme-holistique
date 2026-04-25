@@ -1,14 +1,15 @@
 'use client'
 
 import Nav from '@/app/components/Nav'
+import { useState } from 'react'
 
 const specialites = [
   {
     slug: 'sophrologie',
     emoji: '🧘',
     nom: 'Sophrologie',
+    categorie: 'parole',
     accroche: 'Retrouvez calme, confiance et équilibre grâce à la respiration et la relaxation.',
-    description: 'La sophrologie est une méthode psychocorporelle qui combine respiration, relaxation et visualisation pour agir sur le stress, l anxiété et le sommeil.',
     problematiques: ['Stress et anxiété', 'Troubles du sommeil', 'Confiance en soi', 'Burn-out', 'Préparation mentale'],
     praticiens: 187,
     satisfaction: 4.9,
@@ -19,8 +20,8 @@ const specialites = [
     slug: 'naturopathie',
     emoji: '🌿',
     nom: 'Naturopathie',
+    categorie: 'plantes',
     accroche: 'Une approche globale de votre santé par l alimentation, les plantes et l hygiène de vie.',
-    description: 'La naturopathie accompagne votre corps vers un équilibre naturel en s appuyant sur la nutrition, la phytothérapie, l aromathérapie et les techniques de vitalité.',
     problematiques: ['Troubles digestifs', 'Fatigue chronique', 'Déséquilibres hormonaux', 'PMA et fertilité', 'Rééquilibrage alimentaire'],
     praticiens: 156,
     satisfaction: 4.8,
@@ -31,8 +32,8 @@ const specialites = [
     slug: 'osteopathie',
     emoji: '🤲',
     nom: 'Ostéopathie',
+    categorie: 'corps',
     accroche: 'Soulagez vos douleurs et retrouvez votre mobilité grâce au toucher thérapeutique.',
-    description: 'L ostéopathie traite les déséquilibres du corps par des manipulations douces et précises. Elle agit sur les douleurs musculo-squelettiques, les tensions et les troubles fonctionnels.',
     problematiques: ['Douleurs de dos', 'Douleurs articulaires', 'Troubles posturaux', 'Récupération sportive', 'Nourrissons et bébés'],
     praticiens: 143,
     satisfaction: 4.7,
@@ -43,8 +44,8 @@ const specialites = [
     slug: 'hypnotherapie',
     emoji: '🧠',
     nom: 'Hypnothérapie',
+    categorie: 'parole',
     accroche: 'Accédez à vos ressources profondes pour transformer durablement vos comportements.',
-    description: 'L hypnothérapie utilise l état de conscience modifiée pour agir en profondeur sur les traumatismes, phobies, addictions et blocages émotionnels.',
     problematiques: ['Phobies', 'Traumatismes', 'Addictions', 'Confiance en soi', 'Gestion du stress'],
     praticiens: 98,
     satisfaction: 4.8,
@@ -55,8 +56,8 @@ const specialites = [
     slug: 'kinesiologie',
     emoji: '⚡',
     nom: 'Kinésiologie',
+    categorie: 'corps',
     accroche: 'Libérez les blocages physiques et émotionnels grâce au test musculaire.',
-    description: 'La kinésiologie identifie et libère les blocages énergétiques, émotionnels et structurels du corps en utilisant le test musculaire comme outil de communication.',
     problematiques: ['Stress chronique', 'Troubles d apprentissage', 'Douleurs inexpliquées', 'Blocages émotionnels', 'Enfants et adolescents'],
     praticiens: 87,
     satisfaction: 4.6,
@@ -67,8 +68,8 @@ const specialites = [
     slug: 'acupuncture',
     emoji: '🌸',
     nom: 'Acupuncture',
+    categorie: 'energie',
     accroche: 'Rééquilibrez votre énergie vitale grâce à la médecine traditionnelle chinoise.',
-    description: 'L acupuncture stimule des points précis du corps pour rétablir la circulation de l énergie vitale. Elle agit sur la douleur, le stress, les troubles digestifs et bien d autres maux.',
     problematiques: ['Douleurs chroniques', 'Troubles digestifs', 'Stress et anxiété', 'Fertilité', 'Troubles du sommeil'],
     praticiens: 76,
     satisfaction: 4.7,
@@ -79,8 +80,8 @@ const specialites = [
     slug: 'reflexologie',
     emoji: '💆',
     nom: 'Réflexologie',
+    categorie: 'corps',
     accroche: 'Stimulez les zones réflexes de vos pieds pour agir sur l ensemble de votre corps.',
-    description: 'La réflexologie plantaire stimule des zones spécifiques des pieds correspondant aux organes et systèmes du corps. Elle favorise la détente profonde et le rééquilibrage.',
     problematiques: ['Stress et tension', 'Troubles circulatoires', 'Fatigue', 'Douleurs chroniques', 'Soutien immunitaire'],
     praticiens: 65,
     satisfaction: 4.5,
@@ -91,8 +92,8 @@ const specialites = [
     slug: 'therapies-breves',
     emoji: '🗣️',
     nom: 'Thérapies brèves',
+    categorie: 'parole',
     accroche: 'Des résultats concrets en peu de séances grâce aux approches Palo Alto, TCC et EMDR.',
-    description: 'Les thérapies brèves regroupent des approches orientées solutions comme la thérapie Palo Alto, les TCC et l EMDR. Elles permettent d obtenir des changements significatifs rapidement.',
     problematiques: ['Anxiété', 'Phobies', 'Burn-out', 'Traumatismes', 'Relations difficiles'],
     praticiens: 58,
     satisfaction: 4.9,
@@ -103,8 +104,8 @@ const specialites = [
     slug: 'fasciatherapie',
     emoji: '🌊',
     nom: 'Fasciathérapie',
+    categorie: 'corps',
     accroche: 'Libérez les tensions profondes du corps grâce au travail sur les fascias.',
-    description: 'La fasciathérapie agit sur le tissu conjonctif qui enveloppe muscles et organes. Par des mouvements lents et précis, elle libère les tensions et restaure la mobilité.',
     problematiques: ['Douleurs chroniques', 'Stress', 'Troubles posturaux', 'Récupération post-opératoire', 'Fatigue profonde'],
     praticiens: 45,
     satisfaction: 4.7,
@@ -115,8 +116,8 @@ const specialites = [
     slug: 'ayurveda',
     emoji: '🪷',
     nom: 'Ayurveda',
+    categorie: 'energie',
     accroche: 'Retrouvez l équilibre corps-esprit grâce à la médecine traditionnelle indienne.',
-    description: 'L Ayurveda est une médecine ancestrale indienne qui adapte alimentation, plantes et soins à votre constitution unique pour prévenir et traiter les déséquilibres.',
     problematiques: ['Fatigue chronique', 'Troubles digestifs', 'Stress', 'Déséquilibres hormonaux', 'Bien-être global'],
     praticiens: 32,
     satisfaction: 4.8,
@@ -127,8 +128,8 @@ const specialites = [
     slug: 'psychopraticien',
     emoji: '💙',
     nom: 'Psychopraticien',
+    categorie: 'parole',
     accroche: 'Un accompagnement bienveillant pour traverser les difficultés émotionnelles et relationnelles.',
-    description: 'Le psychopraticien accompagne les personnes en souffrance psychique grâce à diverses approches thérapeutiques. Il offre un espace d écoute et de transformation personnelle.',
     problematiques: ['Anxiété', 'Dépression légère', 'Deuil', 'Relations difficiles', 'Développement personnel'],
     praticiens: 89,
     satisfaction: 4.8,
@@ -139,8 +140,8 @@ const specialites = [
     slug: 'coaching',
     emoji: '🎯',
     nom: 'Coaching holistique',
+    categorie: 'parole',
     accroche: 'Atteignez vos objectifs et révélez votre potentiel grâce à un accompagnement sur-mesure.',
-    description: 'Le coaching holistique prend en compte toutes les dimensions de la personne — professionnelle, personnelle, physique et émotionnelle — pour un accompagnement global et durable.',
     problematiques: ['Reconversion professionnelle', 'Confiance en soi', 'Gestion du temps', 'Leadership', 'Équilibre vie pro-perso'],
     praticiens: 112,
     satisfaction: 4.6,
@@ -158,6 +159,12 @@ const categories = [
 ]
 
 export default function Specialites() {
+  const [categorieActive, setCategorieActive] = useState('toutes')
+
+  const specialitesFiltrees = categorieActive === 'toutes'
+    ? specialites
+    : specialites.filter(s => s.categorie === categorieActive)
+
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
 
@@ -174,7 +181,7 @@ export default function Specialites() {
           </svg>
         </div>
         <span className="inline-block text-xs px-4 py-1.5 rounded-full mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
-          12 spécialités référencées
+          {specialites.length} spécialités référencées
         </span>
         <h1 className="text-4xl font-light text-white mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
           Les médecines alternatives
@@ -185,35 +192,39 @@ export default function Specialites() {
       </section>
 
       {/* FILTRES */}
-      <section className="py-8 px-6 bg-white shadow-sm">
+      <section className="py-6 px-6 bg-white shadow-sm sticky top-0 z-40">
         <div className="max-w-5xl mx-auto flex gap-3 flex-wrap justify-center">
-          {categories.map((cat, i) => (
+          {categories.map((cat) => (
             <button
               key={cat.valeur}
+              onClick={() => setCategorieActive(cat.valeur)}
               className="text-sm px-5 py-2 rounded-full transition"
               style={{
-                backgroundColor: i === 0 ? '#6b21a8' : '#faf9f7',
-                color: i === 0 ? '#ffffff' : '#57534e',
-                border: i === 0 ? 'none' : '1px solid #e7e5e4',
+                backgroundColor: categorieActive === cat.valeur ? '#6b21a8' : '#faf9f7',
+                color: categorieActive === cat.valeur ? '#ffffff' : '#57534e',
+                border: categorieActive === cat.valeur ? 'none' : '1px solid #e7e5e4',
               }}
             >
               {cat.label}
             </button>
           ))}
         </div>
+        <p className="text-center text-xs mt-3" style={{ color: '#a8a29e' }}>
+          {specialitesFiltrees.length} spécialité{specialitesFiltrees.length > 1 ? 's' : ''} affichée{specialitesFiltrees.length > 1 ? 's' : ''}
+        </p>
       </section>
 
       {/* GRILLE SPÉCIALITÉS */}
       <section className="max-w-6xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {specialites.map((spec) => (
+          {specialitesFiltrees.map((spec) => (
             <div
               key={spec.slug}
               className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group"
               style={{ border: '1px solid #e7e5e4' }}
               onClick={() => { window.location.href = `/specialites/${spec.slug}` }}
             >
-              {/* En-tête colorée */}
+              {/* En-tête */}
               <div
                 className="px-6 py-8 text-center"
                 style={{ background: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)' }}
@@ -227,7 +238,6 @@ export default function Specialites() {
 
               {/* Contenu */}
               <div className="p-6">
-                {/* Problématiques */}
                 <div className="flex flex-wrap gap-1.5 mb-5">
                   {spec.problematiques.slice(0, 3).map((pb) => (
                     <span key={pb} className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#faf9f7', color: '#78716c', border: '1px solid #e7e5e4' }}>
@@ -241,14 +251,12 @@ export default function Specialites() {
                   )}
                 </div>
 
-                {/* Stats */}
                 <div className="flex items-center justify-between mb-4 text-xs" style={{ color: '#a8a29e' }}>
                   <span>👩‍⚕️ {spec.praticiens} praticiens</span>
                   <span>⭐ {spec.satisfaction}/5</span>
                   <span>À partir de {spec.tarif_depuis}</span>
                 </div>
 
-                {/* Visio */}
                 {spec.visio && (
                   <div className="flex items-center gap-1.5 mb-4">
                     <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#eff6ff', color: '#3b82f6' }}>
@@ -257,7 +265,6 @@ export default function Specialites() {
                   </div>
                 )}
 
-                {/* CTA */}
                 <button
                   className="w-full text-white py-2.5 rounded-xl text-sm font-medium transition group-hover:opacity-90"
                   style={{ backgroundColor: '#6b21a8' }}

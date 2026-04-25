@@ -45,6 +45,7 @@ const questions = [
       { label: 'Naturopathie ou nutrition', emoji: '🌿' },
       { label: 'Psychothérapie', emoji: '🗣' },
       { label: 'Rien encore', emoji: '✨' },
+      { label: 'Autre', emoji: '✏️' },
     ],
   },
   {
@@ -131,6 +132,7 @@ export default function Orientation() {
   const [etape, setEtape] = useState(0)
   const [reponses, setReponses] = useState<Record<number, string[]>>({})
   const [selectionMulti, setSelectionMulti] = useState<string[]>([])
+  const [autreTexte, setAutreTexte] = useState('')
   const [termine, setTermine] = useState(false)
 
   const question = questions[etape]
@@ -153,8 +155,12 @@ export default function Orientation() {
   }
 
   const validerMulti = () => {
-    setReponses({ ...reponses, [question.id]: selectionMulti })
+    const selection = selectionMulti.includes('Autre') && autreTexte
+      ? [...selectionMulti.filter(l => l !== 'Autre'), `Autre: ${autreTexte}`]
+      : selectionMulti
+    setReponses({ ...reponses, [question.id]: selection })
     setSelectionMulti([])
+    setAutreTexte('')
     if (etape < questions.length - 1) {
       setEtape(etape + 1)
     } else {
@@ -260,7 +266,7 @@ export default function Orientation() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
           {question.options.map((option) => {
             const selectionne = question.type === 'multi'
               ? selectionMulti.includes(option.label)
@@ -285,8 +291,22 @@ export default function Orientation() {
           })}
         </div>
 
+        {/* Champ libre si "Autre" sélectionné */}
+        {question.type === 'multi' && selectionMulti.includes('Autre') && (
+          <div className="mb-4">
+            <input
+              type="text"
+              value={autreTexte}
+              onChange={(e) => setAutreTexte(e.target.value)}
+              placeholder="Précisez ce que vous avez essayé..."
+              className="w-full text-sm rounded-xl px-4 py-3 outline-none"
+              style={{ border: '2px solid #6b21a8', color: '#1c1917', backgroundColor: '#faf9f7' }}
+            />
+          </div>
+        )}
+
         {question.type === 'multi' && (
-          <div className="text-center">
+          <div className="text-center mt-2">
             <button
               onClick={validerMulti}
               disabled={selectionMulti.length === 0}

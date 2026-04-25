@@ -1,6 +1,6 @@
 'use client'
-import Nav from '@/app/components/Nav'
 
+import Nav from '@/app/components/Nav'
 import { useState, useEffect } from 'react'
 
 const specialitesRotatives = [
@@ -65,14 +65,14 @@ export default function Home() {
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
 
-<Nav />
+      <Nav />
 
       {/* HERO */}
-      <section className="w-full flex flex-col lg:flex-row" style={{ minHeight: '680px' }}>
+      <section className="w-full flex flex-col lg:flex-row" style={{ minHeight: '580px' }}>
 
-        {/* Colonne texte — 55% */}
+        {/* Colonne texte */}
         <div
-          className="flex flex-col justify-center items-center text-center px-16 py-24 relative"
+          className="flex flex-col justify-center items-center text-center px-6 sm:px-12 py-14 sm:py-20 relative w-full lg:w-auto"
           style={{
             background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)',
             flex: '0 0 55%',
@@ -91,11 +91,11 @@ export default function Home() {
             </svg>
           </div>
 
-          <p className="text-sm font-medium mb-4 uppercase tracking-widest" style={{ color: '#c4b5fd' }}>
+          <p className="text-xs font-medium mb-3 uppercase tracking-widest" style={{ color: '#c4b5fd' }}>
             Prenez rendez-vous avec un
           </p>
 
-          <h1 className="font-light text-white leading-tight mb-2" style={{ fontFamily: 'var(--font-lora)', fontSize: '3.5rem' }}>
+          <h1 className="font-light text-white leading-tight mb-2" style={{ fontFamily: 'var(--font-lora)', fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
             <span style={{
               color: '#e9d5ff',
               display: 'inline-block',
@@ -107,29 +107,29 @@ export default function Home() {
             </span>
           </h1>
 
-          <div className="w-16 h-0.5 my-6 mx-auto" style={{ backgroundColor: '#a855f7' }} />
+          <div className="w-16 h-0.5 my-5 mx-auto" style={{ backgroundColor: '#a855f7' }} />
 
-          <p className="font-bold mb-2 whitespace-nowrap" style={{ fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: '1.5rem' }}>
+          <p className="font-bold mb-2" style={{ fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: 'clamp(1rem, 2.5vw, 1.4rem)' }}>
             <span style={{ color: '#ffffff' }}>Votre </span>
             <span style={{ color: '#f0abfc' }}>allié</span>
             <span style={{ color: '#ffffff' }}> pour trouver le bon </span>
             <span style={{ color: '#f0abfc' }}>accompagnement</span>
           </p>
 
-          <p className="font-bold mb-10 whitespace-nowrap" style={{ color: '#e9d5ff', fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: '1.2rem' }}>
+          <p className="font-bold mb-8 max-w-sm" style={{ color: '#e9d5ff', fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: 'clamp(0.9rem, 2vw, 1.15rem)' }}>
             un praticien, ou plusieurs, qui travaillent ensemble pour vous.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center w-full max-w-md">
             <button
-              className="px-7 py-4 rounded-2xl text-sm font-medium text-white transition shadow-lg"
+              className="px-6 py-3 rounded-2xl text-sm font-medium text-white transition shadow-lg"
               style={{ backgroundColor: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.3)' }}
               onClick={() => { window.location.href = '/recherche' }}
             >
               🔍 Je cherche un praticien
             </button>
             <button
-              className="px-7 py-4 rounded-2xl text-sm font-medium transition shadow-lg"
+              className="px-6 py-3 rounded-2xl text-sm font-medium transition shadow-lg"
               style={{ backgroundColor: '#ffffff', color: '#6b21a8' }}
               onClick={() => { window.location.href = '/orientation' }}
             >
@@ -138,15 +138,15 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Colonne photo — 45% */}
-        <div className="relative hidden lg:block overflow-hidden" style={{ flex: '0 0 45%', minHeight: '680px' }}>
-          {/* Courbe HAUT */}
+        {/* Colonne photo rotative — cachée sur mobile */}
+        <div className="relative hidden lg:block overflow-hidden" style={{ flex: '0 0 45%', minHeight: '580px' }}>
+          {/* Courbe HAUT photo */}
           <div className="absolute top-0 left-0 w-full overflow-hidden z-10" style={{ marginTop: '-1px' }}>
             <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
               <path d="M0,30 C480,60 960,0 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
             </svg>
           </div>
-          {/* Courbe BAS */}
+          {/* Courbe BAS photo */}
           <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10" style={{ marginBottom: '-1px' }}>
             <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
               <path d="M0,30 C480,0 960,60 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
@@ -162,16 +162,12 @@ export default function Home() {
               style={{
                 opacity: i === photoIndex ? (photoVisible ? 1 : 0) : 0,
                 transition: 'opacity 0.6s ease',
-                minHeight: '680px',
+                minHeight: '580px',
               }}
             />
           ))}
 
-          {/* Badge vérifié */}
-          <div
-            className="absolute bottom-16 left-8 bg-white rounded-2xl px-5 py-4 shadow-xl z-20"
-            style={{ border: '1px solid #ede9fe' }}
-          >
+          <div className="absolute bottom-16 left-8 bg-white rounded-2xl px-5 py-4 shadow-xl z-20" style={{ border: '1px solid #ede9fe' }}>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg" style={{ backgroundColor: '#f5f3ff' }}>✓</div>
               <div>
@@ -181,7 +177,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Indicateurs */}
           <div className="absolute bottom-16 right-8 flex gap-2 z-20">
             {photosRotatives.map((_, i) => (
               <div
@@ -280,7 +275,11 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <button className="text-white px-8 py-3 rounded-2xl text-sm font-medium" style={{ backgroundColor: '#6b21a8' }}>
+            <button
+              className="text-white px-8 py-3 rounded-2xl text-sm font-medium"
+              style={{ backgroundColor: '#6b21a8' }}
+              onClick={() => { window.location.href = '/specialites' }}
+            >
               Voir toutes les spécialités
             </button>
           </div>

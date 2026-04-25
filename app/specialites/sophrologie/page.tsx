@@ -6,6 +6,7 @@ export default function Sophrologie() {
   const specialite = {
     nom: 'Sophrologie',
     emoji: '🧘',
+    photo: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1400&h=500&fit=crop&crop=center',
     accroche: 'Retrouvez calme, confiance et équilibre grâce à la respiration et la relaxation.',
     description_longue: `La sophrologie est une méthode psychocorporelle créée dans les années 60 par le neuropsychiatre Alfonso Caycedo. Elle combine des techniques de respiration, de relaxation musculaire et de visualisation positive pour agir sur le corps et l esprit.
 
@@ -78,34 +79,35 @@ En quelques séances, vous apprendrez des techniques que vous pourrez pratiquer 
 
       <Nav />
 
-      {/* HERO */}
-      <section
-        className="px-6 py-16 text-center relative"
-        style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}
-      >
+      {/* PHOTO EN HAUT */}
+      <div className="w-full relative overflow-hidden" style={{ height: '320px' }}>
+        <img src={specialite.photo} alt={specialite.nom} className="w-full h-full object-cover" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(59,7,100,0.3) 0%, rgba(59,7,100,0.7) 100%)' }} />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+          <div className="text-6xl mb-3">{specialite.emoji}</div>
+          <h1 className="text-4xl font-light text-white mb-3" style={{ fontFamily: 'var(--font-lora)' }}>{specialite.nom}</h1>
+          <p className="text-lg max-w-2xl" style={{ color: '#e9d5ff' }}>{specialite.accroche}</p>
+        </div>
         <div className="absolute bottom-0 left-0 w-full overflow-hidden" style={{ marginBottom: '-1px' }}>
           <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
             <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
           </svg>
         </div>
-        <div className="text-6xl mb-4">{specialite.emoji}</div>
-        <h1 className="text-4xl font-light text-white mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
-          {specialite.nom}
-        </h1>
-        <p className="text-lg max-w-2xl mx-auto mb-8" style={{ color: '#d8b4fe' }}>
-          {specialite.accroche}
-        </p>
-        <div className="flex flex-wrap justify-center gap-4 text-sm">
-          <span style={{ color: '#e9d5ff' }}>👩‍⚕️ {specialite.praticiens} praticiens vérifiés</span>
-          <span style={{ color: '#e9d5ff' }}>⭐ {specialite.satisfaction}/5 de satisfaction</span>
-          <span style={{ color: '#e9d5ff' }}>À partir de {specialite.tarif_depuis}</span>
-          {specialite.visio && <span style={{ color: '#e9d5ff' }}>🖥 Disponible en visio</span>}
+      </div>
+
+      {/* STATS */}
+      <section className="bg-white py-6 px-6 shadow-sm">
+        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-8 text-sm">
+          <span style={{ color: '#57534e' }}>👩‍⚕️ <strong style={{ color: '#6b21a8' }}>{specialite.praticiens}</strong> praticiens vérifiés</span>
+          <span style={{ color: '#57534e' }}>⭐ <strong style={{ color: '#6b21a8' }}>{specialite.satisfaction}/5</strong> de satisfaction</span>
+          <span style={{ color: '#57534e' }}>À partir de <strong style={{ color: '#6b21a8' }}>{specialite.tarif_depuis}</strong></span>
+          <span style={{ color: '#57534e' }}>🖥 <strong style={{ color: '#6b21a8' }}>Visio disponible</strong></span>
         </div>
       </section>
 
       <div className="max-w-5xl mx-auto px-6 py-12 flex flex-col gap-10">
 
-        {/* QU'EST-CE QUE C'EST */}
+        {/* DESCRIPTION */}
         <section className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
           <h2 className="text-2xl font-light mb-6" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Qu est-ce que la {specialite.nom} ?
@@ -118,7 +120,7 @@ En quelques séances, vous apprendrez des techniques que vous pourrez pratiquer 
               { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
               { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
-              { label: 'Format', value: specialite.visio ? 'Cabinet et visio' : 'Cabinet uniquement', emoji: '🖥' },
+              { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
             ].map((info) => (
               <div key={info.label} className="text-center p-4 rounded-2xl" style={{ backgroundColor: '#f5f3ff' }}>
                 <p className="text-xl mb-1">{info.emoji}</p>
@@ -131,9 +133,7 @@ En quelques séances, vous apprendrez des techniques que vous pourrez pratiquer 
 
         {/* POUR QUI */}
         <section>
-          <h2 className="text-2xl font-light mb-6" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-            Pour qui ?
-          </h2>
+          <h2 className="text-2xl font-light mb-6" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Pour qui ?</h2>
           <div className="flex flex-wrap gap-3">
             {specialite.pour_qui.map((p) => (
               <div key={p.label} className="flex items-center gap-2 bg-white px-4 py-3 rounded-2xl shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
@@ -167,10 +167,7 @@ En quelques séances, vous apprendrez des techniques que vous pourrez pratiquer 
           <div className="flex flex-col gap-4">
             {specialite.deroulement.map((etape) => (
               <div key={etape.etape} className="flex gap-4 items-start">
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0 text-white"
-                  style={{ backgroundColor: '#6b21a8' }}
-                >
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0 text-white" style={{ backgroundColor: '#6b21a8' }}>
                   {etape.etape}
                 </div>
                 <div>
@@ -182,19 +179,28 @@ En quelques séances, vous apprendrez des techniques que vous pourrez pratiquer 
           </div>
         </section>
 
-        {/* PRATICIENS EN VEDETTE */}
+        {/* PRATICIENS */}
         <section>
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
             <h2 className="text-2xl font-light" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
               Nos sophrologues vérifiés
             </h2>
-            <button
-              className="text-white px-5 py-2 rounded-xl text-sm font-medium"
-              style={{ backgroundColor: '#6b21a8' }}
-              onClick={() => { window.location.href = '/recherche' }}
-            >
-              Voir tous les {specialite.praticiens} praticiens
-            </button>
+            <div className="flex gap-3">
+              <button
+                className="text-white px-5 py-2 rounded-xl text-sm font-medium"
+                style={{ backgroundColor: '#6b21a8' }}
+                onClick={() => { window.location.href = '/recherche' }}
+              >
+                Voir les {specialite.praticiens} sophrologues
+              </button>
+              <button
+                className="px-5 py-2 rounded-xl text-sm font-medium"
+                style={{ backgroundColor: '#f5f3ff', color: '#6b21a8', border: '1px solid #ede9fe' }}
+                onClick={() => { window.location.href = '/recherche' }}
+              >
+                📍 Près de chez moi
+              </button>
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {specialite.praticiens_vedette.map((p) => (
@@ -223,9 +229,7 @@ En quelques séances, vous apprendrez des techniques que vous pourrez pratiquer 
 
         {/* FAQ */}
         <section>
-          <h2 className="text-2xl font-light mb-6" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-            Questions fréquentes
-          </h2>
+          <h2 className="text-2xl font-light mb-6" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Questions fréquentes</h2>
           <div className="flex flex-col gap-3">
             {specialite.faq.map((item) => (
               <div key={item.question} className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
@@ -236,11 +240,8 @@ En quelques séances, vous apprendrez des techniques que vous pourrez pratiquer 
           </div>
         </section>
 
-        {/* CTA FINAL */}
-        <section
-          className="rounded-3xl p-10 text-center"
-          style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}
-        >
+        {/* CTA */}
+        <section className="rounded-3xl p-10 text-center" style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}>
           <h2 className="text-2xl font-light text-white mb-3" style={{ fontFamily: 'var(--font-lora)' }}>
             Prêt à consulter un sophrologue ?
           </h2>

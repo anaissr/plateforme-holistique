@@ -1,5 +1,6 @@
 'use client'
 
+import Nav from '@/app/components/Nav'
 import { useState } from 'react'
 
 const etapes = [
@@ -16,14 +17,7 @@ export default function Inscription() {
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
 
-<nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-        <button onClick={() => { window.location.href = '/' }} className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
-          🌿 Holistia
-        </button>
-        <p className="text-sm" style={{ color: '#a8a29e' }}>
-          Inscription praticien — 100% gratuit
-        </p>
-      </nav>
+      <Nav />
 
       <section
         className="px-6 py-10 text-center"
@@ -35,10 +29,7 @@ export default function Inscription() {
         >
           Rejoignez 1 200+ praticiens
         </span>
-        <h1
-          className="text-3xl font-light text-white mb-3"
-          style={{ fontFamily: 'var(--font-lora)' }}
-        >
+        <h1 className="text-3xl font-light text-white mb-3" style={{ fontFamily: 'var(--font-lora)' }}>
           Créez votre profil gratuitement
         </h1>
         <p className="text-sm max-w-md mx-auto" style={{ color: '#d8b4fe' }}>
@@ -61,10 +52,7 @@ export default function Inscription() {
                   >
                     {etape > e.id ? '✓' : e.id}
                   </div>
-                  <p
-                    className="text-xs mt-1 hidden sm:block text-center"
-                    style={{ color: etape >= e.id ? '#6b21a8' : '#a8a29e' }}
-                  >
+                  <p className="text-xs mt-1 hidden sm:block text-center" style={{ color: etape >= e.id ? '#6b21a8' : '#a8a29e' }}>
                     {e.titre}
                   </p>
                 </div>
@@ -84,52 +72,27 @@ export default function Inscription() {
 
         {etape === 1 && (
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-            <h2 className="text-xl font-medium mb-6" style={{ color: '#1c1917' }}>
-              Informations personnelles
-            </h2>
+            <h2 className="text-xl font-medium mb-6" style={{ color: '#1c1917' }}>Informations personnelles</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Prénom</label>
-                <input
-                  type="text"
-                  placeholder="Sophie"
-                  className="w-full text-sm rounded-xl px-4 py-3 outline-none"
-                  style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
-                />
+                <input type="text" placeholder="Sophie" className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }} />
               </div>
               <div>
                 <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Nom</label>
-                <input
-                  type="text"
-                  placeholder="Laurent"
-                  className="w-full text-sm rounded-xl px-4 py-3 outline-none"
-                  style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
-                />
+                <input type="text" placeholder="Laurent" className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }} />
               </div>
               <div>
                 <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Email professionnel</label>
-                <input
-                  type="email"
-                  placeholder="sophie@cabinet.fr"
-                  className="w-full text-sm rounded-xl px-4 py-3 outline-none"
-                  style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
-                />
+                <input type="email" placeholder="sophie@cabinet.fr" className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }} />
               </div>
               <div>
                 <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Téléphone</label>
-                <input
-                  type="tel"
-                  placeholder="+33 6 00 00 00 00"
-                  className="w-full text-sm rounded-xl px-4 py-3 outline-none"
-                  style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
-                />
+                <input type="tel" placeholder="+33 6 00 00 00 00" className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }} />
               </div>
               <div>
                 <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Pays de résidence</label>
-                <select
-                  className="w-full text-sm rounded-xl px-4 py-3 outline-none"
-                  style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
-                >
+                <select className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}>
                   <option value="">Sélectionner...</option>
                   <option>France</option>
                   <option>Belgique</option>
@@ -141,12 +104,7 @@ export default function Inscription() {
               </div>
               <div>
                 <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Ville</label>
-                <input
-                  type="text"
-                  placeholder="Paris"
-                  className="w-full text-sm rounded-xl px-4 py-3 outline-none"
-                  style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
-                />
+                <input type="text" placeholder="Paris" className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }} />
               </div>
             </div>
 
@@ -154,11 +112,7 @@ export default function Inscription() {
               <label className="text-xs font-medium block mb-2" style={{ color: '#78716c' }}>Mode de consultation</label>
               <div className="flex gap-3 flex-wrap">
                 {['En cabinet uniquement', 'En visio uniquement', 'Cabinet et visio'].map((mode) => (
-                  <button
-                    key={mode}
-                    className="text-sm px-4 py-2 rounded-xl border transition"
-                    style={{ borderColor: '#e7e5e4', color: '#57534e', backgroundColor: 'white' }}
-                  >
+                  <button key={mode} className="text-sm px-4 py-2 rounded-xl border transition" style={{ borderColor: '#e7e5e4', color: '#57534e', backgroundColor: 'white' }}>
                     {mode}
                   </button>
                 ))}
@@ -169,17 +123,11 @@ export default function Inscription() {
               <label className="text-xs font-medium block mb-2" style={{ color: '#78716c' }}>
                 Photo de profil — visage bien visible, fond neutre
               </label>
-              <div
-                className="border-2 border-dashed rounded-2xl p-8 text-center"
-                style={{ borderColor: '#e7e5e4' }}
-              >
+              <div className="border-2 border-dashed rounded-2xl p-8 text-center" style={{ borderColor: '#e7e5e4' }}>
                 <div className="text-3xl mb-2">📸</div>
                 <p className="text-sm font-medium" style={{ color: '#57534e' }}>Glissez votre photo ici</p>
                 <p className="text-xs mt-1" style={{ color: '#a8a29e' }}>JPG ou PNG — minimum 400x400px</p>
-                <button
-                  className="mt-3 text-xs px-4 py-2 rounded-xl"
-                  style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
-                >
+                <button className="mt-3 text-xs px-4 py-2 rounded-xl" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
                   Parcourir les fichiers
                 </button>
               </div>
@@ -193,10 +141,7 @@ export default function Inscription() {
 
             <div className="mb-4">
               <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Spécialité principale</label>
-              <select
-                className="w-full text-sm rounded-xl px-4 py-3 outline-none"
-                style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
-              >
+              <select className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}>
                 <option value="">Choisir...</option>
                 <option>Sophrologie</option>
                 <option>Naturopathie</option>
@@ -216,12 +161,8 @@ export default function Inscription() {
             <div className="mb-4">
               <label className="text-xs font-medium block mb-2" style={{ color: '#78716c' }}>Public accompagné</label>
               <div className="flex flex-wrap gap-2">
-                {['Adultes', 'Adolescents', 'Enfants', 'Couples', 'Femmes enceintes', 'PMA et fertilité', 'Seniors', 'Sportifs'].map((p) => (
-                  <button
-                    key={p}
-                    className="text-xs px-3 py-1.5 rounded-full border transition"
-                    style={{ borderColor: '#e7e5e4', color: '#57534e', backgroundColor: 'white' }}
-                  >
+                {['Adultes', 'Adolescents', 'Enfants', 'Bébés', 'Couples', 'Femmes enceintes', 'PMA et fertilité', 'Sportifs'].map((p) => (
+                  <button key={p} className="text-xs px-3 py-1.5 rounded-full border transition" style={{ borderColor: '#e7e5e4', color: '#57534e', backgroundColor: 'white' }}>
                     {p}
                   </button>
                 ))}
@@ -231,17 +172,8 @@ export default function Inscription() {
             <div className="mb-4">
               <label className="text-xs font-medium block mb-2" style={{ color: '#78716c' }}>Problématiques traitées</label>
               <div className="flex flex-wrap gap-2">
-                {[
-                  'Stress et anxiété', 'Troubles du sommeil', 'Douleurs chroniques',
-                  'Troubles digestifs', 'Fatigue chronique', 'PMA et fertilité',
-                  'Burn-out', 'Traumatismes', 'Deuil', 'Phobies',
-                  'Développement personnel',
-                ].map((pb) => (
-                  <button
-                    key={pb}
-                    className="text-xs px-3 py-1.5 rounded-full border transition"
-                    style={{ borderColor: '#e7e5e4', color: '#57534e', backgroundColor: 'white' }}
-                  >
+                {['Stress et anxiété', 'Troubles du sommeil', 'Douleurs chroniques', 'Troubles digestifs', 'Fatigue chronique', 'PMA et fertilité', 'Burn-out', 'Traumatismes', 'Deuil', 'Phobies', 'Développement personnel'].map((pb) => (
+                  <button key={pb} className="text-xs px-3 py-1.5 rounded-full border transition" style={{ borderColor: '#e7e5e4', color: '#57534e', backgroundColor: 'white' }}>
                     {pb}
                   </button>
                 ))}
@@ -249,9 +181,7 @@ export default function Inscription() {
             </div>
 
             <div className="mb-4">
-              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>
-                Présentation de votre pratique
-              </label>
+              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Présentation de votre pratique</label>
               <textarea
                 placeholder="Décrivez votre approche, votre parcours..."
                 className="w-full text-sm rounded-xl px-4 py-3 outline-none resize-none"
@@ -260,20 +190,12 @@ export default function Inscription() {
             </div>
 
             <div>
-              <label className="text-xs font-medium block mb-2" style={{ color: '#78716c' }}>
-                Médias optionnels — photos, vidéo de présentation
-              </label>
-              <div
-                className="border-2 border-dashed rounded-2xl p-6 text-center"
-                style={{ borderColor: '#e7e5e4' }}
-              >
+              <label className="text-xs font-medium block mb-2" style={{ color: '#78716c' }}>Médias optionnels — photos, vidéo de présentation</label>
+              <div className="border-2 border-dashed rounded-2xl p-6 text-center" style={{ borderColor: '#e7e5e4' }}>
                 <div className="text-2xl mb-2">🎥</div>
                 <p className="text-sm" style={{ color: '#57534e' }}>Photos ou vidéo de présentation</p>
                 <p className="text-xs mt-1" style={{ color: '#a8a29e' }}>Max 5 fichiers — JPG, PNG ou MP4</p>
-                <button
-                  className="mt-3 text-xs px-4 py-2 rounded-xl"
-                  style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
-                >
+                <button className="mt-3 text-xs px-4 py-2 rounded-xl" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
                   Ajouter des médias
                 </button>
               </div>
@@ -284,14 +206,9 @@ export default function Inscription() {
         {etape === 3 && (
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
             <h2 className="text-xl font-medium mb-2" style={{ color: '#1c1917' }}>Formations et certifications</h2>
-            <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>
-              Documents vérifiés par notre équipe sous 48h.
-            </p>
+            <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>Documents vérifiés par notre équipe sous 48h.</p>
 
-            <div
-              className="rounded-2xl p-4 mb-6 flex gap-3"
-              style={{ backgroundColor: '#f5f3ff', border: '1px solid #ede9fe' }}
-            >
+            <div className="rounded-2xl p-4 mb-6 flex gap-3" style={{ backgroundColor: '#f5f3ff', border: '1px solid #ede9fe' }}>
               <span className="text-lg">🔒</span>
               <div>
                 <p className="text-sm font-medium" style={{ color: '#6b21a8' }}>Vérification obligatoire</p>
@@ -308,11 +225,7 @@ export default function Inscription() {
                 { label: 'Diplôme de formation principal', desc: 'Votre formation principale', icon: '🎓' },
                 { label: 'Certifications complémentaires', desc: 'Formations additionnelles (optionnel)', icon: '📜' },
               ].map((doc) => (
-                <div
-                  key={doc.label}
-                  className="flex items-center justify-between p-4 rounded-2xl"
-                  style={{ border: '1px solid #e7e5e4', backgroundColor: '#faf9f7' }}
-                >
+                <div key={doc.label} className="flex items-center justify-between p-4 rounded-2xl" style={{ border: '1px solid #e7e5e4', backgroundColor: '#faf9f7' }}>
                   <div className="flex items-center gap-3">
                     <span className="text-xl">{doc.icon}</span>
                     <div>
@@ -320,10 +233,7 @@ export default function Inscription() {
                       <p className="text-xs" style={{ color: '#a8a29e' }}>{doc.desc}</p>
                     </div>
                   </div>
-                  <button
-                    className="text-xs px-4 py-2 rounded-xl flex-shrink-0"
-                    style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
-                  >
+                  <button className="text-xs px-4 py-2 rounded-xl flex-shrink-0" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
                     Uploader
                   </button>
                 </div>
@@ -332,10 +242,7 @@ export default function Inscription() {
 
             <div>
               <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Années d expérience</label>
-              <select
-                className="w-full text-sm rounded-xl px-4 py-3 outline-none"
-                style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
-              >
+              <select className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}>
                 <option>Moins d un an</option>
                 <option>1 à 3 ans</option>
                 <option>3 à 5 ans</option>
@@ -349,9 +256,7 @@ export default function Inscription() {
         {etape === 4 && (
           <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
             <h2 className="text-xl font-medium mb-2" style={{ color: '#1c1917' }}>Tarifs et disponibilités</h2>
-            <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>
-              Modifiable à tout moment depuis votre tableau de bord.
-            </p>
+            <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>Modifiable à tout moment depuis votre tableau de bord.</p>
 
             <div className="mb-6">
               <label className="text-xs font-medium block mb-3" style={{ color: '#78716c' }}>Vos prestations</label>
@@ -360,25 +265,14 @@ export default function Inscription() {
                   { nom: 'Bilan initial', duree: '1h30' },
                   { nom: 'Consultation de suivi', duree: '45min' },
                 ].map((p, i) => (
-                  <div
-                    key={i}
-                    className="grid grid-cols-3 gap-3 p-4 rounded-2xl"
-                    style={{ border: '1px solid #e7e5e4', backgroundColor: '#faf9f7' }}
-                  >
+                  <div key={i} className="grid grid-cols-3 gap-3 p-4 rounded-2xl" style={{ border: '1px solid #e7e5e4', backgroundColor: '#faf9f7' }}>
                     <div>
                       <label className="text-xs block mb-1" style={{ color: '#a8a29e' }}>Nom</label>
-                      <input
-                        defaultValue={p.nom}
-                        className="w-full text-sm rounded-lg px-3 py-2 outline-none"
-                        style={{ border: '1px solid #e7e5e4', backgroundColor: 'white' }}
-                      />
+                      <input defaultValue={p.nom} className="w-full text-sm rounded-lg px-3 py-2 outline-none" style={{ border: '1px solid #e7e5e4', backgroundColor: 'white' }} />
                     </div>
                     <div>
                       <label className="text-xs block mb-1" style={{ color: '#a8a29e' }}>Durée</label>
-                      <select
-                        className="w-full text-sm rounded-lg px-3 py-2 outline-none"
-                        style={{ border: '1px solid #e7e5e4', backgroundColor: 'white' }}
-                      >
+                      <select className="w-full text-sm rounded-lg px-3 py-2 outline-none" style={{ border: '1px solid #e7e5e4', backgroundColor: 'white' }}>
                         <option>30min</option>
                         <option>45min</option>
                         <option>1h</option>
@@ -388,18 +282,11 @@ export default function Inscription() {
                     </div>
                     <div>
                       <label className="text-xs block mb-1" style={{ color: '#a8a29e' }}>Tarif (€)</label>
-                      <input
-                        placeholder="Ex: 80"
-                        className="w-full text-sm rounded-lg px-3 py-2 outline-none"
-                        style={{ border: '1px solid #e7e5e4', backgroundColor: 'white' }}
-                      />
+                      <input placeholder="Ex: 80" className="w-full text-sm rounded-lg px-3 py-2 outline-none" style={{ border: '1px solid #e7e5e4', backgroundColor: 'white' }} />
                     </div>
                   </div>
                 ))}
-                <button
-                  className="text-sm px-4 py-3 rounded-2xl border-2 border-dashed text-center"
-                  style={{ borderColor: '#e7e5e4', color: '#6b21a8' }}
-                >
+                <button className="text-sm px-4 py-3 rounded-2xl border-2 border-dashed text-center" style={{ borderColor: '#e7e5e4', color: '#6b21a8' }}>
                   + Ajouter une prestation
                 </button>
               </div>
@@ -409,11 +296,7 @@ export default function Inscription() {
               <label className="text-xs font-medium block mb-3" style={{ color: '#78716c' }}>Disponibilités générales</label>
               <div className="grid grid-cols-4 gap-2">
                 {['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'].map((jour) => (
-                  <button
-                    key={jour}
-                    className="text-sm px-3 py-2 rounded-xl border transition"
-                    style={{ borderColor: '#e7e5e4', color: '#57534e', backgroundColor: 'white' }}
-                  >
+                  <button key={jour} className="text-sm px-3 py-2 rounded-xl border transition" style={{ borderColor: '#e7e5e4', color: '#57534e', backgroundColor: 'white' }}>
                     {jour}
                   </button>
                 ))}
@@ -428,10 +311,7 @@ export default function Inscription() {
         {etape === 5 && (
           <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
             <div className="text-5xl mb-4">🎉</div>
-            <h2
-              className="text-2xl font-medium mb-3"
-              style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}
-            >
+            <h2 className="text-2xl font-medium mb-3" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
               Votre profil est soumis !
             </h2>
             <p className="text-sm mb-8 max-w-md mx-auto" style={{ color: '#78716c' }}>
@@ -445,11 +325,7 @@ export default function Inscription() {
                 { label: 'Connexion agenda Google', statut: 'A faire', emoji: '📅' },
                 { label: 'Premier RDV reçu', statut: 'Bientot !', emoji: '🌿' },
               ].map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center justify-between p-3 rounded-xl"
-                  style={{ backgroundColor: '#faf9f7', border: '1px solid #e7e5e4' }}
-                >
+                <div key={item.label} className="flex items-center justify-between p-3 rounded-xl" style={{ backgroundColor: '#faf9f7', border: '1px solid #e7e5e4' }}>
                   <div className="flex items-center gap-2">
                     <span>{item.emoji}</span>
                     <span className="text-sm" style={{ color: '#57534e' }}>{item.label}</span>
@@ -459,15 +335,13 @@ export default function Inscription() {
               ))}
             </div>
 
-            <div
-              className="rounded-2xl p-6 max-w-sm mx-auto"
-              style={{ backgroundColor: '#f5f3ff', border: '1px solid #ede9fe' }}
+            <button
+              onClick={() => { window.location.href = '/dashboard' }}
+              className="text-white px-8 py-3 rounded-2xl font-medium"
+              style={{ backgroundColor: '#6b21a8' }}
             >
-              <p className="text-sm font-medium mb-1" style={{ color: '#6b21a8' }}>En attendant...</p>
-              <p className="text-xs" style={{ color: '#7c3aed' }}>
-                Préparez votre agenda Google et vos disponibilités.
-              </p>
-            </div>
+              Accéder à mon tableau de bord
+            </button>
           </div>
         )}
 
@@ -484,21 +358,13 @@ export default function Inscription() {
             <div />
           )}
 
-          {etape < 5 ? (
+          {etape < 5 && (
             <button
               onClick={() => setEtape(etape + 1)}
               className="text-white text-sm px-8 py-3 rounded-2xl transition"
               style={{ backgroundColor: '#6b21a8' }}
             >
               {etape === 4 ? 'Soumettre mon profil' : 'Etape suivante'}
-            </button>
-          ) : (
-            <button
-              onClick={() => { window.location.href = '/' }}
-              className="text-white text-sm px-8 py-3 rounded-2xl transition"
-              style={{ backgroundColor: '#6b21a8' }}
-            >
-              Retour à l accueil
             </button>
           )}
         </div>

@@ -1,4 +1,5 @@
 'use client'
+import Nav from '@/app/components/Nav'
 
 import { useState, useEffect } from 'react'
 
@@ -64,31 +65,7 @@ export default function Home() {
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
 
-      {/* NAVIGATION */}
-      <nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-        <div className="text-2xl font-semibold" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-          🌿 Holistia
-        </div>
-        <div className="flex gap-6 text-sm" style={{ color: '#78716c' }}>
-          <button onClick={() => { window.location.href = '/recherche' }} className="hover:opacity-70 transition">
-            Trouver un praticien
-          </button>
-          <button className="hover:opacity-70 transition">Les spécialités</button>
-          <button className="hover:opacity-70 transition">Blog</button>
-        </div>
-        <div className="flex gap-3 items-center">
-          <button className="text-sm font-medium hover:underline" style={{ color: '#6b21a8' }}>
-            Connexion
-          </button>
-          <button
-            className="text-white text-sm px-4 py-2 rounded-full"
-            style={{ backgroundColor: '#6b21a8' }}
-            onClick={() => { window.location.href = '/inscription' }}
-          >
-            Vous êtes praticien ?
-          </button>
-        </div>
-      </nav>
+<Nav />
 
       {/* HERO */}
       <section className="w-full flex flex-col lg:flex-row" style={{ minHeight: '680px' }}>

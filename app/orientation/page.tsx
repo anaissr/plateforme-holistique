@@ -1,5 +1,6 @@
 'use client'
 
+import Nav from '@/app/components/Nav'
 import { useState } from 'react'
 
 const questions = [
@@ -22,7 +23,7 @@ const questions = [
   {
     id: 2,
     question: 'Depuis combien de temps ?',
-    sous_titre: 'Cela nous aide à comprendre ancienneté de votre situation',
+    sous_titre: 'Cela nous aide à comprendre l ancienneté de votre situation',
     type: 'choix',
     options: [
       { label: 'Quelques jours', emoji: '🕐' },
@@ -67,10 +68,10 @@ const questions = [
       { label: 'Un adulte', emoji: '🧑' },
       { label: 'Un adolescent (ou pour un ado)', emoji: '🧒' },
       { label: 'Un enfant (ou pour un enfant)', emoji: '👶' },
+      { label: 'Un bébé (ou pour un bébé)', emoji: '🍼' },
       { label: 'En couple (cherche suivi à deux)', emoji: '👫' },
       { label: 'Femme enceinte', emoji: '🤰' },
       { label: 'En parcours PMA / fertilité', emoji: '🌱' },
-      { label: 'Senior', emoji: '👴' },
     ],
   },
   {
@@ -164,18 +165,10 @@ export default function Orientation() {
   const probleme = reponses[1]?.[0] || 'Stress, anxiété ou burn-out'
   const resultat = resultats.find((r) => r.probleme === probleme) || resultats[0]
 
-if (termine) {
+  if (termine) {
     return (
       <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
-        <nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-          <button onClick={() => { window.location.href = '/' }} className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
-            🌿 Holistia
-          </button>
-          <button onClick={() => { window.location.href = '/' }} className="text-sm" style={{ color: '#78716c' }}>
-            Retour à l accueil
-          </button>
-        </nav>
-
+        <Nav />
         <div className="max-w-3xl mx-auto px-6 py-16 text-center">
           <div className="text-4xl mb-4">✨</div>
           <h1 className="text-3xl font-light mb-3" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
@@ -193,38 +186,27 @@ if (termine) {
                 className="bg-white rounded-3xl p-6 text-left flex gap-4 items-start shadow-sm"
                 style={{ border: '1px solid #e7e5e4' }}
               >
-                <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
-                  style={{ backgroundColor: '#f5f3ff' }}
-                >
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0" style={{ backgroundColor: '#f5f3ff' }}>
                   {s.emoji}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     {i === 0 && (
-                      <span
-                        className="text-xs px-2 py-0.5 rounded-full font-medium"
-                        style={{ backgroundColor: '#6b21a8', color: 'white' }}
-                      >
+                      <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: '#6b21a8', color: 'white' }}>
                         Recommandé
                       </span>
                     )}
-                    <h3 className="font-medium" style={{ color: '#1c1917' }}>
-                      {s.specialite}
-                    </h3>
+                    <h3 className="font-medium" style={{ color: '#1c1917' }}>{s.specialite}</h3>
                   </div>
-                  <p className="text-sm leading-relaxed" style={{ color: '#57534e' }}>
-                    {s.raison}
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: '#57534e' }}>{s.raison}</p>
                 </div>
-                
-<button
-  onClick={() => { window.location.href = '/recherche' }}
-  className="text-white text-sm px-4 py-2 rounded-xl flex-shrink-0"
-  style={{ backgroundColor: '#6b21a8' }}
->
-  Voir praticiens
-</button>
+                <button
+                  onClick={() => { window.location.href = '/recherche' }}
+                  className="text-white text-sm px-4 py-2 rounded-xl flex-shrink-0"
+                  style={{ backgroundColor: '#6b21a8' }}
+                >
+                  Voir praticiens
+                </button>
               </div>
             ))}
           </div>
@@ -243,23 +225,13 @@ if (termine) {
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
-<nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-        <button onClick={() => { window.location.href = '/' }} className="text-2xl font-semibold" style={{ color: '#6b21a8' }}>
-          🌿 Holistia
-        </button>
-        <button onClick={() => { window.location.href = '/' }} className="text-sm" style={{ color: '#78716c' }}>
-          Retour à l accueil
-        </button>
-      </nav>
+      <Nav />
 
       <section
         className="px-6 py-12 text-center"
         style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}
       >
-        <span
-          className="inline-block text-xs px-4 py-1.5 rounded-full mb-4"
-          style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}
-        >
+        <span className="inline-block text-xs px-4 py-1.5 rounded-full mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
           Orientation personnalisée
         </span>
         <h1 className="text-3xl font-light text-white mb-3" style={{ fontFamily: 'var(--font-lora)' }}>
@@ -271,10 +243,7 @@ if (termine) {
       </section>
 
       <div className="w-full h-1.5" style={{ backgroundColor: '#e7e5e4' }}>
-        <div
-          className="h-full transition-all duration-500"
-          style={{ width: `${progression}%`, backgroundColor: '#6b21a8' }}
-        />
+        <div className="h-full transition-all duration-500" style={{ width: `${progression}%`, backgroundColor: '#6b21a8' }} />
       </div>
       <div className="text-center py-2 text-xs" style={{ color: '#a8a29e' }}>
         Question {etape + 1} sur {questions.length}
@@ -287,9 +256,7 @@ if (termine) {
           </h2>
           <p className="text-sm" style={{ color: '#a8a29e' }}>{question.sous_titre}</p>
           {question.type === 'multi' && (
-            <p className="text-xs mt-1 font-medium" style={{ color: '#6b21a8' }}>
-              Plusieurs choix possibles
-            </p>
+            <p className="text-xs mt-1 font-medium" style={{ color: '#6b21a8' }}>Plusieurs choix possibles</p>
           )}
         </div>
 
@@ -312,9 +279,7 @@ if (termine) {
               >
                 <span className="text-2xl flex-shrink-0">{option.emoji}</span>
                 <span className="text-sm font-medium">{option.label}</span>
-                {selectionne && (
-                  <span className="ml-auto text-sm" style={{ color: '#6b21a8' }}>✓</span>
-                )}
+                {selectionne && <span className="ml-auto text-sm" style={{ color: '#6b21a8' }}>✓</span>}
               </button>
             )
           })}
@@ -338,11 +303,7 @@ if (termine) {
 
         {etape > 0 && (
           <div className="text-center mt-6">
-            <button
-              onClick={() => setEtape(etape - 1)}
-              className="text-sm underline"
-              style={{ color: '#a8a29e' }}
-            >
+            <button onClick={() => setEtape(etape - 1)} className="text-sm underline" style={{ color: '#a8a29e' }}>
               Question précédente
             </button>
           </div>

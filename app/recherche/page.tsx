@@ -1,4 +1,7 @@
 'use client'
+
+import Nav from '@/app/components/Nav'
+
 export default function Recherche() {
   const praticiens = [
     {
@@ -29,7 +32,7 @@ export default function Recherche() {
       dispo: 'Jeudi à 10h',
       badge: '',
       description: 'Ostéopathe structurel et fonctionnel, spécialisé dans les douleurs chroniques, les troubles posturaux et la récupération sportive.',
-      public: ['Adultes', 'Enfants', 'Sportifs'],
+      public: ['Adultes', 'Enfants', 'Sportifs', 'Bébés'],
       prestations: [
         { nom: 'Consultation adulte', duree: '45min', tarif: '80€' },
         { nom: 'Consultation enfant', duree: '30min', tarif: '60€' },
@@ -74,28 +77,7 @@ export default function Recherche() {
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
 
-      {/* NAVIGATION */}
-      <nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-        <button
-          onClick={() => { window.location.href = '/' }}
-          className="text-2xl font-semibold"
-          style={{ color: '#6b21a8' }}
-        >
-          🌿 Holistia
-        </button>
-        <div className="flex gap-6 text-sm" style={{ color: '#78716c' }}>
-          <button className="hover:opacity-70 transition">Les spécialités</button>
-          <button className="hover:opacity-70 transition">Comment ça marche</button>
-          <button className="hover:opacity-70 transition">Blog</button>
-        </div>
-        <button
-          className="text-white text-sm px-4 py-2 rounded-full"
-          style={{ backgroundColor: '#6b21a8' }}
-          onClick={() => { window.location.href = '/inscription' }}
-        >
-          Vous êtes praticien ?
-        </button>
-      </nav>
+      <Nav />
 
       {/* BARRE DE RECHERCHE */}
       <section
@@ -103,13 +85,11 @@ export default function Recherche() {
         style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}
       >
         <div className="max-w-6xl mx-auto">
-          <h1
-            className="text-2xl font-light text-white mb-6 text-center"
-            style={{ fontFamily: 'var(--font-lora)' }}
-          >
+          <h1 className="text-2xl font-light text-white mb-6 text-center" style={{ fontFamily: 'var(--font-lora)' }}>
             Trouvez votre praticien
           </h1>
           <div className="bg-white rounded-2xl p-4 flex flex-wrap gap-3 items-end shadow-lg">
+
             <div className="flex-1 min-w-36">
               <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>Spécialité</label>
               <select className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
@@ -124,7 +104,9 @@ export default function Recherche() {
                 <option>Thérapies brèves</option>
               </select>
             </div>
+
             <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
+
             <div className="flex-1 min-w-36">
               <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>Pour qui ?</label>
               <select className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
@@ -132,14 +114,16 @@ export default function Recherche() {
                 <option>Adultes</option>
                 <option>Enfants</option>
                 <option>Adolescents</option>
+                <option>Bébés</option>
                 <option>Couples</option>
                 <option>Femmes enceintes</option>
                 <option>PMA et fertilité</option>
-                <option>Seniors</option>
                 <option>Sportifs</option>
               </select>
             </div>
+
             <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
+
             <div className="flex-1 min-w-32">
               <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>Mode</label>
               <select className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
@@ -148,17 +132,22 @@ export default function Recherche() {
                 <option>En visio</option>
               </select>
             </div>
+
             <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
+
             <div className="flex-1 min-w-32">
               <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>Disponibilité</label>
               <select className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
                 <option value="">N'importe quand</option>
                 <option>Aujourd'hui</option>
                 <option>Cette semaine</option>
+                <option>Le samedi</option>
                 <option>Ce mois-ci</option>
               </select>
             </div>
+
             <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
+
             <div className="flex-1 min-w-32">
               <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>Budget max</label>
               <select className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
@@ -169,10 +158,8 @@ export default function Recherche() {
                 <option>Plus de 120€</option>
               </select>
             </div>
-            <button
-              className="text-white px-6 py-3 rounded-xl text-sm font-medium"
-              style={{ backgroundColor: '#6b21a8' }}
-            >
+
+            <button className="text-white px-6 py-3 rounded-xl text-sm font-medium" style={{ backgroundColor: '#6b21a8' }}>
               Rechercher
             </button>
           </div>
@@ -185,10 +172,7 @@ export default function Recherche() {
           <p className="text-sm" style={{ color: '#78716c' }}>
             <span className="font-medium" style={{ color: '#44403c' }}>24 praticiens</span> correspondent à votre recherche
           </p>
-          <select
-            className="text-sm border rounded-lg px-3 py-2"
-            style={{ borderColor: '#e7e5e4', color: '#44403c' }}
-          >
+          <select className="text-sm border rounded-lg px-3 py-2" style={{ borderColor: '#e7e5e4', color: '#44403c' }}>
             <option>Trier par : Pertinence</option>
             <option>Trier par : Note</option>
             <option>Trier par : Tarif croissant</option>
@@ -222,10 +206,7 @@ export default function Recherche() {
                         {praticien.nom}
                       </h2>
                       {praticien.badge && (
-                        <span
-                          className="text-xs px-2 py-0.5 rounded-full"
-                          style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
-                        >
+                        <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
                           {praticien.badge}
                         </span>
                       )}
@@ -234,11 +215,7 @@ export default function Recherche() {
                     <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>📍 {praticien.ville}</p>
                     <div className="flex gap-1 flex-wrap mt-2">
                       {praticien.public.map((p) => (
-                        <span
-                          key={p}
-                          className="text-xs px-2 py-0.5 rounded-full"
-                          style={{ backgroundColor: '#faf9f7', color: '#78716c', border: '1px solid #e7e5e4' }}
-                        >
+                        <span key={p} className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#faf9f7', color: '#78716c', border: '1px solid #e7e5e4' }}>
                           {p}
                         </span>
                       ))}
@@ -256,27 +233,18 @@ export default function Recherche() {
                   </div>
                 </div>
 
-                <p className="text-sm mt-2 leading-relaxed" style={{ color: '#78716c' }}>
-                  {praticien.description}
-                </p>
+                <p className="text-sm mt-2 leading-relaxed" style={{ color: '#78716c' }}>{praticien.description}</p>
 
                 <div className="flex gap-2 flex-wrap mt-3">
                   {praticien.prestations.map((p) => (
-                    <span
-                      key={p.nom}
-                      className="text-xs px-3 py-1 rounded-lg"
-                      style={{ backgroundColor: '#faf9f7', color: '#57534e', border: '1px solid #e7e5e4' }}
-                    >
+                    <span key={p.nom} className="text-xs px-3 py-1 rounded-lg" style={{ backgroundColor: '#faf9f7', color: '#57534e', border: '1px solid #e7e5e4' }}>
                       {p.nom} · {p.duree} · {p.tarif}
                     </span>
                   ))}
                 </div>
 
                 <div className="flex items-center justify-between mt-4 flex-wrap gap-3">
-                  <span
-                    className="text-xs px-3 py-1 rounded-full"
-                    style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}
-                  >
+                  <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>
                     🟢 Prochain RDV : {praticien.dispo}
                   </span>
                   <div className="flex gap-2">

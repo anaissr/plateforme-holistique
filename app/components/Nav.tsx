@@ -41,7 +41,7 @@ export default function Nav() {
         <button
           className="text-sm font-medium hover:underline"
           style={{ color: '#6b21a8' }}
-          onClick={() => { window.location.href = '/patient' }}
+onClick={() => { window.location.href = '/connexion' }}
         >
           Connexion
         </button>

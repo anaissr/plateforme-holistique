@@ -1,3 +1,4 @@
+
 'use client'
 
 import Nav from '@/app/components/Nav'
@@ -18,6 +19,7 @@ const ateliers = [
     places: 15,
     placesRestantes: 4,
     tarif: '35€',
+    tarifsNum: 35,
     categorie: 'parole',
     niveau: 'Débutant',
     description: 'Un atelier pratique pour découvrir les outils de la sophrologie et repartir avec des techniques concrètes pour mieux gérer le stress au quotidien.',
@@ -37,6 +39,7 @@ const ateliers = [
     places: 15,
     placesRestantes: 9,
     tarif: '40€',
+    tarifsNum: 40,
     categorie: 'energie',
     niveau: 'Débutant',
     description: 'Découvrez les bases de l\'Ayurveda, identifiez votre dosha dominant et repartez avec un programme alimentaire et des rituels adaptés à votre constitution.',
@@ -56,6 +59,7 @@ const ateliers = [
     places: 15,
     placesRestantes: 12,
     tarif: '45€',
+    tarifsNum: 45,
     categorie: 'plantes',
     niveau: 'Tous niveaux',
     description: 'Comprendre le microbiote intestinal et apprendre à le chouchouter au quotidien grâce à l\'alimentation, les probiotiques et les plantes.',
@@ -75,6 +79,7 @@ const ateliers = [
     places: 15,
     placesRestantes: 11,
     tarif: '25€',
+    tarifsNum: 25,
     categorie: 'parole',
     niveau: 'Tous niveaux',
     description: 'Un espace bienveillant pour pratiquer ensemble la méditation de pleine conscience et explorer le lâcher-prise à travers des exercices guidés.',
@@ -94,6 +99,7 @@ const ateliers = [
     places: 8,
     placesRestantes: 2,
     tarif: '65€',
+    tarifsNum: 65,
     categorie: 'corps',
     niveau: 'Tous niveaux',
     description: 'Un atelier en petit groupe pour découvrir la kinésiologie et expérimenter des techniques de libération émotionnelle par le corps.',
@@ -113,6 +119,7 @@ const ateliers = [
     places: 10,
     placesRestantes: 6,
     tarif: '55€',
+    tarifsNum: 55,
     categorie: 'parole',
     niveau: 'Tous niveaux',
     description: 'Comprendre le mécanisme des phobies et peurs limitantes selon l\'approche Palo Alto et repartir avec des outils concrets pour s\'en libérer.',
@@ -138,6 +145,9 @@ export default function Ateliers() {
   const [categorieActive, setCategorieActive] = useState('tous')
   const [formatActif, setFormatActif] = useState('tous')
   const [atelierOuvert, setAtelierOuvert] = useState<number | null>(null)
+  const [modaleCadeau, setModaleCadeau] = useState<typeof ateliers[0] | null>(null)
+  const [messagesCadeau, setMessageCadeau] = useState('')
+  const [emailDestinataire, setEmailDestinataire] = useState('')
 
   const ateliersFiltres = ateliers.filter((a) => {
     const matchCategorie = categorieActive === 'tous' || a.categorie === categorieActive
@@ -148,6 +158,88 @@ export default function Ateliers() {
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
       <Nav />
+
+      {/* MODALE BON CADEAU */}
+      {modaleCadeau && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+          onClick={() => setModaleCadeau(null)}
+        >
+          <div
+            className="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center mb-6">
+              <p className="text-4xl mb-3">🎁</p>
+              <h2 className="text-xl font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
+                Offrir cet atelier
+              </h2>
+              <p className="text-sm" style={{ color: '#a8a29e' }}>
+                {modaleCadeau.titre}
+              </p>
+            </div>
+
+            <div className="rounded-2xl p-4 mb-5" style={{ backgroundColor: '#f5f3ff' }}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{modaleCadeau.specialite}</p>
+                  <p className="text-xs" style={{ color: '#78716c' }}>avec {modaleCadeau.praticien}</p>
+                  <p className="text-xs" style={{ color: '#78716c' }}>📅 {modaleCadeau.date} · {modaleCadeau.heure}</p>
+                </div>
+                <p className="text-2xl font-light" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+                  {modaleCadeau.tarif}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4 mb-6">
+              <div>
+                <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>
+                  Email du destinataire
+                </label>
+                <input
+                  type="email"
+                  value={emailDestinataire}
+                  onChange={(e) => setEmailDestinataire(e.target.value)}
+                  placeholder="prenom@email.com"
+                  className="w-full text-sm rounded-xl px-4 py-3 outline-none"
+                  style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
+                />
+              </div>
+              <div>
+                <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>
+                  Message personnalisé (optionnel)
+                </label>
+                <textarea
+                  value={messagesCadeau}
+                  onChange={(e) => setMessageCadeau(e.target.value)}
+                  placeholder="Je pense que cet atelier te ferait du bien..."
+                  className="w-full text-sm rounded-xl px-4 py-3 resize-none outline-none"
+                  style={{ border: '1px solid #e7e5e4', color: '#1c1917', height: '80px' }}
+                />
+              </div>
+            </div>
+
+            <button
+              className="w-full text-white py-3 rounded-2xl text-sm font-medium mb-3"
+              style={{ backgroundColor: '#6b21a8' }}
+            >
+              Offrir cet atelier — {modaleCadeau.tarif}
+            </button>
+            <p className="text-xs text-center mb-4" style={{ color: '#a8a29e' }}>
+              Le bon cadeau est envoyé par email · Valable 1 an
+            </p>
+            <button
+              onClick={() => setModaleCadeau(null)}
+              className="w-full py-2 text-sm"
+              style={{ color: '#a8a29e' }}
+            >
+              Annuler
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* HERO */}
       <section className="px-6 py-16 text-center relative" style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}>
@@ -271,18 +363,16 @@ export default function Ateliers() {
                     </div>
                   </div>
 
-                  {/* PRATICIEN */}
                   <div className="flex items-center gap-2 mb-3">
                     <img src={atelier.photoPraticien} alt={atelier.praticien} className="w-7 h-7 rounded-full object-cover" />
                     <span className="text-sm" style={{ color: '#57534e' }}>avec <strong>{atelier.praticien}</strong></span>
                   </div>
 
-                  {/* DATE, LIEU ET PLACES */}
                   <div className="flex gap-4 flex-wrap mb-3">
                     <span className="text-xs flex items-center gap-1" style={{ color: '#78716c' }}>
                       📅 {atelier.date}
                     </span>
-                   {atelier.format === 'Présentiel' && atelier.lieu ? (
+                    {atelier.format === 'Présentiel' && atelier.lieu ? (
                       <span className="text-xs flex items-center gap-1" style={{ color: '#78716c' }}>
                         📍 {atelier.lieu}
                       </span>
@@ -303,7 +393,6 @@ export default function Ateliers() {
                     {atelier.description}
                   </p>
 
-                  {/* PROGRAMME DÉPLIABLE */}
                   {atelierOuvert === atelier.id && (
                     <div className="mb-4 p-4 rounded-2xl" style={{ backgroundColor: '#f5f3ff' }}>
                       <p className="text-xs font-medium mb-2" style={{ color: '#6b21a8' }}>Au programme :</p>
@@ -319,7 +408,6 @@ export default function Ateliers() {
                   )}
                 </div>
 
-                {/* ACTIONS */}
                 <div className="flex gap-3 flex-wrap items-center">
                   <button
                     className="text-white px-6 py-2.5 rounded-xl text-sm font-medium"
@@ -335,6 +423,7 @@ export default function Ateliers() {
                     {atelierOuvert === atelier.id ? 'Masquer le programme' : 'Voir le programme'}
                   </button>
                   <button
+                    onClick={() => setModaleCadeau(atelier)}
                     className="text-sm px-4 py-2.5 rounded-xl"
                     style={{ backgroundColor: '#faf9f7', color: '#78716c', border: '1px solid #e7e5e4' }}
                   >
@@ -359,7 +448,7 @@ export default function Ateliers() {
             Vous êtes praticien ?
           </h2>
           <p className="text-sm mb-8" style={{ color: '#78716c' }}>
-            Proposez vos ateliers sur Holistia et touchez une audience déjà sensibilisée aux médecines alternatives. Nous vous aidons à cibler les participants les plus pertinents selon leur profil et leurs besoins.
+            Proposez vos ateliers sur Holistia et touchez une audience déjà sensibilisée aux médecines alternatives.
           </p>
           <button
             className="text-white px-8 py-4 rounded-2xl font-medium shadow-lg"

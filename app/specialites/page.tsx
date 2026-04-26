@@ -204,7 +204,7 @@ export default function Specialites() {
       </section>
 
       {/* FILTRES */}
-      <section className="py-6 px-6 bg-white shadow-sm sticky top-0 z-40">
+      <section className="py-6 px-6 bg-white shadow-sm sticky top-16 z-40">
         <div className="max-w-5xl mx-auto flex gap-3 flex-wrap justify-center">
           {categories.map((cat) => (
             <button

@@ -102,6 +102,7 @@ export default function Recherche() {
                 <option>Acupuncture</option>
                 <option>Réflexologie</option>
                 <option>Thérapies brèves</option>
+                <option>Médecine traditionnelle chinoise</option>
               </select>
             </div>
 

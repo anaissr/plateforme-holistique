@@ -90,7 +90,7 @@ const questions = [
     id: 7,
     question: 'Votre approche préférée ?',
     sous_titre: 'Si vous avez une affinité particulière',
-    type: 'choix',
+    type: 'multi',
     options: [
       { label: 'Par le corps et le toucher', emoji: '🤲' },
       { label: 'Par la parole et l echange', emoji: '💬' },

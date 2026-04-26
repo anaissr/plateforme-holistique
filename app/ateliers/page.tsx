@@ -365,7 +365,7 @@ export default function Ateliers() {
 
                   <div className="flex items-center gap-2 mb-3">
                     <img src={atelier.photoPraticien} alt={atelier.praticien} className="w-7 h-7 rounded-full object-cover" />
-                    <span className="text-sm" style={{ color: '#57534e' }}>avec <strong>{atelier.praticien}</strong></span>
+<span className="text-sm" style={{ color: '#57534e' }}>avec <strong className="cursor-pointer hover:underline" style={{ color: '#6b21a8' }} onClick={() => { window.location.href = '/praticien' }}>{atelier.praticien}</strong></span>
                   </div>
 
                   <div className="flex gap-4 flex-wrap mb-3">

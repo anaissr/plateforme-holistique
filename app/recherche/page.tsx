@@ -111,7 +111,10 @@ export default function Recherche() {
   const praticiensFiltres = praticiens.filter((p) => {
     if (problematiquesSelectionnees.length === 0) return true
     return problematiquesSelectionnees.some((prob) =>
-      p.problematiques.some((pp) => pp.toLowerCase().includes(prob.toLowerCase()) || prob.toLowerCase().includes(pp.toLowerCase()))
+      p.problematiques.some((pp) =>
+        pp.toLowerCase().includes(prob.toLowerCase()) ||
+        prob.toLowerCase().includes(pp.toLowerCase())
+      )
     )
   })
 
@@ -201,9 +204,14 @@ export default function Recherche() {
             <button
               onClick={() => setAfficherTroubles(!afficherTroubles)}
               className="flex items-center gap-2 text-sm px-4 py-2 rounded-full transition"
-              style={{ backgroundColor: problematiquesSelectionnees.length > 0 ? '#ffffff' : 'rgba(255,255,255,0.15)', color: problematiquesSelectionnees.length > 0 ? '#6b21a8' : '#ffffff' }}
+              style={{
+                backgroundColor: problematiquesSelectionnees.length > 0 ? '#ffffff' : 'rgba(255,255,255,0.15)',
+                color: problematiquesSelectionnees.length > 0 ? '#6b21a8' : '#ffffff',
+              }}
             >
-              {problematiquesSelectionnees.length > 0 ? `✓ ${problematiquesSelectionnees.length} trouble${problematiquesSelectionnees.length > 1 ? 's' : ''} sélectionné${problematiquesSelectionnees.length > 1 ? 's' : ''}` : '+ Filtrer par problématique'}
+              {problematiquesSelectionnees.length > 0
+                ? `✓ ${problematiquesSelectionnees.length} trouble${problematiquesSelectionnees.length > 1 ? 's' : ''} sélectionné${problematiquesSelectionnees.length > 1 ? 's' : ''}`
+                : '+ Filtrer par problématique'}
               <span style={{ fontSize: '10px' }}>{afficherTroubles ? '▲' : '▼'}</span>
             </button>
 
@@ -245,16 +253,14 @@ export default function Recherche() {
         <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
           <div>
             <p className="text-sm" style={{ color: '#78716c' }}>
-              <span className="font-medium" style={{ color: '#44403c' }}>{praticiensFiltres.length} praticien{praticiensFiltres.length > 1 ? 's' : ''}</span> correspondent à votre recherche
+              <span className="font-medium" style={{ color: '#44403c' }}>
+                {praticiensFiltres.length} praticien{praticiensFiltres.length > 1 ? 's' : ''}
+              </span> correspondent à votre recherche
             </p>
             {problematiquesSelectionnees.length > 0 && (
               <div className="flex gap-2 flex-wrap mt-2">
                 {problematiquesSelectionnees.map((p) => (
-                  <span
-                    key={p}
-                    className="text-xs px-3 py-1 rounded-full flex items-center gap-1"
-                    style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
-                  >
+                  <span key={p} className="text-xs px-3 py-1 rounded-full flex items-center gap-1" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
                     {p}
                     <button onClick={() => toggleProblematique(p)} style={{ color: '#a855f7' }}>✕</button>
                   </span>
@@ -275,7 +281,7 @@ export default function Recherche() {
             <div className="text-center py-16">
               <p className="text-4xl mb-4">🔍</p>
               <p className="font-medium mb-2" style={{ color: '#1c1917' }}>Aucun praticien trouvé</p>
-              <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>Essayez de modifier vos filtres de problématique</p>
+              <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>Essayez de modifier vos filtres</p>
               <button
                 onClick={() => setProblematiquesSelectionnees([])}
                 className="text-white px-6 py-3 rounded-2xl text-sm font-medium"
@@ -324,7 +330,6 @@ export default function Recherche() {
                           </span>
                         ))}
                       </div>
-                      {/* PROBLÉMATIQUES */}
                       <div className="flex gap-1 flex-wrap mt-1">
                         {praticien.problematiques.map((pb) => (
                           <span

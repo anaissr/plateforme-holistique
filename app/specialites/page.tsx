@@ -1,181 +1,66 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Nav from '@/app/components/Nav'
-import { useState } from 'react'
 
-const specialites = [
+const specialitesRotatives = [
+  'sophrologue',
+  'naturopathe',
+  'ostéopathe',
+  'hypnothérapeute',
+  'kinésiologue',
+  'acupuncteur',
+  'réflexologue',
+  'praticien Palo Alto',
+  'fasciathérapeute',
+]
+
+const photosRotatives = [
   {
-    slug: 'sophrologie',
-    emoji: '🧘',
-    nom: 'Sophrologie',
-    categorie: 'parole',
-    accroche: 'Retrouvez calme, confiance et équilibre grâce à la respiration et la relaxation.',
-    problematiques: ['Stress et anxiété', 'Troubles du sommeil', 'Confiance en soi', 'Burn-out', 'Préparation mentale'],
-    praticiens: 187,
-    satisfaction: 4.9,
-    tarif_depuis: '55€',
-    visio: true,
+    url: 'https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=900&h=900&fit=crop&crop=center',
+    label: 'Consultation naturopathie',
   },
   {
-    slug: 'naturopathie',
-    emoji: '🌿',
-    nom: 'Naturopathie',
-    categorie: 'plantes',
-    accroche: 'Une approche globale de votre santé par l alimentation, les plantes et l hygiène de vie.',
-    problematiques: ['Troubles digestifs', 'Fatigue chronique', 'Déséquilibres hormonaux', 'PMA et fertilité', 'Rééquilibrage alimentaire'],
-    praticiens: 156,
-    satisfaction: 4.8,
-    tarif_depuis: '65€',
-    visio: true,
+    url: 'https://images.unsplash.com/photo-1714976694810-85add1a29c96?w=900&h=900&fit=crop&crop=center',
+    label: 'Thérapie brève',
   },
   {
-    slug: 'osteopathie',
-    emoji: '🤲',
-    nom: 'Ostéopathie',
-    categorie: 'corps',
-    accroche: 'Soulagez vos douleurs et retrouvez votre mobilité grâce au toucher thérapeutique.',
-    problematiques: ['Douleurs de dos', 'Douleurs articulaires', 'Troubles posturaux', 'Récupération sportive', 'Nourrissons et bébés'],
-    praticiens: 143,
-    satisfaction: 4.7,
-    tarif_depuis: '70€',
-    visio: false,
+    url: 'https://images.unsplash.com/photo-1699523229257-76f576d27eed?w=900&h=900&fit=crop&crop=center',
+    label: 'Soin thérapeutique',
   },
   {
-    slug: 'hypnotherapie',
-    emoji: '🧠',
-    nom: 'Hypnothérapie',
-    categorie: 'parole',
-    accroche: 'Accédez à vos ressources profondes pour transformer durablement vos comportements.',
-    problematiques: ['Phobies', 'Traumatismes', 'Addictions', 'Confiance en soi', 'Gestion du stress'],
-    praticiens: 98,
-    satisfaction: 4.8,
-    tarif_depuis: '80€',
-    visio: true,
-  },
-  {
-    slug: 'kinesiologie',
-    emoji: '⚡',
-    nom: 'Kinésiologie',
-    categorie: 'corps',
-    accroche: 'Libérez les blocages physiques et émotionnels grâce au test musculaire.',
-    problematiques: ['Stress chronique', 'Troubles d apprentissage', 'Douleurs inexpliquées', 'Blocages émotionnels', 'Enfants et adolescents'],
-    praticiens: 87,
-    satisfaction: 4.6,
-    tarif_depuis: '60€',
-    visio: true,
-  },
-  {
-    slug: 'acupuncture',
-    emoji: '🌸',
-    nom: 'Acupuncture',
-    categorie: 'energie',
-    accroche: 'Rééquilibrez votre énergie vitale grâce à la médecine traditionnelle chinoise.',
-    problematiques: ['Douleurs chroniques', 'Troubles digestifs', 'Stress et anxiété', 'Fertilité', 'Troubles du sommeil'],
-    praticiens: 76,
-    satisfaction: 4.7,
-    tarif_depuis: '65€',
-    visio: false,
-  },
-  {
-    slug: 'reflexologie',
-    emoji: '💆',
-    nom: 'Réflexologie',
-    categorie: 'corps',
-    accroche: 'Stimulez les zones réflexes de vos pieds pour agir sur l ensemble de votre corps.',
-    problematiques: ['Stress et tension', 'Troubles circulatoires', 'Fatigue', 'Douleurs chroniques', 'Soutien immunitaire'],
-    praticiens: 65,
-    satisfaction: 4.5,
-    tarif_depuis: '55€',
-    visio: false,
-  },
-  {
-    slug: 'therapies-breves',
-    emoji: '🗣️',
-    nom: 'Thérapies brèves',
-    categorie: 'parole',
-    accroche: 'Des résultats concrets en peu de séances grâce aux approches Palo Alto, TCC et EMDR.',
-    problematiques: ['Anxiété', 'Phobies', 'Burn-out', 'Traumatismes', 'Relations difficiles'],
-    praticiens: 58,
-    satisfaction: 4.9,
-    tarif_depuis: '70€',
-    visio: true,
-  },
-  {
-    slug: 'fasciatherapie',
-    emoji: '🌊',
-    nom: 'Fasciathérapie',
-    categorie: 'corps',
-    accroche: 'Libérez les tensions profondes du corps grâce au travail sur les fascias.',
-    problematiques: ['Douleurs chroniques', 'Stress', 'Troubles posturaux', 'Récupération post-opératoire', 'Fatigue profonde'],
-    praticiens: 45,
-    satisfaction: 4.7,
-    tarif_depuis: '65€',
-    visio: false,
-  },
-  {
-    slug: 'ayurveda',
-    emoji: '🪷',
-    nom: 'Ayurveda',
-    categorie: 'energie',
-    accroche: 'Retrouvez l équilibre corps-esprit grâce à la médecine traditionnelle indienne.',
-    problematiques: ['Fatigue chronique', 'Troubles digestifs', 'Stress', 'Déséquilibres hormonaux', 'Bien-être global'],
-    praticiens: 32,
-    satisfaction: 4.8,
-    tarif_depuis: '70€',
-    visio: true,
-  },
-  {
-    slug: 'medecine-chinoise',
-    emoji: '☯️',
-    nom: 'Médecine traditionnelle chinoise',
-    categorie: 'energie',
-    accroche: 'Rééquilibrez votre énergie vitale grâce à 3000 ans de sagesse médicale chinoise.',
-    problematiques: ['Douleurs chroniques', 'Troubles digestifs', 'Stress et anxiété', 'Fertilité', 'Troubles du sommeil'],
-    praticiens: 76,
-    satisfaction: 4.7,
-    tarif_depuis: '65€',
-    visio: false,
-  },
-  {
-    slug: 'psychopraticien',
-    emoji: '💙',
-    nom: 'Psychopraticien',
-    categorie: 'parole',
-    accroche: 'Un accompagnement bienveillant pour traverser les difficultés émotionnelles et relationnelles.',
-    problematiques: ['Anxiété', 'Dépression légère', 'Deuil', 'Relations difficiles', 'Développement personnel'],
-    praticiens: 89,
-    satisfaction: 4.8,
-    tarif_depuis: '60€',
-    visio: true,
-  },
-  {
-    slug: 'coaching',
-    emoji: '🎯',
-    nom: 'Coaching holistique',
-    categorie: 'parole',
-    accroche: 'Atteignez vos objectifs et révélez votre potentiel grâce à un accompagnement sur-mesure.',
-    problematiques: ['Reconversion professionnelle', 'Confiance en soi', 'Gestion du temps', 'Leadership', 'Équilibre vie pro-perso'],
-    praticiens: 112,
-    satisfaction: 4.6,
-    tarif_depuis: '70€',
-    visio: true,
+    url: 'https://images.unsplash.com/photo-1591343395082-e120087004b4?w=900&h=900&fit=crop&crop=center',
+    label: 'Ostéopathie',
   },
 ]
 
-const categories = [
-  { label: 'Toutes', valeur: 'toutes' },
-  { label: 'Corps et toucher', valeur: 'corps' },
-  { label: 'Parole et émotion', valeur: 'parole' },
-  { label: 'Alimentation et plantes', valeur: 'plantes' },
-  { label: 'Énergie et tradition', valeur: 'energie' },
-]
+export default function Home() {
+  const [index, setIndex] = useState(0)
+  const [visible, setVisible] = useState(true)
+  const [photoIndex, setPhotoIndex] = useState(0)
+  const [photoVisible, setPhotoVisible] = useState(true)
 
-export default function Specialites() {
-  const [categorieActive, setCategorieActive] = useState('toutes')
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible(false)
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % specialitesRotatives.length)
+        setVisible(true)
+      }, 400)
+    }, 2500)
+    return () => clearInterval(interval)
+  }, [])
 
-  const specialitesFiltrees = categorieActive === 'toutes'
-    ? specialites
-    : specialites.filter(s => s.categorie === categorieActive)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhotoVisible(false)
+      setTimeout(() => {
+        setPhotoIndex((prev) => (prev + 1) % photosRotatives.length)
+        setPhotoVisible(true)
+      }, 600)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
@@ -183,135 +68,504 @@ export default function Specialites() {
       <Nav />
 
       {/* HERO */}
-      <section
-        className="px-6 py-16 text-center relative"
-        style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}
-      >
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden" style={{ marginBottom: '-1px' }}>
-          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-            <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
-          </svg>
-        </div>
-        <span className="inline-block text-xs px-4 py-1.5 rounded-full mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
-          {specialites.length} spécialités référencées
-        </span>
-        <h1 className="text-4xl font-light text-white mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
-          Les médecines alternatives
-        </h1>
-        <p className="text-lg max-w-2xl mx-auto" style={{ color: '#d8b4fe' }}>
-          Découvrez toutes les approches disponibles sur Holistia — des praticiens vérifiés pour chaque spécialité, en cabinet ou en visio.
-        </p>
-      </section>
+      <section className="w-full flex flex-col lg:flex-row" style={{ minHeight: '680px' }}>
 
-      {/* FILTRES */}
-      <section className="py-6 px-6 bg-white shadow-sm sticky top-16 z-40">
-        <div className="max-w-5xl mx-auto flex gap-3 flex-wrap justify-center">
-          {categories.map((cat) => (
+        {/* Colonne texte — 55% */}
+        <div
+          className="flex flex-col justify-center items-center text-center px-16 py-24 relative"
+          style={{
+            background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)',
+            flex: '0 0 55%',
+          }}
+        >
+          <div className="absolute top-0 left-0 w-full overflow-hidden z-10" style={{ marginTop: '-1px' }}>
+            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+              <path d="M0,30 C480,60 960,0 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
+            </svg>
+          </div>
+          <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10" style={{ marginBottom: '-1px' }}>
+            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+              <path d="M0,30 C480,0 960,60 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
+            </svg>
+          </div>
+
+          <p className="text-sm font-medium mb-4 uppercase tracking-widest" style={{ color: '#c4b5fd' }}>
+            Prenez rendez-vous avec un
+          </p>
+
+          <h1 className="font-light text-white leading-tight mb-2" style={{ fontFamily: 'var(--font-lora)', fontSize: '3.5rem' }}>
+            <span style={{
+              color: '#e9d5ff',
+              display: 'inline-block',
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateY(0px)' : 'translateY(-8px)',
+              transition: 'opacity 0.4s ease, transform 0.4s ease',
+            }}>
+              {specialitesRotatives[index]}
+            </span>
+          </h1>
+
+          <div className="w-16 h-0.5 my-6 mx-auto" style={{ backgroundColor: '#a855f7' }} />
+
+          <p className="font-bold mb-2 whitespace-nowrap" style={{ fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: '1.5rem' }}>
+            <span style={{ color: '#ffffff' }}>Votre </span>
+            <span style={{ color: '#f0abfc' }}>allié</span>
+            <span style={{ color: '#ffffff' }}> pour trouver le bon </span>
+            <span style={{ color: '#f0abfc' }}>accompagnement</span>
+          </p>
+
+          <p className="font-bold mb-10 whitespace-nowrap" style={{ color: '#e9d5ff', fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: '1.2rem' }}>
+            un praticien, ou plusieurs, qui travaillent ensemble pour vous.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
-              key={cat.valeur}
-              onClick={() => setCategorieActive(cat.valeur)}
-              className="text-sm px-5 py-2 rounded-full transition"
-              style={{
-                backgroundColor: categorieActive === cat.valeur ? '#6b21a8' : '#faf9f7',
-                color: categorieActive === cat.valeur ? '#ffffff' : '#57534e',
-                border: categorieActive === cat.valeur ? 'none' : '1px solid #e7e5e4',
-              }}
+              className="px-7 py-4 rounded-2xl text-sm font-medium text-white transition shadow-lg"
+              style={{ backgroundColor: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.3)' }}
+              onClick={() => { window.location.href = '/recherche' }}
             >
-              {cat.label}
+              🔍 Je cherche un praticien
             </button>
-          ))}
+            <button
+              className="px-7 py-4 rounded-2xl text-sm font-medium transition shadow-lg"
+              style={{ backgroundColor: '#ffffff', color: '#6b21a8' }}
+              onClick={() => { window.location.href = '/orientation' }}
+            >
+              💬 Je ne sais pas par où commencer
+            </button>
+          </div>
+
+          <p className="text-xs mt-6" style={{ color: '#a78bfa' }}>
+            1 200+ praticiens vérifiés · 0% de commission
+          </p>
         </div>
-        <p className="text-center text-xs mt-3" style={{ color: '#a8a29e' }}>
-          {specialitesFiltrees.length} spécialité{specialitesFiltrees.length > 1 ? 's' : ''} affichée{specialitesFiltrees.length > 1 ? 's' : ''}
-        </p>
+
+        {/* Colonne photo — 45% */}
+        <div className="relative hidden lg:block overflow-hidden" style={{ flex: '0 0 45%', minHeight: '680px' }}>
+          <div className="absolute top-0 left-0 w-full overflow-hidden z-10" style={{ marginTop: '-1px' }}>
+            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+              <path d="M0,30 C480,60 960,0 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
+            </svg>
+          </div>
+          <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10" style={{ marginBottom: '-1px' }}>
+            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+              <path d="M0,30 C480,0 960,60 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
+            </svg>
+          </div>
+
+          {photosRotatives.map((photo, i) => (
+            <img
+              key={photo.url}
+              src={photo.url}
+              alt={photo.label}
+              className="w-full h-full object-cover absolute inset-0"
+              style={{
+                opacity: i === photoIndex ? (photoVisible ? 1 : 0) : 0,
+                transition: 'opacity 0.6s ease',
+                minHeight: '680px',
+              }}
+            />
+          ))}
+
+          <div className="absolute bottom-16 left-8 bg-white rounded-2xl px-5 py-4 shadow-xl z-20" style={{ border: '1px solid #ede9fe' }}>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg" style={{ backgroundColor: '#f5f3ff' }}>✓</div>
+              <div>
+                <p className="text-sm font-medium" style={{ color: '#1c1917' }}>Praticien vérifié</p>
+                <p className="text-xs" style={{ color: '#a8a29e' }}>Diplômes et assurance contrôlés</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute bottom-16 right-8 flex gap-2 z-20">
+            {photosRotatives.map((_, i) => (
+              <div
+                key={i}
+                className="w-2 h-2 rounded-full transition-all cursor-pointer"
+                style={{ backgroundColor: i === photoIndex ? '#6b21a8' : 'rgba(107,33,168,0.3)' }}
+                onClick={() => setPhotoIndex(i)}
+              />
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* GRILLE SPÉCIALITÉS */}
-      <section className="max-w-6xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {specialitesFiltrees.map((spec) => (
-            <div
-              key={spec.slug}
-              className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group"
-              style={{ border: '1px solid #e7e5e4' }}
-              onClick={() => { window.location.href = `/specialites/${spec.slug}` }}
-            >
-              {/* En-tête */}
-              <div
-                className="px-6 py-8 text-center"
-                style={{ background: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)' }}
-              >
-                <div className="text-5xl mb-3">{spec.emoji}</div>
-                <h2 className="text-xl font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-                  {spec.nom}
-                </h2>
-                <p className="text-xs" style={{ color: '#78716c' }}>{spec.accroche}</p>
-              </div>
-
-              {/* Contenu */}
-              <div className="p-6">
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  {spec.problematiques.slice(0, 3).map((pb) => (
-                    <span key={pb} className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#faf9f7', color: '#78716c', border: '1px solid #e7e5e4' }}>
-                      {pb}
-                    </span>
-                  ))}
-                  {spec.problematiques.length > 3 && (
-                    <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#faf9f7', color: '#a8a29e', border: '1px solid #e7e5e4' }}>
-                      +{spec.problematiques.length - 3}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between mb-4 text-xs" style={{ color: '#a8a29e' }}>
-                  <span>👩‍⚕️ {spec.praticiens} praticiens</span>
-                  <span>⭐ {spec.satisfaction}/5</span>
-                  <span>À partir de {spec.tarif_depuis}</span>
-                </div>
-
-                {spec.visio && (
-                  <div className="flex items-center gap-1.5 mb-4">
-                    <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#eff6ff', color: '#3b82f6' }}>
-                      🖥 Disponible en visio
-                    </span>
-                  </div>
-                )}
-
-                <button
-                  className="w-full text-white py-2.5 rounded-xl text-sm font-medium transition group-hover:opacity-90"
-                  style={{ backgroundColor: '#6b21a8' }}
-                >
-                  Voir les praticiens →
-                </button>
-              </div>
+      {/* STATS */}
+      <section className="bg-white py-12 px-6 shadow-sm">
+        <div className="max-w-5xl mx-auto grid grid-cols-3 gap-8 text-center">
+          {[
+            { value: '1 200+', label: 'praticiens vérifiés' },
+            { value: '40+', label: 'spécialités référencées' },
+            { value: '0%', label: 'de commission' },
+          ].map((stat) => (
+            <div key={stat.label}>
+              <div className="text-3xl font-light mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{stat.value}</div>
+              <div className="text-sm" style={{ color: '#a8a29e' }}>{stat.label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* CTA BAS */}
+      {/* ACCÈS RAPIDE — SPÉCIALITÉS */}
+      <section className="py-16 px-6 relative bg-white">
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,0 C360,60 1080,0 1440,60 L1440,0 L0,0 Z" fill="#ffffff" />
+          </svg>
+        </div>
+        <div className="max-w-5xl mx-auto pt-8">
+          <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+            Explorez par spécialité
+          </h2>
+          <p className="text-center text-sm mb-10" style={{ color: '#a8a29e' }}>
+            En cabinet ou en visio — où que vous soyez
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[
+              { emoji: '🧘', label: 'Sophrologie', href: '/specialites/sophrologie' },
+              { emoji: '🌿', label: 'Naturopathie', href: '/specialites/naturopathie' },
+              { emoji: '🤲', label: 'Ostéopathie', href: '/specialites/osteopathie' },
+              { emoji: '🧠', label: 'Hypnothérapie', href: '/specialites/hypnotherapie' },
+              { emoji: '⚡', label: 'Kinésiologie', href: '/specialites/kinesiologie' },
+              { emoji: '🌸', label: 'Acupuncture', href: '/specialites/acupuncture' },
+              { emoji: '💆', label: 'Réflexologie', href: '/specialites/reflexologie' },
+              { emoji: '🗣️', label: 'Thérapies brèves', href: '/specialites/therapies-breves' },
+            ].map((spec) => (
+              <button
+                key={spec.label}
+                className="bg-white rounded-2xl py-6 flex flex-col items-center gap-3 transition hover:shadow-md"
+                style={{ border: '1px solid #e7e5e4' }}
+                onClick={() => { window.location.href = spec.href }}
+              >
+                <span className="text-3xl">{spec.emoji}</span>
+                <span className="text-base font-medium" style={{ color: '#57534e' }}>{spec.label}</span>
+              </button>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <button
+              className="text-white px-8 py-3 rounded-2xl text-sm font-medium"
+              style={{ backgroundColor: '#6b21a8' }}
+              onClick={() => { window.location.href = '/specialites' }}
+            >
+              Voir toutes les spécialités
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ACCÈS RAPIDE — TROUBLES */}
       <section className="py-16 px-6 relative" style={{ backgroundColor: '#f5f3ff' }}>
         <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
           <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-            <path d="M0,30 C480,0 960,60 1440,30 L1440,0 L0,0 Z" fill="#faf9f7" />
+            <path d="M0,60 C480,0 960,60 1440,0 L1440,0 L0,0 Z" fill="#ffffff" />
           </svg>
         </div>
-        <div className="max-w-2xl mx-auto text-center pt-4">
-          <h2 className="text-2xl font-light mb-3" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
-            Vous ne savez pas quelle spécialité choisir ?
+        <div className="max-w-5xl mx-auto pt-8">
+          <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+            Vous ne savez pas par où commencer ?
           </h2>
-          <p className="text-sm mb-8" style={{ color: '#78716c' }}>
-            Répondez à quelques questions — on vous oriente vers les approches les plus adaptées à votre situation.
+          <p className="text-center text-sm mb-10" style={{ color: '#78716c' }}>
+            Choisissez votre situation — on vous oriente vers les bons praticiens
           </p>
-          <button
-            className="text-white px-8 py-4 rounded-2xl font-medium shadow-lg"
-            style={{ backgroundColor: '#6b21a8' }}
-            onClick={() => { window.location.href = '/orientation' }}
-          >
-            Utiliser l orientation personnalisée
-          </button>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {[
+              { emoji: '😰', label: 'Stress et anxiété' },
+              { emoji: '😴', label: 'Troubles du sommeil' },
+              { emoji: '🦴', label: 'Douleurs chroniques' },
+              { emoji: '🤢', label: 'Troubles digestifs' },
+              { emoji: '🌸', label: 'Fertilité et PMA' },
+              { emoji: '🔋', label: 'Fatigue chronique' },
+              { emoji: '💔', label: 'Traumatismes et deuil' },
+              { emoji: '🔥', label: 'Burn-out' },
+              { emoji: '😨', label: 'Phobies' },
+            ].map((pb) => (
+              <button
+                key={pb.label}
+                className="bg-white rounded-2xl py-5 px-4 flex items-center gap-3 transition hover:shadow-md"
+                style={{ border: '1px solid #ede9fe' }}
+                onClick={() => { window.location.href = '/orientation' }}
+              >
+                <span className="text-2xl">{pb.emoji}</span>
+                <span className="text-sm font-medium" style={{ color: '#57534e' }}>{pb.label}</span>
+              </button>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <button
+              className="text-white px-8 py-3 rounded-2xl text-sm font-medium"
+              style={{ backgroundColor: '#6b21a8' }}
+              onClick={() => { window.location.href = '/orientation' }}
+            >
+              Utiliser l'orientation personnalisée →
+            </button>
+          </div>
         </div>
       </section>
+
+      {/* ATELIERS */}
+      <section className="py-16 px-6 relative bg-white">
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,0 C360,60 1080,0 1440,60 L1440,0 L0,0 Z" fill="#f5f3ff" />
+          </svg>
+        </div>
+        <div className="max-w-5xl mx-auto pt-8">
+          <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+            Ateliers et formations
+          </h2>
+          <p className="text-center text-sm mb-10" style={{ color: '#a8a29e' }}>
+            Explorez les médecines alternatives en groupe — à partir de 25€
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              {
+                titre: 'Atelier sophrologie — Gérer le stress',
+                praticien: 'Amélie Chen',
+                date: 'Sam 10 mai · 10h-12h',
+                format: 'Visio',
+                tarif: '35€',
+                places: 4,
+                photo: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=250&fit=crop&crop=center',
+              },
+              {
+                titre: 'Introduction à l\'Ayurveda',
+                praticien: 'Priya Sharma',
+                date: 'Dim 11 mai · 14h-16h30',
+                format: 'Visio',
+                tarif: '40€',
+                places: 9,
+                photo: 'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=400&h=250&fit=crop&crop=center',
+              },
+              {
+                titre: 'Santé digestive et microbiote',
+                praticien: 'Sophie Laurent',
+                date: 'Sam 17 mai · 9h30-12h',
+                format: 'Visio',
+                tarif: '45€',
+                places: 12,
+                photo: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=250&fit=crop&crop=center',
+              },
+            ].map((atelier) => (
+              <div
+                key={atelier.titre}
+                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer"
+                style={{ border: '1px solid #e7e5e4' }}
+                onClick={() => { window.location.href = '/ateliers' }}
+              >
+                <img src={atelier.photo} alt={atelier.titre} className="w-full h-40 object-cover" />
+                <div className="p-4">
+                  <p className="font-medium text-sm mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{atelier.titre}</p>
+                  <p className="text-xs mb-2" style={{ color: '#6b21a8' }}>avec {atelier.praticien}</p>
+                  <p className="text-xs mb-1" style={{ color: '#a8a29e' }}>📅 {atelier.date}</p>
+                  <p className="text-xs mb-3" style={{ color: '#a8a29e' }}>🖥 {atelier.format} · 👥 {atelier.places} places restantes</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium" style={{ color: '#6b21a8' }}>{atelier.tarif}</span>
+                    <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>Réserver</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <button
+              className="text-white px-8 py-3 rounded-2xl text-sm font-medium"
+              style={{ backgroundColor: '#6b21a8' }}
+              onClick={() => { window.location.href = '/ateliers' }}
+            >
+              Voir tous les ateliers →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* POURQUOI NOUS FAIRE CONFIANCE */}
+      <section className="py-20 px-6 relative" style={{ backgroundColor: '#faf9f7' }}>
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,30 C480,60 960,0 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
+          </svg>
+        </div>
+        <div className="max-w-5xl mx-auto pt-8">
+          <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+            Pourquoi nous faire confiance ?
+          </h2>
+          <p className="text-center text-sm mb-12" style={{ color: '#a8a29e' }}>
+            Chaque praticien est soigneusement sélectionné pour vous garantir un accompagnement de qualité
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              { emoji: '🔍', titre: 'Praticiens vérifiés', desc: 'Diplômes, assurance professionnelle et parcours de formation contrôlés par notre équipe.' },
+              { emoji: '⭐', titre: 'Avis authentiques', desc: 'Seuls les patients ayant réellement consulté peuvent laisser un avis. Écoute, ponctualité, clarté.' },
+              { emoji: '🤝', titre: 'Praticiens collaboratifs', desc: 'Vos praticiens peuvent échanger entre eux sur votre dossier pour mieux vous accompagner, avec votre accord.' },
+            ].map((item) => (
+              <div key={item.titre} className="bg-white rounded-3xl p-8 text-center shadow-sm" style={{ border: '1px solid #ede9fe' }}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4" style={{ backgroundColor: '#f5f3ff' }}>
+                  {item.emoji}
+                </div>
+                <h3 className="font-medium mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{item.titre}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: '#78716c' }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRATICIENS EN VEDETTE */}
+      <section className="py-20 px-6 relative bg-white">
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,0 C360,60 1080,0 1440,60 L1440,0 L0,0 Z" fill="#faf9f7" />
+          </svg>
+        </div>
+        <div className="max-w-5xl mx-auto pt-8">
+          <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+            Des praticiens de confiance, partout dans le monde
+          </h2>
+          <p className="text-center text-sm mb-10" style={{ color: '#a8a29e' }}>
+            En visio ou en cabinet — trouvez celui qui vous correspond
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[
+              { photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=300&fit=crop&crop=face', nom: 'Sophie L.', specialite: 'Naturopathe', ville: 'Paris', note: '4.9' },
+              { photo: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=300&h=300&fit=crop&crop=face', nom: 'Amélie C.', specialite: 'Sophrologue', ville: 'Bangkok', note: '5.0' },
+              { photo: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face', nom: 'Marc D.', specialite: 'Ostéopathe', ville: 'Montréal', note: '4.8' },
+              { photo: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300&h=300&fit=crop&crop=face', nom: 'Pierre M.', specialite: 'Hypnothérapeute', ville: 'Lyon', note: '4.7' },
+            ].map((p) => (
+              <div
+                key={p.nom}
+                className="bg-white rounded-2xl overflow-hidden transition hover:shadow-md cursor-pointer"
+                style={{ border: '1px solid #e7e5e4' }}
+                onClick={() => { window.location.href = '/praticien' }}
+              >
+                <img src={p.photo} alt={p.nom} className="w-full h-40 object-cover object-top" />
+                <div className="p-4">
+                  <p className="font-medium text-sm" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{p.nom}</p>
+                  <p className="text-xs" style={{ color: '#6b21a8' }}>{p.specialite}</p>
+                  <p className="text-xs" style={{ color: '#a8a29e' }}>📍 {p.ville}</p>
+                  <div className="flex items-center gap-1 mt-1">
+                    <span className="text-xs">⭐</span>
+                    <span className="text-xs font-medium" style={{ color: '#1c1917' }}>{p.note}</span>
+                    <span className="text-xs ml-auto px-2 py-0.5 rounded-full" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>Vérifié</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <button
+              className="text-white px-8 py-3 rounded-2xl text-sm font-medium"
+              style={{ backgroundColor: '#6b21a8' }}
+              onClick={() => { window.location.href = '/recherche' }}
+            >
+              Voir tous les praticiens
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* TÉMOIGNAGES */}
+      <section className="py-20 px-6 relative" style={{ backgroundColor: '#faf9f7' }}>
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,60 C480,0 960,60 1440,0 L1440,0 L0,0 Z" fill="#ffffff" />
+          </svg>
+        </div>
+        <div className="max-w-3xl mx-auto pt-8 text-center">
+          <h2 className="text-2xl font-light mb-10" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+            Ils ont trouvé leur accompagnement
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {[
+              {
+                text: 'En 3 questions, Holistia m\'a orientée vers une naturopathe en visio. Je n\'aurais jamais trouvé seule ce qu\'il me fallait vraiment.',
+                name: 'Sophie M.',
+                role: 'Patiente, consultée en visio',
+                photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
+              },
+              {
+                text: 'Je me concentre enfin sur mes patients. Holistia s\'occupe de me faire connaître — mon agenda est plein en 2 mois.',
+                name: 'Claire D.',
+                role: 'Sophrologue, praticienne Holistia',
+                photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
+              },
+            ].map((t) => (
+              <div key={t.name} className="bg-white rounded-3xl p-8 text-left shadow-sm" style={{ border: '1px solid #ede9fe' }}>
+                <p className="text-sm leading-relaxed mb-6" style={{ color: '#57534e', fontFamily: 'var(--font-lora)', fontStyle: 'italic' }}>
+                  "{t.text}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <img src={t.photo} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
+                  <div>
+                    <div className="font-medium text-sm" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{t.name}</div>
+                    <div className="text-xs" style={{ color: '#a8a29e' }}>{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA PRATICIEN */}
+      <section className="py-20 px-6 relative bg-white">
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,0 C360,60 1080,0 1440,60 L1440,0 L0,0 Z" fill="#faf9f7" />
+          </svg>
+        </div>
+        <div className="max-w-5xl mx-auto pt-8 text-center">
+          <h2 className="text-2xl font-light mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+            Vous êtes praticien ?
+          </h2>
+          <p className="text-sm mb-12" style={{ color: '#78716c' }}>
+            Concentrez-vous sur vos patients. On s'occupe de vous faire connaître.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10">
+            {[
+              { emoji: '📅', titre: 'Agenda en ligne', desc: 'Gérez vos RDV simplement, synchronisé avec Google Agenda' },
+              { emoji: '🌍', titre: 'Visibilité mondiale', desc: 'Accédez à une clientèle francophone partout dans le monde' },
+              { emoji: '🤝', titre: 'Réseau de pairs', desc: 'Échangez avec d\'autres praticiens pour mieux accompagner vos patients' },
+              { emoji: '0%', titre: 'Zéro commission', desc: 'Gardez 100% de vos honoraires — on ne prend rien sur vos RDV' },
+            ].map((b) => (
+              <div key={b.titre} className="flex flex-col items-center gap-3">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl" style={{ backgroundColor: '#f5f3ff' }}>
+                  {b.emoji}
+                </div>
+                <h3 className="font-medium text-sm" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{b.titre}</h3>
+                <p className="text-xs leading-relaxed" style={{ color: '#a8a29e' }}>{b.desc}</p>
+              </div>
+            ))}
+          </div>
+          <button
+            className="text-white px-10 py-4 rounded-2xl font-medium shadow-lg"
+            style={{ backgroundColor: '#6b21a8' }}
+            onClick={() => { window.location.href = '/inscription' }}
+          >
+            Créer mon profil gratuitement
+          </button>
+          <p className="text-xs mt-3" style={{ color: '#a8a29e' }}>
+            Gratuit pendant 12 mois · Aucun engagement · Profil en ligne sous 48h
+          </p>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-10 px-8 text-sm relative" style={{ backgroundColor: '#1c1917', color: '#a8a29e' }}>
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '40px', width: '100%' }}>
+            <path d="M0,20 C480,40 960,0 1440,20 L1440,0 L0,0 Z" fill="#ffffff" />
+          </svg>
+        </div>
+        <div className="max-w-5xl mx-auto flex justify-between items-center pt-4">
+          <div className="text-white font-medium" style={{ fontFamily: 'var(--font-lora)' }}>🌿 Holistia</div>
+          <div className="flex gap-6">
+            {['À propos', 'Charte qualité', 'Ateliers', 'Blog', 'Contact', 'CGU'].map((link) => (
+              <button key={link} className="hover:text-white transition">{link}</button>
+            ))}
+          </div>
+        </div>
+      </footer>
 
     </main>
   )

@@ -6,6 +6,16 @@ import { useState } from 'react'
 export default function Dashboard() {
   const [onglet, setOnglet] = useState('apercu')
   const [recherchePat, setRecherchePat] = useState('')
+  const [lienVisio, setLienVisio] = useState('')
+  const [notes, setNotes] = useState<Record<string, { ponctualite: number, fiabilite: number }>>({
+    'Marie L.': { ponctualite: 5, fiabilite: 5 },
+    'Julie R.': { ponctualite: 4, fiabilite: 5 },
+    'Thomas B.': { ponctualite: 0, fiabilite: 0 },
+    'Sophie M.': { ponctualite: 5, fiabilite: 4 },
+    'Claire D.': { ponctualite: 5, fiabilite: 5 },
+    'Emma P.': { ponctualite: 3, fiabilite: 4 },
+    'Lucas M.': { ponctualite: 4, fiabilite: 3 },
+  })
 
   const stats = {
     rdvCeMois: 24,
@@ -83,6 +93,31 @@ export default function Dashboard() {
     p.problematique.toLowerCase().includes(recherchePat.toLowerCase())
   )
 
+  const setNote = (nom: string, type: 'ponctualite' | 'fiabilite', val: number) => {
+    setNotes(prev => ({
+      ...prev,
+      [nom]: { ...prev[nom], [type]: val }
+    }))
+  }
+
+  const EtoileNote = ({ nom, type, label, emoji }: { nom: string, type: 'ponctualite' | 'fiabilite', label: string, emoji: string }) => (
+    <div className="text-center">
+      <p className="text-xs mb-1" style={{ color: '#a8a29e' }}>{emoji} {label}</p>
+      <div className="flex gap-0.5">
+        {[1,2,3,4,5].map((i) => (
+          <button
+            key={i}
+            onClick={() => setNote(nom, type, i)}
+            className="text-lg transition hover:scale-110"
+            style={{ color: i <= (notes[nom]?.[type] || 0) ? '#6b21a8' : '#e7e5e4' }}
+          >
+            ★
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
 
@@ -90,21 +125,34 @@ export default function Dashboard() {
 
       <div className="max-w-7xl mx-auto px-8 py-8">
 
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8 flex-wrap gap-3">
           <div>
             <h1 className="text-2xl font-light" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
               Bonjour Sophie 👋
             </h1>
             <p className="text-sm mt-1" style={{ color: '#a8a29e' }}>
-              Voici votre tableau de bord — vendredi 25 avril 2026
+              Voici votre tableau de bord — dimanche 26 avril 2026
             </p>
           </div>
-          <button
-            className="text-white px-5 py-3 rounded-2xl text-sm font-medium"
-            style={{ backgroundColor: '#6b21a8' }}
-          >
-            + Bloquer un créneau
-          </button>
+          <div className="flex gap-3 items-center flex-wrap">
+            <div className="flex items-center gap-2 px-4 py-3 rounded-2xl" style={{ backgroundColor: '#f5f3ff', border: '1px solid #ede9fe' }}>
+              <span className="text-sm">🖥</span>
+              <input
+                type="text"
+                value={lienVisio}
+                onChange={(e) => setLienVisio(e.target.value)}
+                placeholder="Votre lien Zoom ou Meet..."
+                className="text-sm outline-none bg-transparent"
+                style={{ color: '#6b21a8', width: '200px' }}
+              />
+              {lienVisio && (
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>✓ Sauvegardé</span>
+              )}
+            </div>
+            <button className="text-white px-5 py-3 rounded-2xl text-sm font-medium" style={{ backgroundColor: '#6b21a8' }}>
+              + Bloquer un créneau
+            </button>
+          </div>
         </div>
 
         {/* ONGLETS */}
@@ -290,7 +338,7 @@ export default function Dashboard() {
             <div className="grid grid-cols-7 gap-2 text-center">
               {Array.from({ length: 30 }, (_, i) => i + 1).map((jour) => {
                 const aRdv = [1,3,4,7,8,10,11,14,15,17,18,21,22,24,25,28].includes(jour)
-                const estAujourdhui = jour === 25
+                const estAujourdhui = jour === 26
                 return (
                   <div key={jour} className="aspect-square rounded-xl flex flex-col items-center justify-center cursor-pointer transition hover:shadow-sm"
                     style={{
@@ -313,7 +361,6 @@ export default function Dashboard() {
         {/* PATIENTS */}
         {onglet === 'patients' && (
           <div className="flex flex-col gap-4">
-            {/* Barre de recherche */}
             <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3" style={{ border: '1px solid #e7e5e4' }}>
               <span className="text-lg">🔍</span>
               <input
@@ -329,41 +376,84 @@ export default function Dashboard() {
               )}
             </div>
 
+            <div className="rounded-2xl p-4 flex gap-3" style={{ backgroundColor: '#f5f3ff', border: '1px solid #ede9fe' }}>
+              <span>💙</span>
+              <p className="text-xs" style={{ color: '#7c3aed' }}>
+                Notez vos patients sur leur ponctualité et fiabilité — ces notes sont publiques et encouragent le respect mutuel sur Holistia.
+              </p>
+            </div>
+
             <p className="text-xs" style={{ color: '#a8a29e' }}>
               {patientsFiltres.length} patient{patientsFiltres.length > 1 ? 's' : ''} trouvé{patientsFiltres.length > 1 ? 's' : ''}
             </p>
 
             <div className="flex flex-col gap-3">
               {patientsFiltres.map((patient) => (
-                <div key={patient.nom} className="bg-white rounded-2xl p-4 flex items-center justify-between hover:shadow-sm transition cursor-pointer" style={{ border: '1px solid #e7e5e4' }}>
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
-                      {patient.nom[0]}
+                <div key={patient.nom} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
+                  <div className="flex items-start justify-between flex-wrap gap-4">
+
+                    {/* Infos patient */}
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
+                        {patient.nom[0]}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{patient.nom}</p>
+                        <p className="text-xs" style={{ color: '#a8a29e' }}>{patient.age} · {patient.problematique}</p>
+                        <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>Dernier RDV : {patient.dernierRdv} · {patient.frequence}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{patient.nom}</p>
-                      <p className="text-xs" style={{ color: '#a8a29e' }}>{patient.age} · {patient.problematique}</p>
+
+                    {/* Notes + statut */}
+                    <div className="flex items-center gap-6 flex-wrap">
+
+                      {/* Ponctualité */}
+                      <div>
+                        <p className="text-xs mb-1 text-center" style={{ color: '#a8a29e' }}>⏰ Ponctualité</p>
+                        <div className="flex gap-0.5">
+                          {[1,2,3,4,5].map((i) => (
+                            <button
+                              key={i}
+                              onClick={() => setNote(patient.nom, 'ponctualite', i)}
+                              className="text-xl transition hover:scale-110"
+                              style={{ color: i <= (notes[patient.nom]?.ponctualite || 0) ? '#6b21a8' : '#e7e5e4' }}
+                            >
+                              ★
+                            </button>
+                          ))}
+                        </div>
+                        <p className="text-xs text-center mt-0.5" style={{ color: '#a8a29e' }}>
+                          {notes[patient.nom]?.ponctualite ? `${notes[patient.nom].ponctualite}/5` : 'Non noté'}
+                        </p>
+                      </div>
+
+                      {/* Fiabilité */}
+                      <div>
+                        <p className="text-xs mb-1 text-center" style={{ color: '#a8a29e' }}>📅 Fiabilité RDV</p>
+                        <div className="flex gap-0.5">
+                          {[1,2,3,4,5].map((i) => (
+                            <button
+                              key={i}
+                              onClick={() => setNote(patient.nom, 'fiabilite', i)}
+                              className="text-xl transition hover:scale-110"
+                              style={{ color: i <= (notes[patient.nom]?.fiabilite || 0) ? '#6b21a8' : '#e7e5e4' }}
+                            >
+                              ★
+                            </button>
+                          ))}
+                        </div>
+                        <p className="text-xs text-center mt-0.5" style={{ color: '#a8a29e' }}>
+                          {notes[patient.nom]?.fiabilite ? `${notes[patient.nom].fiabilite}/5` : 'Non noté'}
+                        </p>
+                      </div>
+
+                      <span className="text-xs px-3 py-1 rounded-full" style={{
+                        backgroundColor: patient.statut === 'Fidèle' ? '#f0fdf4' : patient.statut === 'Nouveau' ? '#eff6ff' : '#f5f3ff',
+                        color: patient.statut === 'Fidèle' ? '#16a34a' : patient.statut === 'Nouveau' ? '#3b82f6' : '#6b21a8',
+                      }}>
+                        {patient.statut}
+                      </span>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-right hidden sm:block">
-                      <p className="text-xs" style={{ color: '#a8a29e' }}>Dernier RDV</p>
-                      <p className="text-sm" style={{ color: '#57534e' }}>{patient.dernierRdv}</p>
-                    </div>
-                    <div className="text-right hidden sm:block">
-                      <p className="text-xs" style={{ color: '#a8a29e' }}>Fréquence</p>
-                      <p className="text-xs font-medium" style={{ color: '#6b21a8' }}>{patient.frequence}</p>
-                    </div>
-                    <div className="text-right hidden sm:block">
-                      <p className="text-xs" style={{ color: '#a8a29e' }}>Total RDV</p>
-                      <p className="text-sm font-medium" style={{ color: '#6b21a8' }}>{patient.rdvTotal}</p>
-                    </div>
-                    <span className="text-xs px-3 py-1 rounded-full" style={{
-                      backgroundColor: patient.statut === 'Fidèle' ? '#f0fdf4' : patient.statut === 'Nouveau' ? '#eff6ff' : '#f5f3ff',
-                      color: patient.statut === 'Fidèle' ? '#16a34a' : patient.statut === 'Nouveau' ? '#3b82f6' : '#6b21a8',
-                    }}>
-                      {patient.statut}
-                    </span>
                   </div>
                 </div>
               ))}
@@ -420,16 +510,10 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* FRÉQUENCE PATIENTS */}
             <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-              <h2 className="font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
-                Fréquence de consultation de vos patients
-              </h2>
-              <p className="text-xs mb-6" style={{ color: '#a8a29e' }}>
-                Comprendre la fréquence vous aide à mieux anticiper votre activité et fidéliser votre patientèle
-              </p>
+              <h2 className="font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Fréquence de consultation</h2>
+              <p className="text-xs mb-6" style={{ color: '#a8a29e' }}>Comprendre la fréquence vous aide à mieux anticiper votre activité</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Répartition globale */}
                 <div>
                   <p className="text-xs font-medium mb-3" style={{ color: '#57534e' }}>Répartition globale</p>
                   <div className="flex flex-col gap-3">
@@ -446,8 +530,6 @@ export default function Dashboard() {
                     ))}
                   </div>
                 </div>
-
-                {/* Par problématique */}
                 <div>
                   <p className="text-xs font-medium mb-3" style={{ color: '#57534e' }}>Par problématique</p>
                   <div className="flex flex-col gap-4">
@@ -455,9 +537,9 @@ export default function Dashboard() {
                       <div key={item.probleme}>
                         <p className="text-xs mb-1 font-medium" style={{ color: '#1c1917' }}>{item.probleme}</p>
                         <div className="flex h-4 rounded-full overflow-hidden gap-0.5">
-                          <div style={{ width: `${item.mensuel}%`, backgroundColor: '#6b21a8' }} title={`Mensuel: ${item.mensuel}%`} />
-                          <div style={{ width: `${item.bimensuel}%`, backgroundColor: '#a855f7' }} title={`Bimensuel: ${item.bimensuel}%`} />
-                          <div style={{ width: `${item.trimestriel}%`, backgroundColor: '#e9d5ff' }} title={`Trimestriel: ${item.trimestriel}%`} />
+                          <div style={{ width: `${item.mensuel}%`, backgroundColor: '#6b21a8' }} />
+                          <div style={{ width: `${item.bimensuel}%`, backgroundColor: '#a855f7' }} />
+                          <div style={{ width: `${item.trimestriel}%`, backgroundColor: '#e9d5ff' }} />
                         </div>
                         <div className="flex gap-3 mt-1">
                           <span className="text-xs" style={{ color: '#6b21a8' }}>■ Mensuel {item.mensuel}%</span>

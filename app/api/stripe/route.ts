@@ -8,7 +8,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Clé Stripe manquante' }, { status: 500 })
     }
 
-    const stripe = new Stripe(key, { apiVersion: '2024-06-20' })
+    const stripe = new Stripe(key, { apiVersion: '2025-04-30.basil' })
     const { montant, description, email } = await request.json()
     const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
 

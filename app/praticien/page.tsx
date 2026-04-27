@@ -1,11 +1,11 @@
 'use client'
 
 import Nav from '@/app/components/Nav'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
 export default function FichePraticien() {
-  const [jourSelectionne, setJourSelectionne] = useState('Lun 28')
+  const [jourSelectionne, setJourSelectionne] = useState('Lun 28 avr')
   const [creneauSelectionne, setCreneauSelectionne] = useState('')
   const [prestationSelectionnee, setPrestationSelectionnee] = useState(0)
   const [modePaiement, setModePaiement] = useState<'rdv' | 'cadeau'>('rdv')
@@ -13,6 +13,7 @@ export default function FichePraticien() {
   const [chargementRdv, setChargementRdv] = useState(false)
   const [succesRdv, setSuccesRdv] = useState('')
   const [erreurRdv, setErreurRdv] = useState('')
+  const [messagePatient, setMessagePatient] = useState('')
   const [messageContact, setMessageContact] = useState('')
 
   const praticien = {
@@ -39,11 +40,11 @@ Je suis spécialisée dans les troubles digestifs (ballonnements, intestin irrit
       { titre: 'Formation en Micronutrition', ecole: 'IEDM', annee: '2018' },
     ],
     agenda: {
-      'Lun 28': ['9h00', '11h00', '14h00', '15h00', '17h00'],
-      'Mar 29': ['10h00', '15h00', '17h00'],
-      'Mer 30': [],
-      'Jeu 31': ['9h00', '13h00', '14h00', '16h00'],
-      'Ven 1': ['11h00', '14h00', '16h00'],
+      'Lun 28 avr': ['9h00', '11h00', '14h00', '15h00', '17h00'],
+      'Mar 29 avr': ['10h00', '15h00', '17h00'],
+      'Mer 30 avr': [],
+      'Jeu 1 mai': ['9h00', '13h00', '14h00', '16h00'],
+      'Ven 2 mai': ['11h00', '14h00', '16h00'],
     },
     avisClients: [
       { prenom: 'Marie L.', date: 'Mars 2026', note: 5, ponctualite: 5, ecoute: 5, clarte: 5, texte: "Sophie a transformé mon rapport à l alimentation. Après des années de troubles digestifs sans solution, j ai enfin trouvé ce qui me convient." },
@@ -74,15 +75,15 @@ Je suis spécialisée dans les troubles digestifs (ballonnements, intestin irrit
         statut: 'en_attente',
         prestation: prestation.nom,
         tarif: prestation.tarif_num,
+        notes_praticien: messagePatient,
       })
 
     if (error) {
-      setErreurRdv('Erreur lors de la prise de RDV. Veuillez réessayer.')
+      setErreurRdv('Une erreur est survenue. Veuillez réessayer.')
       setChargementRdv(false)
       return
     }
 
-    // Email de confirmation au patient
     await fetch('/api/email-rdv', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -265,7 +266,6 @@ Je suis spécialisée dans les troubles digestifs (ballonnements, intestin irrit
             {/* MODE RDV */}
             {modePaiement === 'rdv' && (
               <div className="p-6">
-
                 {succesRdv ? (
                   <div className="text-center py-4">
                     <p className="text-3xl mb-3">🎉</p>
@@ -328,6 +328,17 @@ Je suis spécialisée dans les troubles digestifs (ballonnements, intestin irrit
                         ))}
                       </div>
                     )}
+
+                    <div className="mb-4">
+                      <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>4. Message pour le praticien (optionnel)</label>
+                      <textarea
+                        value={messagePatient}
+                        onChange={(e) => setMessagePatient(e.target.value)}
+                        placeholder="Décrivez brièvement votre situation pour que le praticien puisse se préparer..."
+                        className="w-full text-sm rounded-xl px-4 py-3 resize-none outline-none"
+                        style={{ border: '1px solid #e7e5e4', color: '#1c1917', height: '80px' }}
+                      />
+                    </div>
 
                     <button
                       onClick={prendreRdv}

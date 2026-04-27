@@ -85,8 +85,20 @@ export default function Inscription() {
       return
     }
 
-    setSucces('Votre dossier a bien été soumis ! Nous revenons vers vous sous 48h.')
-    setChargement(false)
+// Envoyer les emails
+    await fetch('/api/email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nom: `${form.prenom} ${form.nom}`,
+        email: form.email,
+        specialite: form.specialite,
+        ville: form.ville,
+        pays: form.pays,
+      }),
+    })
+
+setSucces('Inscription réussie ! Un email vient de vous être envoyé pour compléter votre profil. Votre dossier sera validé sous 48h une fois toutes vos informations renseignées.')
   }
 
   return (

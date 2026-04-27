@@ -74,7 +74,8 @@ export default function Inscription() {
         ville: form.ville,
         pays: form.pays,
         specialite: form.specialite,
-        visio: form.visio,
+visio: form.visio,
+        cabinet: form.cabinet,
         valide: false,
         actif: false,
       })

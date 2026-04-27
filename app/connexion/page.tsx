@@ -2,11 +2,56 @@
 
 import Nav from '@/app/components/Nav'
 import { useState } from 'react'
+import { supabase } from '@/lib/supabase'
 
 export default function Connexion() {
   const [type, setType] = useState<'patient' | 'praticien'>('patient')
   const [email, setEmail] = useState('')
   const [motDePasse, setMotDePasse] = useState('')
+  const [chargement, setChargement] = useState(false)
+  const [erreur, setErreur] = useState('')
+  const [succes, setSucces] = useState('')
+
+  const seConnecter = async () => {
+    setChargement(true)
+    setErreur('')
+    setSucces('')
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password: motDePasse,
+    })
+
+    if (error) {
+      setErreur('Email ou mot de passe incorrect.')
+      setChargement(false)
+      return
+    }
+
+    setSucces('Connexion réussie ! Redirection...')
+    setTimeout(() => {
+      window.location.href = type === 'patient' ? '/patient' : '/dashboard'
+    }, 1000)
+  }
+
+  const sInscrire = async () => {
+    setChargement(true)
+    setErreur('')
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password: motDePasse,
+    })
+
+    if (error) {
+setErreur(error.message)
+      setChargement(false)
+      return
+    }
+
+    setSucces('Compte créé ! Vérifiez votre email pour confirmer.')
+    setChargement(false)
+  }
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
@@ -48,8 +93,20 @@ export default function Connexion() {
           </button>
         </div>
 
-        {/* FORMULAIRE */}
         <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
+
+          {erreur && (
+            <div className="mb-4 p-3 rounded-xl text-sm" style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}>
+              {erreur}
+            </div>
+          )}
+
+          {succes && (
+            <div className="mb-4 p-3 rounded-xl text-sm" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>
+              {succes}
+            </div>
+          )}
+
           <div className="flex flex-col gap-4">
             <div>
               <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Email</label>
@@ -79,11 +136,12 @@ export default function Connexion() {
               </button>
             </div>
             <button
+              onClick={seConnecter}
+              disabled={chargement || !email || !motDePasse}
               className="w-full text-white py-3 rounded-2xl text-sm font-medium"
-              style={{ backgroundColor: '#6b21a8' }}
-              onClick={() => { window.location.href = type === 'patient' ? '/patient' : '/dashboard' }}
+              style={{ backgroundColor: chargement ? '#a855f7' : '#6b21a8' }}
             >
-              Se connecter
+              {chargement ? 'Connexion...' : 'Se connecter'}
             </button>
           </div>
 
@@ -93,23 +151,16 @@ export default function Connexion() {
             <div className="flex-1 h-px" style={{ backgroundColor: '#e7e5e4' }} />
           </div>
 
-          <div className="flex flex-col gap-3">
-            <button
-              className="w-full py-3 rounded-2xl text-sm font-medium flex items-center justify-center gap-3"
-              style={{ backgroundColor: '#faf9f7', color: '#1c1917', border: '1px solid #e7e5e4' }}
-            >
-              <span>🔵</span> Continuer avec Google
-            </button>
-            <button
-              className="w-full py-3 rounded-2xl text-sm font-medium flex items-center justify-center gap-3"
-              style={{ backgroundColor: '#faf9f7', color: '#1c1917', border: '1px solid #e7e5e4' }}
-            >
-              <span>🍎</span> Continuer avec Apple
-            </button>
-          </div>
+          <button
+            onClick={sInscrire}
+            disabled={chargement || !email || !motDePasse}
+            className="w-full py-3 rounded-2xl text-sm font-medium"
+            style={{ backgroundColor: '#faf9f7', color: '#6b21a8', border: '1px solid #e7e5e4' }}
+          >
+            Créer un compte avec cet email
+          </button>
         </div>
 
-        {/* CRÉER UN COMPTE */}
         <div className="text-center mt-6">
           {type === 'patient' ? (
             <p className="text-sm" style={{ color: '#78716c' }}>

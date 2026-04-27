@@ -6,8 +6,11 @@ import { supabase } from '@/lib/supabase'
 
 export default function Connexion() {
   const [type, setType] = useState<'patient' | 'praticien'>('patient')
+  const [mode, setMode] = useState<'connexion' | 'inscription'>('connexion')
   const [email, setEmail] = useState('')
   const [motDePasse, setMotDePasse] = useState('')
+  const [prenom, setPrenom] = useState('')
+  const [nom, setNom] = useState('')
   const [chargement, setChargement] = useState(false)
   const [erreur, setErreur] = useState('')
   const [succes, setSucces] = useState('')
@@ -15,12 +18,8 @@ export default function Connexion() {
   const seConnecter = async () => {
     setChargement(true)
     setErreur('')
-    setSucces('')
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password: motDePasse,
-    })
+    const { error } = await supabase.auth.signInWithPassword({ email, password: motDePasse })
 
     if (error) {
       setErreur('Email ou mot de passe incorrect.')
@@ -28,28 +27,46 @@ export default function Connexion() {
       return
     }
 
-    setSucces('Connexion réussie ! Redirection...')
-    setTimeout(() => {
-      window.location.href = type === 'patient' ? '/patient' : '/dashboard'
-    }, 1000)
+    window.location.href = type === 'patient' ? '/patient' : '/dashboard'
   }
 
   const sInscrire = async () => {
+    if (!prenom || !nom || !email || !motDePasse) {
+      setErreur('Veuillez remplir tous les champs.')
+      return
+    }
     setChargement(true)
     setErreur('')
 
-    const { data, error } = await supabase.auth.signUp({
+    const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password: motDePasse,
     })
 
-    if (error) {
-setErreur(error.message)
+    if (authError) {
+      setErreur(authError.message)
       setChargement(false)
       return
     }
 
-    setSucces('Compte créé ! Vérifiez votre email pour confirmer.')
+    // Créer le profil patient en base
+    const { error: dbError } = await supabase
+      .from('patients')
+      .insert({
+        user_id: authData.user?.id,
+        prenom,
+        nom,
+        email,
+      })
+
+    if (dbError) {
+      setErreur(dbError.message)
+      setChargement(false)
+      return
+    }
+
+    setSucces('Compte créé ! Bienvenue sur Holistia 🌿')
+    setTimeout(() => { window.location.href = '/patient' }, 1500)
     setChargement(false)
   }
 
@@ -62,15 +79,13 @@ setErreur(error.message)
         <div className="text-center mb-8">
           <div className="text-4xl mb-4">🌿</div>
           <h1 className="text-3xl font-light mb-2" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
-            Connexion
+            {mode === 'connexion' ? 'Connexion' : 'Créer un compte'}
           </h1>
-          <p className="text-sm" style={{ color: '#a8a29e' }}>
-            Bienvenue sur Holistia
-          </p>
+          <p className="text-sm" style={{ color: '#a8a29e' }}>Bienvenue sur Holistia</p>
         </div>
 
         {/* TOGGLE PATIENT / PRATICIEN */}
-        <div className="flex rounded-2xl p-1 mb-8" style={{ backgroundColor: '#f5f3ff' }}>
+        <div className="flex rounded-2xl p-1 mb-6" style={{ backgroundColor: '#f5f3ff' }}>
           <button
             onClick={() => setType('patient')}
             className="flex-1 py-3 rounded-xl text-sm font-medium transition"
@@ -100,7 +115,6 @@ setErreur(error.message)
               {erreur}
             </div>
           )}
-
           {succes && (
             <div className="mb-4 p-3 rounded-xl text-sm" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>
               {succes}
@@ -108,8 +122,37 @@ setErreur(error.message)
           )}
 
           <div className="flex flex-col gap-4">
+
+            {/* Champs inscription patient */}
+            {mode === 'inscription' && type === 'patient' && (
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Prénom *</label>
+                  <input
+                    type="text"
+                    value={prenom}
+                    onChange={(e) => setPrenom(e.target.value)}
+                    placeholder="Marie"
+                    className="w-full text-sm rounded-xl px-4 py-3 outline-none"
+                    style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Nom *</label>
+                  <input
+                    type="text"
+                    value={nom}
+                    onChange={(e) => setNom(e.target.value)}
+                    placeholder="Laurent"
+                    className="w-full text-sm rounded-xl px-4 py-3 outline-none"
+                    style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
+                  />
+                </div>
+              </div>
+            )}
+
             <div>
-              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Email</label>
+              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Email *</label>
               <input
                 type="email"
                 value={email}
@@ -119,8 +162,9 @@ setErreur(error.message)
                 style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
               />
             </div>
+
             <div>
-              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Mot de passe</label>
+              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Mot de passe *</label>
               <input
                 type="password"
                 value={motDePasse}
@@ -130,46 +174,54 @@ setErreur(error.message)
                 style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
               />
             </div>
-            <div className="text-right">
-              <button className="text-xs underline" style={{ color: '#6b21a8' }}>
-                Mot de passe oublié ?
-              </button>
-            </div>
+
+            {mode === 'connexion' && (
+              <div className="text-right">
+                <button className="text-xs underline" style={{ color: '#6b21a8' }}>
+                  Mot de passe oublié ?
+                </button>
+              </div>
+            )}
+
             <button
-              onClick={seConnecter}
-              disabled={chargement || !email || !motDePasse}
+              onClick={mode === 'connexion' ? seConnecter : sInscrire}
+              disabled={chargement || !!succes}
               className="w-full text-white py-3 rounded-2xl text-sm font-medium"
               style={{ backgroundColor: chargement ? '#a855f7' : '#6b21a8' }}
             >
-              {chargement ? 'Connexion...' : 'Se connecter'}
+              {chargement ? 'Chargement...' : mode === 'connexion' ? 'Se connecter' : 'Créer mon compte'}
             </button>
           </div>
-
-          <div className="flex items-center gap-3 my-6">
-            <div className="flex-1 h-px" style={{ backgroundColor: '#e7e5e4' }} />
-            <span className="text-xs" style={{ color: '#a8a29e' }}>ou</span>
-            <div className="flex-1 h-px" style={{ backgroundColor: '#e7e5e4' }} />
-          </div>
-
-          <button
-            onClick={sInscrire}
-            disabled={chargement || !email || !motDePasse}
-            className="w-full py-3 rounded-2xl text-sm font-medium"
-            style={{ backgroundColor: '#faf9f7', color: '#6b21a8', border: '1px solid #e7e5e4' }}
-          >
-            Créer un compte avec cet email
-          </button>
         </div>
 
+        {/* SWITCH CONNEXION / INSCRIPTION */}
         <div className="text-center mt-6">
-          {type === 'patient' ? (
-            <p className="text-sm" style={{ color: '#78716c' }}>
-              Pas encore de compte ?{' '}
-              <button className="underline font-medium" style={{ color: '#6b21a8' }}>
-                Créer un compte patient
-              </button>
-            </p>
-          ) : (
+          {type === 'patient' && (
+            mode === 'connexion' ? (
+              <p className="text-sm" style={{ color: '#78716c' }}>
+                Pas encore de compte ?{' '}
+                <button
+                  className="underline font-medium"
+                  style={{ color: '#6b21a8' }}
+                  onClick={() => { setMode('inscription'); setErreur('') }}
+                >
+                  Créer un compte patient
+                </button>
+              </p>
+            ) : (
+              <p className="text-sm" style={{ color: '#78716c' }}>
+                Déjà un compte ?{' '}
+                <button
+                  className="underline font-medium"
+                  style={{ color: '#6b21a8' }}
+                  onClick={() => { setMode('connexion'); setErreur('') }}
+                >
+                  Se connecter
+                </button>
+              </p>
+            )
+          )}
+          {type === 'praticien' && (
             <p className="text-sm" style={{ color: '#78716c' }}>
               Pas encore inscrit ?{' '}
               <button

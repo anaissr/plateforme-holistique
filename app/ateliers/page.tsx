@@ -221,14 +221,27 @@ export default function Ateliers() {
               </div>
             </div>
 
-            <button
-              className="w-full text-white py-3 rounded-2xl text-sm font-medium mb-3"
-              style={{ backgroundColor: '#6b21a8' }}
-            >
-              Offrir cet atelier — {modaleCadeau.tarif}
-            </button>
+          <button
+                  className="w-full text-white py-3 rounded-2xl text-sm font-medium mb-3"
+                  style={{ backgroundColor: '#6b21a8' }}
+                  onClick={async () => {
+                    const res = await fetch('/api/stripe', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        montant: modaleCadeau.tarifsNum,
+                        description: `Bon cadeau — ${modaleCadeau.titre} avec ${modaleCadeau.praticien}`,
+                        email: emailDestinataire || '',
+                      }),
+                    })
+                    const data = await res.json()
+                    if (data.url) window.location.href = data.url
+                  }}
+                >
+                  Offrir cet atelier — {modaleCadeau.tarif}
+                </button>
             <p className="text-xs text-center mb-4" style={{ color: '#a8a29e' }}>
-              Le bon cadeau est envoyé par email · Valable 1 an
+              Le bon cadeau est envoyé par email · Valable pour cet atelier uniquement
             </p>
             <button
               onClick={() => setModaleCadeau(null)}
@@ -412,6 +425,19 @@ export default function Ateliers() {
                   <button
                     className="text-white px-6 py-2.5 rounded-xl text-sm font-medium"
                     style={{ backgroundColor: '#6b21a8' }}
+                    onClick={async () => {
+                      const res = await fetch('/api/stripe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          montant: atelier.tarifsNum,
+                          description: `${atelier.titre} — avec ${atelier.praticien}`,
+                          email: '',
+                        }),
+                      })
+                      const data = await res.json()
+                      if (data.url) window.location.href = data.url
+                    }}
                   >
                     Réserver ma place
                   </button>

@@ -28,6 +28,7 @@ export async function POST(request: Request) {
       success_url: `${baseUrl}/paiement-success`,
       cancel_url: `${baseUrl}/praticien`,
       customer_email: email || undefined,
+    
     })
 
     return NextResponse.json({ url: session.url })

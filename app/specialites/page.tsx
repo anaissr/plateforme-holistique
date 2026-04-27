@@ -277,10 +277,10 @@ export default function Specialites() {
 
                 <button
                   className="w-full text-white py-2.5 rounded-xl text-sm font-medium transition group-hover:opacity-90"
-                  style={{ backgroundColor: '#6b21a8' }}
+style={{ backgroundColor: '#6b21a8' }}
                   onClick={(e) => {
                     e.stopPropagation()
-                    window.location.href = `/specialites/${spec.slug}`
+                    window.location.href = '/recherche'
                   }}
                 >
                   Voir les praticiens →

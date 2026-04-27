@@ -313,9 +313,9 @@ export default function Home() {
                 key={pb.label}
                 className="bg-white rounded-2xl py-6 px-4 flex items-center gap-3 transition hover:shadow-md"
                 style={{ border: '1px solid #ede9fe' }}
-                onClick={() => { window.location.href = '/orientation' }}
+onClick={() => { window.location.href = `/orientation?probleme=${encodeURIComponent(pb.label)}` }}
               >
-                <span className="text-3xl">{pb.emoji}</span>
+                <span className="text-2xl">{pb.emoji}</span>
                 <span className="text-base font-medium" style={{ color: '#57534e' }}>{pb.label}</span>
               </button>
             ))}

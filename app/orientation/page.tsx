@@ -129,8 +129,13 @@ const resultats = [
 ]
 
 export default function Orientation() {
-  const [etape, setEtape] = useState(0)
-  const [reponses, setReponses] = useState<Record<number, string[]>>({})
+const problemeUrl = typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('probleme')
+    : null
+  const [etape, setEtape] = useState(problemeUrl ? 1 : 0)
+  const [reponses, setReponses] = useState<Record<number, string[]>>(
+    problemeUrl ? { 1: [problemeUrl] } : {}
+  )
   const [selectionMulti, setSelectionMulti] = useState<string[]>([])
   const [autreTexte, setAutreTexte] = useState('')
   const [termine, setTermine] = useState(false)

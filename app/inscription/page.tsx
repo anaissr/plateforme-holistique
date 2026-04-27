@@ -8,6 +8,8 @@ export default function Inscription() {
   const [chargement, setChargement] = useState(false)
   const [erreur, setErreur] = useState('')
   const [succes, setSucces] = useState('')
+  const [charteAcceptee, setCharteAcceptee] = useState(false)
+  const [cguAcceptees, setCguAcceptees] = useState(false)
 
   const [form, setForm] = useState({
     prenom: '',
@@ -27,10 +29,27 @@ export default function Inscription() {
   }
 
   const soumettre = async () => {
-    if (!form.email || !form.motDePasse || !form.prenom || !form.nom) {
-      setErreur('Veuillez remplir au moins votre prénom, nom, email et mot de passe.')
+    if (!form.prenom || !form.nom || !form.email || !form.motDePasse) {
+      setErreur('Veuillez remplir votre prénom, nom, email et mot de passe.')
       return
     }
+    if (!form.specialite) {
+      setErreur('Veuillez choisir votre spécialité.')
+      return
+    }
+    if (!form.ville || !form.pays) {
+      setErreur('Veuillez indiquer votre ville et votre pays.')
+      return
+    }
+    if (!form.visio && !form.cabinet) {
+      setErreur('Veuillez choisir au moins un mode de consultation.')
+      return
+    }
+    if (!charteAcceptee || !cguAcceptees) {
+      setErreur('Veuillez accepter la charte qualité et les CGU.')
+      return
+    }
+
     setChargement(true)
     setErreur('')
 
@@ -47,7 +66,7 @@ export default function Inscription() {
 
     const { error: dbError } = await supabase
       .from('praticiens')
-.insert({
+      .insert({
         user_id: authData.user?.id,
         nom: `${form.prenom} ${form.nom}`,
         email: form.email,
@@ -60,8 +79,8 @@ export default function Inscription() {
         actif: false,
       })
 
-if (dbError) {
-      setErreur('DB Error: ' + dbError.message + ' | Code: ' + dbError.code + ' | Details: ' + dbError.details)
+    if (dbError) {
+      setErreur(dbError.message)
       setChargement(false)
       return
     }
@@ -100,7 +119,7 @@ if (dbError) {
 
         {erreur && (
           <div className="p-4 rounded-2xl text-sm" style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}>
-            {erreur}
+            ⚠️ {erreur}
           </div>
         )}
         {succes && (
@@ -114,6 +133,7 @@ if (dbError) {
             Informations essentielles
           </h2>
           <div className="flex flex-col gap-4">
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Prénom *</label>
@@ -191,7 +211,7 @@ if (dbError) {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Ville</label>
+                <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Ville *</label>
                 <input
                   type="text"
                   value={form.ville}
@@ -202,7 +222,7 @@ if (dbError) {
                 />
               </div>
               <div>
-                <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Pays</label>
+                <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Pays *</label>
                 <input
                   type="text"
                   value={form.pays}
@@ -215,7 +235,7 @@ if (dbError) {
             </div>
 
             <div>
-              <label className="text-xs font-medium block mb-2" style={{ color: '#78716c' }}>Mode de consultation</label>
+              <label className="text-xs font-medium block mb-2" style={{ color: '#78716c' }}>Mode de consultation *</label>
               <div className="flex gap-3">
                 {[
                   { label: '🏥 En cabinet', champ: 'cabinet' },
@@ -236,32 +256,72 @@ if (dbError) {
                 ))}
               </div>
             </div>
+
+            <div>
+              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Téléphone (optionnel)</label>
+              <input
+                type="text"
+                value={form.telephone}
+                onChange={(e) => update('telephone', e.target.value)}
+                placeholder="+33 6 00 00 00 00"
+                className="w-full text-sm rounded-xl px-4 py-3 outline-none"
+                style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
+              />
+            </div>
+
           </div>
         </div>
 
+        {/* CGU ET CHARTE */}
         <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-          <div className="flex flex-col gap-3 mb-6">
-            {[
-              "J'accepte la charte qualité Holistia",
-              "J'accepte les CGU et la politique de confidentialité",
-              "Je certifie que mes diplômes et assurance sont valides",
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-3">
-                <input type="checkbox" className="w-4 h-4" style={{ accentColor: '#6b21a8' }} />
-                <span className="text-sm" style={{ color: '#57534e' }}>{item}</span>
+          <div className="flex flex-col gap-4">
+            <div
+              className="flex items-start gap-3 cursor-pointer"
+              onClick={() => setCharteAcceptee(!charteAcceptee)}
+            >
+              <div
+                className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0 mt-0.5"
+                style={{
+                  backgroundColor: charteAcceptee ? '#6b21a8' : '#ffffff',
+                  border: charteAcceptee ? 'none' : '2px solid #e7e5e4',
+                }}
+              >
+                {charteAcceptee && <span className="text-white text-xs">✓</span>}
               </div>
-            ))}
+              <span className="text-sm" style={{ color: '#57534e' }}>
+                J'accepte la <span className="underline" style={{ color: '#6b21a8' }}>charte qualité Holistia</span> — je m'engage à exercer dans le respect de mes patients et à fournir mes justificatifs de formation *
+              </span>
+            </div>
+
+            <div
+              className="flex items-start gap-3 cursor-pointer"
+              onClick={() => setCguAcceptees(!cguAcceptees)}
+            >
+              <div
+                className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0 mt-0.5"
+                style={{
+                  backgroundColor: cguAcceptees ? '#6b21a8' : '#ffffff',
+                  border: cguAcceptees ? 'none' : '2px solid #e7e5e4',
+                }}
+              >
+                {cguAcceptees && <span className="text-white text-xs">✓</span>}
+              </div>
+              <span className="text-sm" style={{ color: '#57534e' }}>
+                J'accepte les <span className="underline" style={{ color: '#6b21a8' }}>CGU et la politique de confidentialité</span> *
+              </span>
+            </div>
           </div>
+
           <button
             onClick={soumettre}
             disabled={chargement || !!succes}
-            className="w-full text-white py-4 rounded-2xl font-medium text-sm"
+            className="w-full text-white py-4 rounded-2xl font-medium text-sm mt-6"
             style={{ backgroundColor: chargement ? '#a855f7' : '#6b21a8' }}
           >
             {chargement ? 'Envoi en cours...' : 'Créer mon profil gratuitement'}
           </button>
           <p className="text-xs text-center mt-3" style={{ color: '#a8a29e' }}>
-            Profil en ligne sous 48h · Vous pourrez compléter les détails depuis votre dashboard
+            Vous pourrez compléter votre profil depuis votre dashboard après validation
           </p>
         </div>
 

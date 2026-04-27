@@ -1,511 +1,336 @@
 'use client'
 
 import Nav from '@/app/components/Nav'
-import { useState } from 'react'
-
-type OngletPrincipal = 'apercu' | 'praticiens' | 'patients' | 'rdv' | 'validation' | 'avis'
+import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase'
 
 export default function Admin() {
-  const [onglet, setOnglet] = useState<OngletPrincipal>('apercu')
+  const [onglet, setOnglet] = useState('dossiers')
+  const [praticiens, setPraticiens] = useState<any[]>([])
+  const [chargement, setChargement] = useState(true)
+  const [dossierOuvert, setDossierOuvert] = useState<string | null>(null)
+  const [motifRefus, setMotifRefus] = useState('')
+  const [recherche, setRecherche] = useState('')
 
-  const kpiApercu = [
-    { label: 'Praticiens actifs', value: '1 247', emoji: '👩‍⚕️', delta: '+12% ce mois', cible: 'praticiens' },
-    { label: 'En attente validation', value: '8', emoji: '⏳', delta: '4 dossiers complets', cible: 'validation', alerte: true },
-    { label: 'Patients inscrits', value: '4 832', emoji: '🙋', delta: '+18% ce mois', cible: 'patients' },
-    { label: 'RDV ce mois', value: '2 341', emoji: '📅', delta: '+9% vs mois dernier', cible: 'rdv' },
-    { label: 'Satisfaction patients', value: '4.8/5', emoji: '⭐', delta: 'Sur 1 243 avis', cible: 'avis' },
-    { label: 'Satisfaction praticiens', value: '4.6/5', emoji: '🌟', delta: 'Sur 312 retours', cible: 'praticiens' },
-  ]
+  useEffect(() => {
+    chargerPraticiens()
+  }, [])
 
-  const praticiensenAttente = [
-    { nom: 'Julie Moreau', specialite: 'Kinésiologue', ville: 'Lyon', date: 'Il y a 2h', documents: ['SIRET', 'Diplôme', 'Assurance'], status: 'complet' },
-    { nom: 'Antoine Durand', specialite: 'Acupuncteur', ville: 'Bordeaux', date: 'Il y a 5h', documents: ['SIRET', 'Diplôme'], status: 'incomplet' },
-    { nom: 'Claire Petit', specialite: 'Sophrologue', ville: 'Nantes', date: 'Hier', documents: ['SIRET', 'Diplôme', 'Assurance'], status: 'complet' },
-    { nom: 'Marc Simon', specialite: 'Naturopathe', ville: 'Marseille', date: 'Hier', documents: ['SIRET'], status: 'incomplet' },
-    { nom: 'Léa Bernard', specialite: 'Réflexologue', ville: 'Paris', date: 'Il y a 2 jours', documents: ['SIRET', 'Diplôme', 'Assurance'], status: 'complet' },
-    { nom: 'Paul Martin', specialite: 'Ostéopathe', ville: 'Toulouse', date: 'Il y a 2 jours', documents: ['SIRET', 'Diplôme', 'Assurance'], status: 'complet' },
-  ]
-
-  const avisSignales = [
-    { patient: 'Anonyme', praticien: 'Sophie Laurent', note: 1, texte: 'Contenu inapproprié signalé par le praticien...', date: "Aujourd'hui", raison: 'Contenu offensant' },
-    { patient: 'Thomas B.', praticien: 'Marc Dubois', note: 2, texte: 'Avis qui semble faux ou non vérifié...', date: 'Hier', raison: 'Avis suspect' },
-  ]
-
-  const courbeInscrits = {
-    praticiens: [42, 89, 156, 287, 445, 612, 789, 921, 1050, 1134, 1198, 1247],
-    patients: [120, 310, 580, 980, 1420, 1890, 2340, 2980, 3540, 4020, 4430, 4832],
-    mois: ['Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc', 'Jan', 'Fév', 'Mar', 'Avr'],
+  const chargerPraticiens = async () => {
+    setChargement(true)
+    const { data } = await supabase
+      .from('praticiens')
+      .select('*')
+      .order('created_at', { ascending: false })
+    if (data) setPraticiens(data)
+    setChargement(false)
   }
 
-  const repartitionGeo = [
-    { pays: '🇫🇷 France', praticiens: 892, patients: 3241, pct: 72 },
-    { pays: '🇧🇪 Belgique', praticiens: 124, patients: 456, pct: 10 },
-    { pays: '🇨🇭 Suisse', praticiens: 98, patients: 387, pct: 8 },
-    { pays: '🌍 Autres', praticiens: 133, patients: 748, pct: 10 },
-  ]
+  const validerPraticien = async (praticien: any) => {
+    const { error } = await supabase
+      .from('praticiens')
+      .update({ valide: true, actif: true })
+      .eq('id', praticien.id)
 
-  const repartitionSpecialite = [
-    { label: 'Sophrologie', praticiens: 187, rdv: 423, satisfaction: 4.9 },
-    { label: 'Naturopathie', praticiens: 156, rdv: 389, satisfaction: 4.8 },
-    { label: 'Ostéopathie', praticiens: 143, rdv: 521, satisfaction: 4.7 },
-    { label: 'Hypnothérapie', praticiens: 98, rdv: 234, satisfaction: 4.8 },
-    { label: 'Kinésiologie', praticiens: 87, rdv: 198, satisfaction: 4.6 },
-    { label: 'Acupuncture', praticiens: 76, rdv: 187, satisfaction: 4.7 },
-    { label: 'Réflexologie', praticiens: 65, rdv: 145, satisfaction: 4.5 },
-    { label: 'Thérapies brèves', praticiens: 58, rdv: 132, satisfaction: 4.9 },
-  ]
+    if (!error) {
+      // Email de validation au praticien
+      await fetch('/api/email-validation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nom: praticien.nom,
+          email: praticien.email,
+          accepte: true,
+          motif: '',
+        }),
+      })
+      chargerPraticiens()
+      setDossierOuvert(null)
+    }
+  }
 
-  const repartitionPatients = [
-    { label: 'Femmes 30-45 ans', pct: 38 },
-    { label: 'Femmes 45-60 ans', pct: 19 },
-    { label: 'Hommes 30-45 ans', pct: 17 },
-    { label: 'Femmes -30 ans', pct: 11 },
-    { label: 'Hommes -30 ans', pct: 8 },
-    { label: 'Autres', pct: 7 },
-  ]
+  const refuserPraticien = async (praticien: any) => {
+    if (!motifRefus) {
+      alert('Veuillez indiquer un motif de refus.')
+      return
+    }
+    const { error } = await supabase
+      .from('praticiens')
+      .update({ valide: false, actif: false })
+      .eq('id', praticien.id)
 
-  const entreePatients = [
-    { label: 'Recherche directe praticien', pct: 58, emoji: '🔍' },
-    { label: 'Outil orientation symptômes', pct: 32, emoji: '💬' },
-    { label: 'Accès direct URL', pct: 10, emoji: '🔗' },
-  ]
+    if (!error) {
+      await fetch('/api/email-validation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nom: praticien.nom,
+          email: praticien.email,
+          accepte: false,
+          motif: motifRefus,
+        }),
+      })
+      chargerPraticiens()
+      setDossierOuvert(null)
+      setMotifRefus('')
+    }
+  }
 
-  const rdvParSemaine = [
-    { semaine: 'S1', rdv: 489 },
-    { semaine: 'S2', rdv: 612 },
-    { semaine: 'S3', rdv: 534 },
-    { semaine: 'S4', rdv: 706 },
-  ]
-
-  const rdvParSpecialite = [
-    { label: 'Ostéopathie', rdv: 521, pct: 22 },
-    { label: 'Sophrologie', rdv: 423, pct: 18 },
-    { label: 'Naturopathie', rdv: 389, pct: 17 },
-    { label: 'Hypnothérapie', rdv: 234, pct: 10 },
-    { label: 'Kinésiologie', rdv: 198, pct: 8 },
-    { label: 'Autres', rdv: 576, pct: 25 },
-  ]
-
-  const maxPatients = Math.max(...courbeInscrits.patients)
-  const maxPraticiens = Math.max(...courbeInscrits.praticiens)
-
-  const Courbe = ({ data, color, max }: { data: number[], color: string, max: number }) => (
-    <svg viewBox={`0 0 ${data.length * 60} 100`} className="w-full" style={{ height: '120px' }}>
-      <polyline
-        points={data.map((v, i) => `${i * 60 + 30},${100 - (v / max) * 90}`).join(' ')}
-        fill="none"
-        stroke={color}
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-      {data.map((v, i) => (
-        <circle key={i} cx={i * 60 + 30} cy={100 - (v / max) * 90} r="3" fill={color} />
-      ))}
-    </svg>
+  const praticiensFiltres = praticiens.filter(p =>
+    p.nom?.toLowerCase().includes(recherche.toLowerCase()) ||
+    p.specialite?.toLowerCase().includes(recherche.toLowerCase()) ||
+    p.email?.toLowerCase().includes(recherche.toLowerCase())
   )
 
-  const BarreH = ({ label, value, max, color, extra }: { label: string, value: number, max: number, color: string, extra?: string }) => (
-    <div>
-      <div className="flex justify-between mb-1">
-        <span className="text-xs" style={{ color: '#57534e' }}>{label}</span>
-        <span className="text-xs font-medium" style={{ color }}>
-          {value}{extra && <span style={{ color: '#a8a29e' }}> {extra}</span>}
-        </span>
-      </div>
-      <div className="w-full h-2 rounded-full" style={{ backgroundColor: '#f5f3ff' }}>
-        <div className="h-full rounded-full" style={{ width: `${(value / max) * 100}%`, backgroundColor: color }} />
-      </div>
-    </div>
-  )
-
-  const OngletBtn = ({ id, label, alerte }: { id: OngletPrincipal, label: string, alerte?: boolean }) => (
-    <button
-      onClick={() => setOnglet(id)}
-      className="px-4 py-3 text-sm font-medium transition border-b-2 -mb-px relative whitespace-nowrap"
-      style={{
-        color: onglet === id ? '#6b21a8' : '#a8a29e',
-        borderBottomColor: onglet === id ? '#6b21a8' : 'transparent',
-      }}
-    >
-      {label}
-      {alerte && <span className="absolute top-2 right-1 w-2 h-2 rounded-full" style={{ backgroundColor: '#f59e0b' }} />}
-    </button>
-  )
-
-  const CardKpi = ({ label, value, emoji, delta, cible, alerte }: {
-    label: string, value: string, emoji: string, delta: string, cible: OngletPrincipal, alerte?: boolean
-  }) => (
-    <button
-      onClick={() => setOnglet(cible)}
-      className="bg-white rounded-2xl p-5 shadow-sm text-left hover:shadow-md transition relative"
-      style={{ border: `1px solid ${alerte ? '#fde68a' : '#e7e5e4'}` }}
-    >
-      {alerte && <div className="absolute top-3 right-3 w-2 h-2 rounded-full" style={{ backgroundColor: '#f59e0b' }} />}
-      <p className="text-xl mb-1">{emoji}</p>
-      <p className="text-2xl font-light mb-0.5" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{value}</p>
-      <p className="text-xs font-medium mb-1" style={{ color: '#1c1917' }}>{label}</p>
-      <p className="text-xs" style={{ color: '#a8a29e' }}>{delta}</p>
-    </button>
-  )
+  const enAttente = praticiens.filter(p => p.valide === false || p.valide === null)
+  const valides = praticiens.filter(p => p.valide === true)
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
-
       <Nav />
 
-      <div className="max-w-7xl mx-auto px-8 py-8">
+      <div className="max-w-6xl mx-auto px-8 py-8">
 
-        <div className="mb-8">
-          <h1 className="text-2xl font-light" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
-            Tableau de bord admin
-          </h1>
-          <p className="text-sm mt-1" style={{ color: '#a8a29e' }}>Bienvenue Anaïs — vendredi 25 avril 2026</p>
-        </div>
-
-        <div className="flex gap-1 mb-8 border-b overflow-x-auto" style={{ borderColor: '#e7e5e4' }}>
-          <OngletBtn id="apercu" label="Aperçu" />
-          <OngletBtn id="praticiens" label="Praticiens" />
-          <OngletBtn id="patients" label="Patients" />
-          <OngletBtn id="rdv" label="RDV" />
-          <OngletBtn id="validation" label={`Validation (${praticiensenAttente.length})`} alerte />
-          <OngletBtn id="avis" label={`Avis signalés (${avisSignales.length})`} />
-        </div>
-
-        {/* APERÇU */}
-        {onglet === 'apercu' && (
-          <div className="flex flex-col gap-6">
-            <p className="text-xs" style={{ color: '#a8a29e' }}>Cliquez sur une carte pour voir le détail</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {kpiApercu.map((k) => (
-                <CardKpi key={k.label} label={k.label} value={k.value} emoji={k.emoji} delta={k.delta} cible={k.cible as OngletPrincipal} alerte={k.alerte} />
-              ))}
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Croissance praticiens</h2>
-                <p className="text-xs mb-4" style={{ color: '#a8a29e' }}>12 derniers mois</p>
-                <Courbe data={courbeInscrits.praticiens} color="#6b21a8" max={maxPraticiens} />
-                <div className="flex justify-between mt-1">
-                  {courbeInscrits.mois.map((m) => <span key={m} className="text-xs" style={{ color: '#a8a29e' }}>{m}</span>)}
-                </div>
-              </div>
-              <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Croissance patients</h2>
-                <p className="text-xs mb-4" style={{ color: '#a8a29e' }}>12 derniers mois</p>
-                <Courbe data={courbeInscrits.patients} color="#a855f7" max={maxPatients} />
-                <div className="flex justify-between mt-1">
-                  {courbeInscrits.mois.map((m) => <span key={m} className="text-xs" style={{ color: '#a8a29e' }}>{m}</span>)}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* PRATICIENS */}
-        {onglet === 'praticiens' && (
-          <div className="flex flex-col gap-6">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {[
-                { label: 'Actifs', value: '1 247', emoji: '✅' },
-                { label: 'Nouveaux ce mois', value: '+89', emoji: '🌱' },
-                { label: 'En visio', value: '68%', emoji: '🖥' },
-                { label: 'Satisfaction moy.', value: '4.6/5', emoji: '⭐' },
-              ].map((k) => (
-                <div key={k.label} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                  <p className="text-xl mb-1">{k.emoji}</p>
-                  <p className="text-2xl font-light mb-0.5" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{k.value}</p>
-                  <p className="text-xs" style={{ color: '#a8a29e' }}>{k.label}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-              <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
-                <div>
-                  <h2 className="font-medium" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Évolution des inscriptions</h2>
-                  <p className="text-xs" style={{ color: '#a8a29e' }}>12 derniers mois</p>
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                  {['Toutes zones', 'France', 'Belgique', 'Suisse'].map((f, i) => (
-                    <button key={f} className="text-xs px-3 py-1.5 rounded-xl border transition" style={{ borderColor: i === 0 ? '#6b21a8' : '#e7e5e4', color: i === 0 ? '#6b21a8' : '#78716c', backgroundColor: i === 0 ? '#f5f3ff' : 'white' }}>
-                      {f}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <Courbe data={courbeInscrits.praticiens} color="#6b21a8" max={maxPraticiens} />
-              <div className="flex justify-between mt-1">
-                {courbeInscrits.mois.map((m) => <span key={m} className="text-xs" style={{ color: '#a8a29e' }}>{m}</span>)}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Répartition géographique</h2>
-                <div className="flex flex-col gap-3">
-                  {repartitionGeo.map((g) => <BarreH key={g.pays} label={g.pays} value={g.praticiens} max={892} color="#6b21a8" extra="praticiens" />)}
-                </div>
-              </div>
-              <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Répartition par spécialité</h2>
-                <div className="flex flex-col gap-3">
-                  {repartitionSpecialite.map((s) => <BarreH key={s.label} label={s.label} value={s.praticiens} max={187} color="#a855f7" extra="praticiens" />)}
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-              <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>RDV et satisfaction par spécialité</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr style={{ borderBottom: '1px solid #e7e5e4' }}>
-                      {['Spécialité', 'Praticiens', 'RDV ce mois', 'RDV / praticien', 'Satisfaction'].map((h) => (
-                        <th key={h} className="text-left py-3 px-2 text-xs font-medium" style={{ color: '#a8a29e' }}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {repartitionSpecialite.map((s) => (
-                      <tr key={s.label} style={{ borderBottom: '1px solid #f5f5f4' }}>
-                        <td className="py-3 px-2 font-medium" style={{ color: '#1c1917' }}>{s.label}</td>
-                        <td className="py-3 px-2" style={{ color: '#57534e' }}>{s.praticiens}</td>
-                        <td className="py-3 px-2" style={{ color: '#57534e' }}>{s.rdv}</td>
-                        <td className="py-3 px-2" style={{ color: '#57534e' }}>{(s.rdv / s.praticiens).toFixed(1)}</td>
-                        <td className="py-3 px-2">
-                          <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>⭐ {s.satisfaction}</span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* PATIENTS */}
-        {onglet === 'patients' && (
-          <div className="flex flex-col gap-6">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {[
-                { label: 'Inscrits', value: '4 832', emoji: '🙋' },
-                { label: 'Nouveaux ce mois', value: '+423', emoji: '🌱' },
-                { label: 'Utilisent orientation', value: '32%', emoji: '💬' },
-                { label: 'Satisfaction moy.', value: '4.8/5', emoji: '⭐' },
-              ].map((k) => (
-                <div key={k.label} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                  <p className="text-xl mb-1">{k.emoji}</p>
-                  <p className="text-2xl font-light mb-0.5" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{k.value}</p>
-                  <p className="text-xs" style={{ color: '#a8a29e' }}>{k.label}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-              <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
-                <div>
-                  <h2 className="font-medium" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Évolution des inscriptions</h2>
-                  <p className="text-xs" style={{ color: '#a8a29e' }}>12 derniers mois</p>
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                  {['Tous', 'France', 'Belgique', 'Femmes', 'Hommes', '-30 ans', '30-45 ans', '+45 ans'].map((f, i) => (
-                    <button key={f} className="text-xs px-3 py-1.5 rounded-xl border transition" style={{ borderColor: i === 0 ? '#6b21a8' : '#e7e5e4', color: i === 0 ? '#6b21a8' : '#78716c', backgroundColor: i === 0 ? '#f5f3ff' : 'white' }}>
-                      {f}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <Courbe data={courbeInscrits.patients} color="#a855f7" max={maxPatients} />
-              <div className="flex justify-between mt-1">
-                {courbeInscrits.mois.map((m) => <span key={m} className="text-xs" style={{ color: '#a8a29e' }}>{m}</span>)}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Répartition géographique</h2>
-                <div className="flex flex-col gap-3">
-                  {repartitionGeo.map((g) => <BarreH key={g.pays} label={g.pays} value={g.patients} max={3241} color="#6b21a8" extra="patients" />)}
-                </div>
-              </div>
-              <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Profil démographique</h2>
-                <div className="flex flex-col gap-3">
-                  {repartitionPatients.map((p) => <BarreH key={p.label} label={p.label} value={p.pct} max={100} color="#a855f7" extra="%" />)}
-                </div>
-              </div>
-              <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Entrée sur la plateforme</h2>
-                <p className="text-xs mb-4" style={{ color: '#a8a29e' }}>Comment les patients arrivent</p>
-                <div className="flex flex-col gap-4">
-                  {entreePatients.map((e) => (
-                    <div key={e.label}>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span>{e.emoji}</span>
-                        <span className="text-xs" style={{ color: '#57534e' }}>{e.label}</span>
-                        <span className="ml-auto text-sm font-medium" style={{ color: '#6b21a8' }}>{e.pct}%</span>
-                      </div>
-                      <div className="w-full h-3 rounded-full" style={{ backgroundColor: '#f5f3ff' }}>
-                        <div className="h-full rounded-full" style={{ width: `${e.pct}%`, backgroundColor: '#6b21a8' }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 p-3 rounded-xl" style={{ backgroundColor: '#f5f3ff', border: '1px solid #ede9fe' }}>
-                  <p className="text-xs font-medium" style={{ color: '#6b21a8' }}>
-                    💡 32% utilisent l orientation — objectif 50%
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* RDV */}
-        {onglet === 'rdv' && (
-          <div className="flex flex-col gap-6">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {[
-                { label: 'RDV ce mois', value: '2 341', emoji: '📅' },
-                { label: 'Taux annulation', value: '8%', emoji: '❌' },
-                { label: 'En visio', value: '44%', emoji: '🖥' },
-                { label: 'Délai moyen RDV', value: '3,2 jours', emoji: '⏱' },
-              ].map((k) => (
-                <div key={k.label} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                  <p className="text-xl mb-1">{k.emoji}</p>
-                  <p className="text-2xl font-light mb-0.5" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{k.value}</p>
-                  <p className="text-xs" style={{ color: '#a8a29e' }}>{k.label}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-              <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>RDV par semaine ce mois</h2>
-              <div className="flex items-end gap-6 h-32 px-4">
-                {rdvParSemaine.map((s) => (
-                  <div key={s.semaine} className="flex-1 flex flex-col items-center gap-2">
-                    <p className="text-sm font-medium" style={{ color: '#6b21a8' }}>{s.rdv}</p>
-                    <div className="w-full rounded-t-xl" style={{ height: `${(s.rdv / 706) * 96}px`, backgroundColor: '#6b21a8', opacity: s.semaine === 'S4' ? 1 : 0.5 }} />
-                    <p className="text-xs" style={{ color: '#a8a29e' }}>{s.semaine}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>RDV par spécialité</h2>
-                <div className="flex flex-col gap-3">
-                  {rdvParSpecialite.map((s) => <BarreH key={s.label} label={s.label} value={s.rdv} max={521} color="#6b21a8" extra={`(${s.pct}%)`} />)}
-                </div>
-              </div>
-              <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-                <h2 className="font-medium mb-4" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Cabinet vs Visio</h2>
-                <div className="flex gap-4 mb-4">
-                  <div className="flex-1 text-center p-4 rounded-2xl" style={{ backgroundColor: '#faf9f7' }}>
-                    <p className="text-2xl font-light" style={{ color: '#1c1917' }}>56%</p>
-                    <p className="text-xs mt-1" style={{ color: '#a8a29e' }}>🏥 Cabinet</p>
-                  </div>
-                  <div className="flex-1 text-center p-4 rounded-2xl" style={{ backgroundColor: '#f5f3ff' }}>
-                    <p className="text-2xl font-light" style={{ color: '#6b21a8' }}>44%</p>
-                    <p className="text-xs mt-1" style={{ color: '#a8a29e' }}>🖥 Visio</p>
-                  </div>
-                </div>
-                <h2 className="font-medium mb-3" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Par zone géographique</h2>
-                <div className="flex flex-col gap-3">
-                  {repartitionGeo.map((g) => (
-                    <div key={g.pays}>
-                      <div className="flex justify-between mb-1">
-                        <span className="text-xs" style={{ color: '#57534e' }}>{g.pays}</span>
-                        <span className="text-xs font-medium" style={{ color: '#6b21a8' }}>{g.pct}%</span>
-                      </div>
-                      <div className="w-full h-2 rounded-full" style={{ backgroundColor: '#f5f3ff' }}>
-                        <div className="h-full rounded-full" style={{ width: `${g.pct}%`, backgroundColor: '#6b21a8' }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* VALIDATION */}
-        {onglet === 'validation' && (
-          <div className="flex flex-col gap-4">
-            <p className="text-sm" style={{ color: '#a8a29e' }}>
-              {praticiensenAttente.filter(p => p.status === 'complet').length} dossiers complets prêts à valider —{' '}
-              {praticiensenAttente.filter(p => p.status === 'incomplet').length} dossiers incomplets
+        <div className="flex justify-between items-center mb-8 flex-wrap gap-3">
+          <div>
+            <h1 className="text-2xl font-light" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
+              Dashboard Admin 🌿
+            </h1>
+            <p className="text-sm mt-1" style={{ color: '#a8a29e' }}>
+              {enAttente.length} dossier{enAttente.length > 1 ? 's' : ''} en attente · {valides.length} praticien{valides.length > 1 ? 's' : ''} validé{valides.length > 1 ? 's' : ''}
             </p>
-            {praticiensenAttente.map((p) => (
-              <div key={p.nom} className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: `1px solid ${p.status === 'complet' ? '#e7e5e4' : '#fde68a'}` }}>
-                <div className="flex items-start justify-between flex-wrap gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-medium" style={{ color: '#1c1917' }}>{p.nom}</h3>
-                      <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: p.status === 'complet' ? '#f0fdf4' : '#fffbeb', color: p.status === 'complet' ? '#16a34a' : '#92400e' }}>
-                        {p.status === 'complet' ? '✓ Dossier complet' : '⚠ Dossier incomplet'}
-                      </span>
-                    </div>
-                    <p className="text-sm" style={{ color: '#6b21a8' }}>{p.specialite}</p>
-                    <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>📍 {p.ville} · Inscrit {p.date}</p>
-                    <div className="flex gap-2 mt-3 flex-wrap">
-                      {['SIRET', 'Diplôme', 'Assurance'].map((doc) => (
-                        <span key={doc} className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: p.documents.includes(doc) ? '#f0fdf4' : '#fef2f2', color: p.documents.includes(doc) ? '#16a34a' : '#dc2626' }}>
-                          {p.documents.includes(doc) ? '✓' : '✗'} {doc}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    {p.status === 'complet' ? (
-                      <>
-                        <button className="text-white text-sm px-5 py-2 rounded-xl" style={{ backgroundColor: '#16a34a' }}>✓ Valider</button>
-                        <button className="text-sm px-5 py-2 rounded-xl border" style={{ borderColor: '#dc2626', color: '#dc2626' }}>Refuser</button>
-                      </>
-                    ) : (
-                      <button className="text-sm px-5 py-2 rounded-xl border" style={{ borderColor: '#e7e5e4', color: '#78716c' }}>Relancer par email</button>
-                    )}
-                    <button className="text-sm px-5 py-2 rounded-xl" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>Voir le dossier</button>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
-        )}
+          <button
+            onClick={chargerPraticiens}
+            className="text-sm px-4 py-2 rounded-xl"
+            style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
+          >
+            🔄 Rafraîchir
+          </button>
+        </div>
 
-        {/* AVIS SIGNALÉS */}
-        {onglet === 'avis' && (
+        {/* ONGLETS */}
+        <div className="flex gap-2 mb-8 border-b" style={{ borderColor: '#e7e5e4' }}>
+          {[
+            { id: 'dossiers', label: `📋 En attente (${enAttente.length})` },
+            { id: 'valides', label: `✅ Validés (${valides.length})` },
+            { id: 'tous', label: `👥 Tous (${praticiens.length})` },
+          ].map((o) => (
+            <button
+              key={o.id}
+              onClick={() => setOnglet(o.id)}
+              className="px-4 py-3 text-sm font-medium transition border-b-2 -mb-px whitespace-nowrap"
+              style={{
+                color: onglet === o.id ? '#6b21a8' : '#a8a29e',
+                borderBottomColor: onglet === o.id ? '#6b21a8' : 'transparent',
+              }}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+
+        {/* RECHERCHE */}
+        <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3 mb-6" style={{ border: '1px solid #e7e5e4' }}>
+          <span>🔍</span>
+          <input
+            type="text"
+            value={recherche}
+            onChange={(e) => setRecherche(e.target.value)}
+            placeholder="Rechercher par nom, spécialité ou email..."
+            className="flex-1 text-sm outline-none bg-transparent"
+            style={{ color: '#1c1917' }}
+          />
+        </div>
+
+        {chargement ? (
+          <div className="text-center py-16">
+            <p className="text-4xl mb-4">🌿</p>
+            <p className="text-sm" style={{ color: '#a8a29e' }}>Chargement...</p>
+          </div>
+        ) : (
           <div className="flex flex-col gap-4">
-            <p className="text-sm" style={{ color: '#a8a29e' }}>Avis signalés par des praticiens ou patients — à modérer</p>
-            {avisSignales.map((avis) => (
-              <div key={avis.patient + avis.date} className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: '1px solid #fecaca' }}>
-                <div className="flex items-start justify-between flex-wrap gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}>🚩 {avis.raison}</span>
-                      <span className="text-xs" style={{ color: '#a8a29e' }}>{avis.date}</span>
+            {praticiensFiltres
+              .filter(p => {
+                if (onglet === 'dossiers') return p.valide === false || p.valide === null
+                if (onglet === 'valides') return p.valide === true
+                return true
+              })
+              .map((praticien) => (
+                <div key={praticien.id} className="bg-white rounded-3xl shadow-sm overflow-hidden" style={{ border: '1px solid #e7e5e4' }}>
+
+                  {/* EN-TÊTE PRATICIEN */}
+                  <div
+                    className="p-6 flex items-start justify-between gap-4 cursor-pointer hover:bg-gray-50 transition"
+                    onClick={() => setDossierOuvert(dossierOuvert === praticien.id ? null : praticien.id)}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-lg font-medium" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
+                        {praticien.nom?.[0] || '?'}
+                      </div>
+                      <div>
+                        <p className="font-medium" style={{ color: '#1c1917' }}>{praticien.nom || '—'}</p>
+                        <p className="text-sm" style={{ color: '#6b21a8' }}>{praticien.specialite || '—'}</p>
+                        <p className="text-xs" style={{ color: '#a8a29e' }}>{praticien.email} · {praticien.ville}, {praticien.pays}</p>
+                      </div>
                     </div>
-                    <p className="text-xs mb-1" style={{ color: '#a8a29e' }}>
-                      Avis de <strong>{avis.patient}</strong> sur <strong>{avis.praticien}</strong>
-                    </p>
-                    <div className="flex gap-0.5 mb-2">
-                      {[1,2,3,4,5].map((i) => <span key={i} className="text-xs">{i <= avis.note ? '⭐' : '☆'}</span>)}
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <span className="text-xs px-3 py-1 rounded-full font-medium" style={{
+                        backgroundColor: praticien.valide === true ? '#f0fdf4' : '#fef9c3',
+                        color: praticien.valide === true ? '#16a34a' : '#854d0e',
+                      }}>
+                        {praticien.valide === true ? '✅ Validé' : '⏳ En attente'}
+                      </span>
+                      <span style={{ color: '#a8a29e' }}>{dossierOuvert === praticien.id ? '▲' : '▼'}</span>
                     </div>
-                    <p className="text-sm" style={{ color: '#57534e' }}>{avis.texte}</p>
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <button className="text-white text-sm px-5 py-2 rounded-xl" style={{ backgroundColor: '#dc2626' }}>Supprimer</button>
-                    <button className="text-sm px-5 py-2 rounded-xl border" style={{ borderColor: '#e7e5e4', color: '#78716c' }}>Conserver</button>
-                  </div>
+
+                  {/* DÉTAIL DOSSIER */}
+                  {dossierOuvert === praticien.id && (
+                    <div className="px-6 pb-6" style={{ borderTop: '1px solid #f5f5f4' }}>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+
+                        {/* Infos générales */}
+                        <div>
+                          <p className="text-xs font-medium mb-3" style={{ color: '#6b21a8' }}>Informations</p>
+                          <div className="flex flex-col gap-2">
+                            {[
+                              { label: 'Téléphone', value: praticien.telephone },
+                              { label: 'Mode', value: `${praticien.cabinet ? '🏥 Cabinet' : ''} ${praticien.visio ? '🖥 Visio' : ''}` },
+                              { label: 'Inscription', value: praticien.created_at ? new Date(praticien.created_at).toLocaleDateString('fr-FR') : '—' },
+                            ].map((item) => (
+                              <div key={item.label} className="flex gap-2">
+                                <span className="text-xs font-medium w-24 flex-shrink-0" style={{ color: '#78716c' }}>{item.label} :</span>
+                                <span className="text-xs" style={{ color: '#1c1917' }}>{item.value || '—'}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Assurance */}
+                        <div>
+                          <p className="text-xs font-medium mb-3" style={{ color: '#6b21a8' }}>Assurance RC Pro</p>
+                          <div className="flex flex-col gap-2">
+                            <div className="flex gap-2">
+                              <span className="text-xs font-medium w-24 flex-shrink-0" style={{ color: '#78716c' }}>Assureur :</span>
+                              <span className="text-xs" style={{ color: praticien.assureur ? '#1c1917' : '#dc2626' }}>{praticien.assureur || '⚠️ Non renseigné'}</span>
+                            </div>
+                            <div className="flex gap-2">
+                              <span className="text-xs font-medium w-24 flex-shrink-0" style={{ color: '#78716c' }}>N° police :</span>
+                              <span className="text-xs" style={{ color: praticien.assurance ? '#1c1917' : '#dc2626' }}>{praticien.assurance || '⚠️ Non renseigné'}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Diplômes */}
+                        <div className="sm:col-span-2">
+                          <p className="text-xs font-medium mb-3" style={{ color: '#6b21a8' }}>Formations et diplômes</p>
+                          {praticien.diplomes && praticien.diplomes.length > 0 ? (
+                            <div className="flex flex-col gap-2">
+                              {praticien.diplomes.map((d: any, i: number) => (
+                                <div key={i} className="flex gap-4 p-3 rounded-xl" style={{ backgroundColor: '#faf9f7' }}>
+                                  <span className="text-xs font-medium" style={{ color: '#6b21a8' }}>#{i + 1}</span>
+                                  <span className="text-xs" style={{ color: '#1c1917' }}>{d.titre} — {d.ecole} ({d.annee})</span>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-xs" style={{ color: '#dc2626' }}>⚠️ Aucun diplôme renseigné</p>
+                          )}
+                        </div>
+
+                        {/* Tarifs */}
+                        <div className="sm:col-span-2">
+                          <p className="text-xs font-medium mb-3" style={{ color: '#6b21a8' }}>Prestations et tarifs</p>
+                          {praticien.tarifs && praticien.tarifs.length > 0 ? (
+                            <div className="flex flex-wrap gap-2">
+                              {praticien.tarifs.map((t: any, i: number) => (
+                                <span key={i} className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
+                                  {t.label} · {t.duree} · {t.prix}€
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-xs" style={{ color: '#dc2626' }}>⚠️ Aucun tarif renseigné</p>
+                          )}
+                        </div>
+
+                        {/* Bio */}
+                        {praticien.bio && (
+                          <div className="sm:col-span-2">
+                            <p className="text-xs font-medium mb-2" style={{ color: '#6b21a8' }}>Présentation</p>
+                            <p className="text-xs leading-relaxed" style={{ color: '#57534e' }}>{praticien.bio}</p>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* ACTIONS VALIDATION */}
+                      {praticien.valide !== true && (
+                        <div className="mt-6 pt-6" style={{ borderTop: '1px solid #f5f5f4' }}>
+                          <p className="text-xs font-medium mb-4" style={{ color: '#6b21a8' }}>Décision de validation</p>
+                          <div className="flex flex-col gap-3">
+                            <button
+                              onClick={() => validerPraticien(praticien)}
+                              className="text-white px-6 py-3 rounded-2xl text-sm font-medium self-start"
+                              style={{ backgroundColor: '#16a34a' }}
+                            >
+                              ✅ Valider ce praticien
+                            </button>
+                            <div className="flex gap-3 items-start">
+                              <input
+                                type="text"
+                                value={motifRefus}
+                                onChange={(e) => setMotifRefus(e.target.value)}
+                                placeholder="Motif du refus (ex: diplôme non reconnu, assurance expirée...)"
+                                className="flex-1 text-sm rounded-xl px-4 py-3 outline-none"
+                                style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
+                              />
+                              <button
+                                onClick={() => refuserPraticien(praticien)}
+                                className="text-white px-6 py-3 rounded-2xl text-sm font-medium flex-shrink-0"
+                                style={{ backgroundColor: '#dc2626' }}
+                              >
+                                ❌ Refuser
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {praticien.valide === true && (
+                        <div className="mt-6 pt-6 flex gap-3" style={{ borderTop: '1px solid #f5f5f4' }}>
+                          <button
+                            onClick={async () => {
+                              await supabase.from('praticiens').update({ valide: false, actif: false }).eq('id', praticien.id)
+                              chargerPraticiens()
+                            }}
+                            className="text-sm px-4 py-2 rounded-xl"
+                            style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}
+                          >
+                            Suspendre ce praticien
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
+              ))}
+
+            {praticiensFiltres.filter(p => {
+              if (onglet === 'dossiers') return p.valide === false || p.valide === null
+              if (onglet === 'valides') return p.valide === true
+              return true
+            }).length === 0 && (
+              <div className="text-center py-16">
+                <p className="text-4xl mb-4">🌿</p>
+                <p className="text-sm" style={{ color: '#a8a29e' }}>
+                  {onglet === 'dossiers' ? 'Aucun dossier en attente' : 'Aucun praticien trouvé'}
+                </p>
               </div>
-            ))}
+            )}
           </div>
         )}
-
       </div>
     </main>
   )

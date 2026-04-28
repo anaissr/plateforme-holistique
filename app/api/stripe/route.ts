@@ -8,7 +8,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Clé Stripe manquante' }, { status: 500 })
     }
 
-    const stripe = new Stripe(key, { apiVersion: '2026-04-22.dahlia' })
+    const stripe = new Stripe(key)
     const { montant, description, email } = await request.json()
     const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
 
@@ -28,7 +28,6 @@ export async function POST(request: Request) {
       success_url: `${baseUrl}/paiement-success`,
       cancel_url: `${baseUrl}/praticien`,
       customer_email: email || undefined,
-    
     })
 
     return NextResponse.json({ url: session.url })
@@ -36,3 +35,4 @@ export async function POST(request: Request) {
     console.error('Stripe error:', error?.message)
     return NextResponse.json({ error: error?.message }, { status: 500 })
   }
+}

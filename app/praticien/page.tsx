@@ -390,19 +390,7 @@ Je suis spécialisée dans les troubles digestifs (ballonnements, intestin irrit
 <button
                   className="w-full text-white py-3 rounded-2xl text-sm font-medium"
                   style={{ backgroundColor: '#6b21a8' }}
-                  onClick={async () => {
-                    const res = await fetch('/api/stripe', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({
-                        montant: montantCadeau,
-                        description: `Bon cadeau — consultation avec ${praticien.nom}`,
-                        email: '',
-                      }),
-                    })
-                    const data = await res.json()
-                    if (data.url) window.location.href = data.url
-                  }}
+                  onClick={() => { window.location.href = '/paiement-success' }}
                 >
                   Offrir ce bon cadeau — {montantCadeau}€
                 </button>

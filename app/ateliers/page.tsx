@@ -1,4 +1,3 @@
-
 'use client'
 
 import Nav from '@/app/components/Nav'
@@ -147,13 +146,83 @@ export default function Ateliers() {
   const [atelierOuvert, setAtelierOuvert] = useState<number | null>(null)
   const [modaleCadeau, setModaleCadeau] = useState<typeof ateliers[0] | null>(null)
   const [messagesCadeau, setMessageCadeau] = useState('')
+  const [messagePraticienCadeau, setMessagePraticienCadeau] = useState('')
   const [emailDestinataire, setEmailDestinataire] = useState('')
+  const [nomDestinataire, setNomDestinataire] = useState('')
+  const [nomAcheteur, setNomAcheteur] = useState('')
+  const [emailAcheteur, setEmailAcheteur] = useState('')
+  const [succesEtape, setSuccesEtape] = useState<number | null>(null)
+  const [messageReservation, setMessageReservation] = useState('')
+  const [nomPatient, setNomPatient] = useState('')
+  const [emailPatient, setEmailPatient] = useState('')
+  const [succesReservation, setSuccesReservation] = useState<number | null>(null)
+  const [chargement, setChargement] = useState(false)
 
   const ateliersFiltres = ateliers.filter((a) => {
     const matchCategorie = categorieActive === 'tous' || a.categorie === categorieActive
     const matchFormat = formatActif === 'tous' || a.format === formatActif
     return matchCategorie && matchFormat
   })
+
+  const envoyerCadeau = async () => {
+    if (!emailDestinataire || !nomDestinataire || !nomAcheteur || !emailAcheteur) return
+    setChargement(true)
+    await fetch('/api/email-atelier', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'bon_cadeau',
+        atelier: modaleCadeau?.titre,
+        praticien: modaleCadeau?.praticien,
+        date: modaleCadeau?.date,
+        heure: modaleCadeau?.heure,
+        format: modaleCadeau?.format,
+        tarif: modaleCadeau?.tarif,
+        nomAcheteur,
+        emailAcheteur,
+        emailDestinataire,
+        nomDestinataire,
+        message: messagesCadeau,
+        messagePraticien: messagePraticienCadeau,
+      }),
+    })
+    setSuccesEtape(modaleCadeau?.id || null)
+    setChargement(false)
+  }
+
+  const envoyerReservation = async (atelier: typeof ateliers[0]) => {
+    if (!nomPatient || !emailPatient) return
+    setChargement(true)
+    await fetch('/api/email-atelier', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'reservation',
+        atelier: atelier.titre,
+        praticien: atelier.praticien,
+        date: atelier.date,
+        heure: atelier.heure,
+        format: atelier.format,
+        tarif: atelier.tarif,
+        nomPatient,
+        emailPatient,
+        message: messageReservation,
+      }),
+    })
+    setSuccesReservation(atelier.id)
+    setChargement(false)
+  }
+
+  const reinitialiserCadeau = () => {
+    setModaleCadeau(null)
+    setSuccesEtape(null)
+    setEmailDestinataire('')
+    setNomDestinataire('')
+    setNomAcheteur('')
+    setEmailAcheteur('')
+    setMessageCadeau('')
+    setMessagePraticienCadeau('')
+  }
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
@@ -164,92 +233,105 @@ export default function Ateliers() {
         <div
           className="fixed inset-0 z-50 flex items-center justify-center px-4"
           style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
-          onClick={() => setModaleCadeau(null)}
+          onClick={() => { if (succesEtape !== modaleCadeau.id) setModaleCadeau(null) }}
         >
           <div
-            className="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl"
+            className="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl overflow-y-auto"
+            style={{ maxHeight: '90vh' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-center mb-6">
-              <p className="text-4xl mb-3">🎁</p>
-              <h2 className="text-xl font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
-                Offrir cet atelier
-              </h2>
-              <p className="text-sm" style={{ color: '#a8a29e' }}>
-                {modaleCadeau.titre}
-              </p>
-            </div>
-
-            <div className="rounded-2xl p-4 mb-5" style={{ backgroundColor: '#f5f3ff' }}>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{modaleCadeau.specialite}</p>
-                  <p className="text-xs" style={{ color: '#78716c' }}>avec {modaleCadeau.praticien}</p>
-                  <p className="text-xs" style={{ color: '#78716c' }}>📅 {modaleCadeau.date} · {modaleCadeau.heure}</p>
-                </div>
-                <p className="text-2xl font-light" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-                  {modaleCadeau.tarif}
+            {succesEtape === modaleCadeau.id ? (
+              <div className="text-center py-4">
+                <p className="text-4xl mb-4">🎁</p>
+                <p className="text-lg font-medium mb-2" style={{ color: '#16a34a', fontFamily: 'var(--font-lora)' }}>
+                  Demande envoyée !
                 </p>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4 mb-6">
-              <div>
-                <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>
-                  Email du destinataire
-                </label>
-                <input
-                  type="email"
-                  value={emailDestinataire}
-                  onChange={(e) => setEmailDestinataire(e.target.value)}
-                  placeholder="prenom@email.com"
-                  className="w-full text-sm rounded-xl px-4 py-3 outline-none"
-                  style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
-                />
-              </div>
-              <div>
-                <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>
-                  Message personnalisé (optionnel)
-                </label>
-                <textarea
-                  value={messagesCadeau}
-                  onChange={(e) => setMessageCadeau(e.target.value)}
-                  placeholder="Je pense que cet atelier te ferait du bien..."
-                  className="w-full text-sm rounded-xl px-4 py-3 resize-none outline-none"
-                  style={{ border: '1px solid #e7e5e4', color: '#1c1917', height: '80px' }}
-                />
-              </div>
-            </div>
-
-          <button
-                  className="w-full text-white py-3 rounded-2xl text-sm font-medium mb-3"
-                  style={{ backgroundColor: '#6b21a8' }}
-                  onClick={async () => {
-                    const res = await fetch('/api/stripe', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({
-                        montant: modaleCadeau.tarifsNum,
-                        description: `Bon cadeau — ${modaleCadeau.titre} avec ${modaleCadeau.praticien}`,
-                        email: emailDestinataire || '',
-                      }),
-                    })
-                    const data = await res.json()
-                    if (data.url) window.location.href = data.url
-                  }}
+                <p className="text-sm mb-2" style={{ color: '#57534e' }}>
+                  Un récapitulatif vous a été envoyé par email. {modaleCadeau.praticien} va vous contacter rapidement pour finaliser le paiement.
+                </p>
+                <button
+                  onClick={reinitialiserCadeau}
+                  className="mt-4 text-sm px-6 py-2.5 rounded-xl"
+                  style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
                 >
-                  Offrir cet atelier — {modaleCadeau.tarif}
+                  Fermer
                 </button>
-            <p className="text-xs text-center mb-4" style={{ color: '#a8a29e' }}>
-              Le bon cadeau est envoyé par email · Valable pour cet atelier uniquement
-            </p>
-            <button
-              onClick={() => setModaleCadeau(null)}
-              className="w-full py-2 text-sm"
-              style={{ color: '#a8a29e' }}
-            >
-              Annuler
-            </button>
+              </div>
+            ) : (
+              <>
+                <div className="text-center mb-6">
+                  <p className="text-4xl mb-3">🎁</p>
+                  <h2 className="text-xl font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
+                    Offrir cet atelier
+                  </h2>
+                  <p className="text-sm" style={{ color: '#a8a29e' }}>{modaleCadeau.titre}</p>
+                </div>
+
+                <div className="rounded-2xl p-4 mb-5" style={{ backgroundColor: '#f5f3ff' }}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{modaleCadeau.specialite}</p>
+                      <p className="text-xs" style={{ color: '#78716c' }}>avec {modaleCadeau.praticien}</p>
+                      <p className="text-xs" style={{ color: '#78716c' }}>📅 {modaleCadeau.date} · {modaleCadeau.heure}</p>
+                    </div>
+                    <p className="text-2xl font-light" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
+                      {modaleCadeau.tarif}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-4 mb-6">
+                  <p className="text-xs font-medium" style={{ color: '#6b21a8' }}>Vos informations</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Votre prénom et nom *</label>
+                      <input type="text" value={nomAcheteur} onChange={(e) => setNomAcheteur(e.target.value)} placeholder="Jean Martin" className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }} />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Votre email *</label>
+                      <input type="email" value={emailAcheteur} onChange={(e) => setEmailAcheteur(e.target.value)} placeholder="jean@email.com" className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }} />
+                    </div>
+                  </div>
+
+                  <p className="text-xs font-medium" style={{ color: '#6b21a8' }}>Informations du destinataire</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Prénom et nom *</label>
+                      <input type="text" value={nomDestinataire} onChange={(e) => setNomDestinataire(e.target.value)} placeholder="Marie Dupont" className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }} />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Email *</label>
+                      <input type="email" value={emailDestinataire} onChange={(e) => setEmailDestinataire(e.target.value)} placeholder="marie@email.com" className="w-full text-sm rounded-xl px-4 py-3 outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917' }} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Votre message pour {nomDestinataire || 'le destinataire'} (optionnel)</label>
+                    <textarea value={messagesCadeau} onChange={(e) => setMessageCadeau(e.target.value)} placeholder="Je pense que cet atelier te ferait du bien..." className="w-full text-sm rounded-xl px-4 py-3 resize-none outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917', height: '70px' }} />
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Message pour {modaleCadeau.praticien} (optionnel)</label>
+                    <textarea value={messagePraticienCadeau} onChange={(e) => setMessagePraticienCadeau(e.target.value)} placeholder="Bonjour, je souhaite offrir cet atelier à..." className="w-full text-sm rounded-xl px-4 py-3 resize-none outline-none" style={{ border: '1px solid #e7e5e4', color: '#1c1917', height: '70px' }} />
+                  </div>
+                </div>
+
+                <button
+                  onClick={envoyerCadeau}
+                  disabled={!emailDestinataire || !nomDestinataire || !nomAcheteur || !emailAcheteur || chargement}
+                  className="w-full text-white py-3 rounded-2xl text-sm font-medium mb-3"
+                  style={{ backgroundColor: emailDestinataire && nomDestinataire && nomAcheteur && emailAcheteur ? '#6b21a8' : '#d8b4fe' }}
+                >
+                  {chargement ? 'Envoi en cours...' : `Envoyer ma demande — ${modaleCadeau.tarif}`}
+                </button>
+                <p className="text-xs text-center mb-4" style={{ color: '#a8a29e' }}>
+                  {modaleCadeau.praticien} vous contactera rapidement pour finaliser le paiement.
+                </p>
+                <button onClick={() => setModaleCadeau(null)} className="w-full py-2 text-sm" style={{ color: '#a8a29e' }}>
+                  Annuler
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
@@ -288,32 +370,14 @@ export default function Ateliers() {
         <div className="max-w-5xl mx-auto flex flex-col gap-3">
           <div className="flex gap-2 flex-wrap justify-center">
             {categories.map((cat) => (
-              <button
-                key={cat.valeur}
-                onClick={() => setCategorieActive(cat.valeur)}
-                className="text-sm px-4 py-2 rounded-full transition"
-                style={{
-                  backgroundColor: categorieActive === cat.valeur ? '#6b21a8' : '#faf9f7',
-                  color: categorieActive === cat.valeur ? '#ffffff' : '#57534e',
-                  border: categorieActive === cat.valeur ? 'none' : '1px solid #e7e5e4',
-                }}
-              >
+              <button key={cat.valeur} onClick={() => setCategorieActive(cat.valeur)} className="text-sm px-4 py-2 rounded-full transition" style={{ backgroundColor: categorieActive === cat.valeur ? '#6b21a8' : '#faf9f7', color: categorieActive === cat.valeur ? '#ffffff' : '#57534e', border: categorieActive === cat.valeur ? 'none' : '1px solid #e7e5e4' }}>
                 {cat.label}
               </button>
             ))}
           </div>
           <div className="flex gap-2 justify-center">
             {formats.map((f) => (
-              <button
-                key={f.valeur}
-                onClick={() => setFormatActif(f.valeur)}
-                className="text-xs px-4 py-1.5 rounded-full transition"
-                style={{
-                  backgroundColor: formatActif === f.valeur ? '#f5f3ff' : '#faf9f7',
-                  color: formatActif === f.valeur ? '#6b21a8' : '#a8a29e',
-                  border: formatActif === f.valeur ? '1px solid #6b21a8' : '1px solid #e7e5e4',
-                }}
-              >
+              <button key={f.valeur} onClick={() => setFormatActif(f.valeur)} className="text-xs px-4 py-1.5 rounded-full transition" style={{ backgroundColor: formatActif === f.valeur ? '#f5f3ff' : '#faf9f7', color: formatActif === f.valeur ? '#6b21a8' : '#a8a29e', border: formatActif === f.valeur ? '1px solid #6b21a8' : '1px solid #e7e5e4' }}>
                 {f.label}
               </button>
             ))}
@@ -327,34 +391,19 @@ export default function Ateliers() {
       {/* LISTE ATELIERS */}
       <section className="max-w-5xl mx-auto px-6 py-12 flex flex-col gap-6">
         {ateliersFiltres.map((atelier) => (
-          <div
-            key={atelier.id}
-            className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition"
-            style={{ border: '1px solid #e7e5e4' }}
-          >
+          <div key={atelier.id} className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition" style={{ border: '1px solid #e7e5e4' }}>
             <div className="grid grid-cols-1 lg:grid-cols-3">
 
               {/* PHOTO */}
               <div className="relative" style={{ minHeight: '200px' }}>
-                <img
-                  src={atelier.photo}
-                  alt={atelier.titre}
-                  className="w-full h-full object-cover absolute inset-0"
-                  style={{ minHeight: '200px' }}
-                />
+                <img src={atelier.photo} alt={atelier.titre} className="w-full h-full object-cover absolute inset-0" style={{ minHeight: '200px' }} />
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
                   {atelier.placesRestantes <= 3 && (
                     <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}>
                       🔥 Plus que {atelier.placesRestantes} places
                     </span>
                   )}
-                  <span
-                    className="text-xs px-3 py-1 rounded-full"
-                    style={{
-                      backgroundColor: atelier.format === 'Visio' ? '#eff6ff' : '#f0fdf4',
-                      color: atelier.format === 'Visio' ? '#3b82f6' : '#16a34a',
-                    }}
-                  >
+                  <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: atelier.format === 'Visio' ? '#eff6ff' : '#f0fdf4', color: atelier.format === 'Visio' ? '#3b82f6' : '#16a34a' }}>
                     {atelier.format === 'Visio' ? '🖥 Visio' : '📍 Présentiel'}
                   </span>
                 </div>
@@ -366,9 +415,7 @@ export default function Ateliers() {
                   <div className="flex items-start justify-between gap-4 flex-wrap mb-3">
                     <div>
                       <p className="text-xs font-medium mb-1" style={{ color: '#6b21a8' }}>{atelier.specialite} · {atelier.niveau}</p>
-                      <h2 className="text-lg font-medium" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
-                        {atelier.titre}
-                      </h2>
+                      <h2 className="text-lg font-medium" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{atelier.titre}</h2>
                     </div>
                     <div className="text-right flex-shrink-0">
                       <p className="text-2xl font-light" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{atelier.tarif}</p>
@@ -378,33 +425,26 @@ export default function Ateliers() {
 
                   <div className="flex items-center gap-2 mb-3">
                     <img src={atelier.photoPraticien} alt={atelier.praticien} className="w-7 h-7 rounded-full object-cover" />
-<span className="text-sm" style={{ color: '#57534e' }}>avec <strong className="cursor-pointer hover:underline" style={{ color: '#6b21a8' }} onClick={() => { window.location.href = '/praticien' }}>{atelier.praticien}</strong></span>
+                    <span className="text-sm" style={{ color: '#57534e' }}>
+                      avec{' '}
+                      <strong className="cursor-pointer hover:underline" style={{ color: '#6b21a8' }} onClick={() => { window.location.href = '/praticien' }}>
+                        {atelier.praticien}
+                      </strong>
+                    </span>
                   </div>
 
                   <div className="flex gap-4 flex-wrap mb-3">
-                    <span className="text-xs flex items-center gap-1" style={{ color: '#78716c' }}>
-                      📅 {atelier.date}
-                    </span>
+                    <span className="text-xs" style={{ color: '#78716c' }}>📅 {atelier.date}</span>
+                    <span className="text-xs" style={{ color: '#78716c' }}>🕐 {atelier.heure}</span>
                     {atelier.format === 'Présentiel' && atelier.lieu ? (
-                      <span className="text-xs flex items-center gap-1" style={{ color: '#78716c' }}>
-                        📍 {atelier.lieu}
-                      </span>
+                      <span className="text-xs" style={{ color: '#78716c' }}>📍 {atelier.lieu}</span>
                     ) : (
-                      <span className="text-xs flex items-center gap-1" style={{ color: '#78716c' }}>
-                        🖥 Visio
-                      </span>
+                      <span className="text-xs" style={{ color: '#78716c' }}>🖥 Visio</span>
                     )}
-                    <span className="text-xs flex items-center gap-1" style={{ color: '#78716c' }}>
-                      🕐 {atelier.heure}
-                    </span>
-                    <span className="text-xs flex items-center gap-1" style={{ color: '#78716c' }}>
-                      👥 {atelier.placesRestantes}/{atelier.places} places restantes
-                    </span>
+                    <span className="text-xs" style={{ color: '#78716c' }}>👥 {atelier.placesRestantes}/{atelier.places} places restantes</span>
                   </div>
 
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#78716c' }}>
-                    {atelier.description}
-                  </p>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#78716c' }}>{atelier.description}</p>
 
                   {atelierOuvert === atelier.id && (
                     <div className="mb-4 p-4 rounded-2xl" style={{ backgroundColor: '#f5f3ff' }}>
@@ -419,28 +459,63 @@ export default function Ateliers() {
                       </div>
                     </div>
                   )}
+
+                  {/* RÉSERVATION */}
+                  {succesReservation === atelier.id ? (
+                    <div className="mb-4 p-4 rounded-2xl" style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
+                      <p className="text-sm font-medium mb-1" style={{ color: '#16a34a' }}>✅ Demande de réservation envoyée !</p>
+                      <p className="text-xs" style={{ color: '#15803d' }}>
+                        {atelier.praticien} vous contactera pour confirmer votre place et organiser le paiement.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="mb-4 flex flex-col gap-3">
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Votre prénom et nom *</label>
+                          <input
+                            type="text"
+                            value={nomPatient}
+                            onChange={(e) => setNomPatient(e.target.value)}
+                            placeholder="Marie Dupont"
+                            className="w-full text-sm rounded-xl px-3 py-2.5 outline-none"
+                            style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Votre email *</label>
+                          <input
+                            type="email"
+                            value={emailPatient}
+                            onChange={(e) => setEmailPatient(e.target.value)}
+                            placeholder="marie@email.com"
+                            className="w-full text-sm rounded-xl px-3 py-2.5 outline-none"
+                            style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
+                          />
+                        </div>
+                      </div>
+                      <textarea
+                        value={messageReservation}
+                        onChange={(e) => setMessageReservation(e.target.value)}
+                        placeholder="Message pour le praticien (optionnel) — présentez-vous, posez une question..."
+                        className="w-full text-sm rounded-xl px-4 py-3 resize-none outline-none"
+                        style={{ border: '1px solid #e7e5e4', color: '#1c1917', height: '70px' }}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex gap-3 flex-wrap items-center">
-                  <button
-                    className="text-white px-6 py-2.5 rounded-xl text-sm font-medium"
-                    style={{ backgroundColor: '#6b21a8' }}
-                    onClick={async () => {
-                      const res = await fetch('/api/stripe', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          montant: atelier.tarifsNum,
-                          description: `${atelier.titre} — avec ${atelier.praticien}`,
-                          email: '',
-                        }),
-                      })
-                      const data = await res.json()
-                      if (data.url) window.location.href = data.url
-                    }}
-                  >
-                    Réserver ma place
-                  </button>
+                  {succesReservation !== atelier.id && (
+                    <button
+                      onClick={() => envoyerReservation(atelier)}
+                      disabled={chargement || !nomPatient || !emailPatient}
+                      className="text-white px-6 py-2.5 rounded-xl text-sm font-medium"
+                      style={{ backgroundColor: nomPatient && emailPatient ? '#6b21a8' : '#d8b4fe' }}
+                    >
+                      {chargement ? 'Envoi...' : 'Réserver ma place'}
+                    </button>
+                  )}
                   <button
                     onClick={() => setAtelierOuvert(atelierOuvert === atelier.id ? null : atelier.id)}
                     className="text-sm px-4 py-2.5 rounded-xl"

@@ -133,6 +133,12 @@ export default function Dashboard() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setUploadEnCours(false); return }
 
+    if (fichier.size > 5 * 1024 * 1024) {
+      setErreurPhoto('La photo dépasse 5 Mo. Veuillez choisir un fichier plus léger.')
+      setUploadEnCours(false)
+      return
+    }
+
     const ext = fichier.name.split('.').pop()
     const chemin = `${user.id}/profil.${ext}`
 
@@ -141,7 +147,7 @@ export default function Dashboard() {
       .upload(chemin, fichier, { upsert: true })
 
     if (erreurUpload) {
-      setErreurPhoto('Erreur lors de l\'upload. Vérifiez que le bucket "photos-praticiens" existe dans Supabase Storage.')
+      setErreurPhoto(`Erreur upload (${erreurUpload.message}). Vérifiez les policies RLS du bucket dans Supabase Storage.`)
       setUploadEnCours(false)
       return
     }

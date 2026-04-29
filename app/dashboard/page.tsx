@@ -16,6 +16,9 @@ export default function Dashboard() {
   const [indicatif, setIndicatif] = useState('+33')
   const [indicatifCustom, setIndicatifCustom] = useState('')
   const [notes, setNotes] = useState<Record<string, { ponctualite: number, fiabilite: number }>>({})
+  const [photoUrl, setPhotoUrl] = useState('')
+  const [uploadEnCours, setUploadEnCours] = useState(false)
+  const [erreurPhoto, setErreurPhoto] = useState('')
 
   const [profil, setProfil] = useState({
     prenom: '',
@@ -68,6 +71,7 @@ export default function Dashboard() {
           cabinet: data.cabinet || false,
         })
         setLienVisio(data.lien_visio || '')
+        if (data.photo) setPhotoUrl(data.photo)
         if (data.diplomes) setDiplomes(data.diplomes)
         if (data.tarifs) setTarifs(data.tarifs)
         setOnglet(estValide ? 'apercu' : 'monprofil')
@@ -117,6 +121,38 @@ export default function Dashboard() {
         : 'Profil sauvegardé ! Complétez les champs obligatoires (*) pour déclencher la validation.')
     }
     setChargementProfil(false)
+  }
+
+  const uploadPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fichier = e.target.files?.[0]
+    if (!fichier) return
+
+    setUploadEnCours(true)
+    setErreurPhoto('')
+
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) { setUploadEnCours(false); return }
+
+    const ext = fichier.name.split('.').pop()
+    const chemin = `${user.id}/profil.${ext}`
+
+    const { error: erreurUpload } = await supabase.storage
+      .from('photos-praticiens')
+      .upload(chemin, fichier, { upsert: true })
+
+    if (erreurUpload) {
+      setErreurPhoto('Erreur lors de l\'upload. Vérifiez que le bucket "photos-praticiens" existe dans Supabase Storage.')
+      setUploadEnCours(false)
+      return
+    }
+
+    const { data: urlData } = supabase.storage.from('photos-praticiens').getPublicUrl(chemin)
+    const publicUrl = urlData.publicUrl
+
+    await supabase.from('praticiens').update({ photo: publicUrl }).eq('user_id', user.id)
+
+    setPhotoUrl(publicUrl)
+    setUploadEnCours(false)
   }
 
   const ajouterDiplome = () => setDiplomes(prev => [...prev, { ecole: '', annee: '', titre: '' }])
@@ -436,33 +472,48 @@ export default function Dashboard() {
 
             {/* PHOTO */}
             <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-              <h2 className="font-medium mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Photos</h2>
+              <h2 className="font-medium mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Photo de profil</h2>
               <div className="rounded-xl p-3 mb-5" style={{ backgroundColor: '#f5f3ff' }}>
                 <p className="text-xs" style={{ color: '#7c3aed' }}>
-                  <span style={{ color: '#dc2626' }}>*</span> <strong>Photo de profil obligatoire</strong> — photo nette de votre visage, bien éclairée, fond neutre de préférence. Les patients doivent pouvoir vous reconnaître clairement. · Autres photos optionnelles.
+                  <span style={{ color: '#dc2626' }}>*</span> <strong>Obligatoire</strong> — photo nette de votre visage, bien éclairée, fond neutre de préférence. Les patients doivent pouvoir vous reconnaître clairement.
                 </p>
               </div>
-              <div className="flex gap-6 flex-wrap">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-28 h-28 rounded-2xl flex items-center justify-center text-3xl" style={{ backgroundColor: '#f5f3ff', border: '2px dashed #a855f7' }}>📷</div>
-                  <label className="text-xs px-4 py-2 rounded-xl cursor-pointer font-medium" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
-                    Photo de profil *
-                    <input type="file" accept="image/*" className="hidden" />
-                  </label>
+              {erreurPhoto && (
+                <div className="mb-4 p-3 rounded-xl text-xs" style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}>{erreurPhoto}</div>
+              )}
+              <div className="flex items-center gap-6">
+                <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: '#f5f3ff', border: '2px dashed #a855f7' }}>
+                  {photoUrl ? (
+                    <img src={photoUrl} alt="Photo de profil" className="w-full h-full object-cover object-top" />
+                  ) : (
+                    <span className="text-3xl">📷</span>
+                  )}
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-28 h-28 rounded-2xl flex items-center justify-center text-3xl" style={{ backgroundColor: '#faf9f7', border: '2px dashed #e7e5e4' }}>➕</div>
-                  <label className="text-xs px-4 py-2 rounded-xl cursor-pointer" style={{ backgroundColor: '#faf9f7', color: '#78716c', border: '1px solid #e7e5e4' }}>
-                    Autre photo (optionnel)
-                    <input type="file" accept="image/*" className="hidden" />
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="text-sm px-5 py-3 rounded-xl cursor-pointer font-medium inline-flex items-center gap-2"
+                    style={{ backgroundColor: uploadEnCours ? '#f5f3ff' : '#6b21a8', color: uploadEnCours ? '#a855f7' : '#ffffff' }}
+                  >
+                    {uploadEnCours ? (
+                      <>
+                        <span className="inline-block w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
+                        Upload en cours...
+                      </>
+                    ) : (
+                      photoUrl ? '🔄 Changer la photo' : '📷 Choisir une photo'
+                    )}
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      className="hidden"
+                      disabled={uploadEnCours}
+                      onChange={uploadPhoto}
+                    />
                   </label>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-28 h-28 rounded-2xl flex items-center justify-center text-3xl" style={{ backgroundColor: '#faf9f7', border: '2px dashed #e7e5e4' }}>➕</div>
-                  <label className="text-xs px-4 py-2 rounded-xl cursor-pointer" style={{ backgroundColor: '#faf9f7', color: '#78716c', border: '1px solid #e7e5e4' }}>
-                    Autre photo (optionnel)
-                    <input type="file" accept="image/*" className="hidden" />
-                  </label>
+                  <p className="text-xs" style={{ color: '#a8a29e' }}>JPG, PNG ou WebP · 5 Mo max</p>
+                  {photoUrl && (
+                    <p className="text-xs" style={{ color: '#16a34a' }}>✓ Photo enregistrée</p>
+                  )}
                 </div>
               </div>
             </div>

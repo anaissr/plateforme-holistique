@@ -154,11 +154,17 @@ export default function FichePraticien() {
 
     const { data: { user } } = await supabase.auth.getUser()
 
+    if (!user) {
+      setErreurRdv('Vous devez être connecté pour prendre un rendez-vous.')
+      setChargementRdv(false)
+      return
+    }
+
     const { error } = await supabase
       .from('rendez-vous')
       .insert({
         praticien_id: praticien.id,
-        patient_id: user?.id || null,
+        patient_id: user.id,
         date: jourSelectionne,
         heure: creneauSelectionne,
         duree: prestation.duree,
@@ -170,7 +176,7 @@ export default function FichePraticien() {
       })
 
     if (error) {
-      setErreurRdv('Une erreur est survenue. Veuillez réessayer.')
+      setErreurRdv(`Erreur : ${error.message}`)
       setChargementRdv(false)
       return
     }
@@ -676,11 +682,6 @@ export default function FichePraticien() {
                     </button>
                   ))}
                 </div>
-                <textarea
-                  placeholder="Écrivez un message pour accompagner votre cadeau..."
-                  className="w-full text-sm rounded-xl px-4 py-3 resize-none outline-none mb-4"
-                  style={{ border: '1px solid #e7e5e4', color: '#1c1917', height: '80px' }}
-                />
                 <button
                   className="w-full text-white py-3 rounded-2xl text-sm font-medium"
                   style={{ backgroundColor: '#6b21a8' }}

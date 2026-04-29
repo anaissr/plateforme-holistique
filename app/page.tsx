@@ -195,7 +195,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto grid grid-cols-3 gap-8 text-center">
           {[
             { value: '1 200+', label: 'praticiens vérifiés' },
-            { value: '40+', label: 'spécialités référencées' },
+            { value: '12+', label: 'spécialités référencées' },
             { value: '0%', label: 'de commission' },
           ].map((stat) => (
             <div key={stat.label}>

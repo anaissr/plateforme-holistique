@@ -65,8 +65,8 @@ function mapPraticien(p: Record<string, unknown>): PraticienUI {
     specialite: (p.specialite as string) || '',
     ville: villeDisplay,
     visio,
-    note: 0,
-    avis: 0,
+    note: (p.note_moyenne as number) || 0,
+    avis: (p.nb_avis as number) || 0,
     tarif_depuis: tarifMin > 0 ? `${tarifMin}€` : '—',
     dispo: premieresDispo[0] || 'Disponible',
     description: (p.bio as string) || '',
@@ -95,7 +95,7 @@ export default function Recherche() {
     const charger = async () => {
       const { data } = await supabase
         .from('praticiens')
-        .select('id, nom, photo, specialite, ville, pays, visio, cabinet, bio, tarifs, specialites, public_cible, disponibilites')
+        .select('id, nom, photo, specialite, ville, pays, visio, cabinet, bio, tarifs, specialites, public_cible, disponibilites, note_moyenne, nb_avis')
         .eq('valide', true)
         .eq('actif', true)
 

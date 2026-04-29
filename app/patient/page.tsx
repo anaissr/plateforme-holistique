@@ -4,10 +4,32 @@ import Nav from '@/app/components/Nav'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
+type RendezVous = {
+  id: string
+  date: string
+  heure: string
+  duree: string
+  mode: string
+  statut: string
+  prestation: string
+  tarif: number
+  notes_praticien: string
+  praticiens: { nom: string; photo: string | null; specialite: string } | null
+}
+
+const STATUT_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
+  en_attente: { label: 'En attente', color: '#92400e', bg: '#fef3c7' },
+  confirme:   { label: 'Confirmé',   color: '#166534', bg: '#dcfce7' },
+  annule:     { label: 'Annulé',     color: '#991b1b', bg: '#fee2e2' },
+  termine:    { label: 'Terminé',    color: '#44403c', bg: '#f5f5f4' },
+}
+
 export default function EspacePatient() {
   const [onglet, setOnglet] = useState<string | null>(null)
   const [chargement, setChargement] = useState(true)
   const [chargementProfil, setChargementProfil] = useState(false)
+  const [rendezVous, setRendezVous] = useState<RendezVous[]>([])
+  const [annulationEnCours, setAnnulationEnCours] = useState<string | null>(null)
   const [succesProfil, setSuccesProfil] = useState('')
   const [erreurProfil, setErreurProfil] = useState('')
   const [indicatif, setIndicatif] = useState('+33')
@@ -61,6 +83,12 @@ export default function EspacePatient() {
     const charger = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { window.location.href = '/connexion'; return }
+
+      const { data: rdvData } = await supabase
+        .from('rendez-vous')
+        .select('*, praticiens(nom, photo, specialite)')
+        .eq('patient_id', user.id)
+      setRendezVous((rdvData as RendezVous[]) || [])
 
       const { data } = await supabase
         .from('patients')
@@ -129,6 +157,13 @@ export default function EspacePatient() {
     if (error) setErreurProfil(error.message)
     else setSuccesProfil('Profil sauvegardé !')
     setChargementProfil(false)
+  }
+
+  const annulerRdv = async (id: string) => {
+    setAnnulationEnCours(id)
+    await supabase.from('rendez-vous').update({ statut: 'annule' }).eq('id', id)
+    setRendezVous(prev => prev.map(r => r.id === id ? { ...r, statut: 'annule' } : r))
+    setAnnulationEnCours(null)
   }
 
   const toggleItem = (list: string[], setList: (v: string[]) => void, item: string) => {
@@ -220,13 +255,104 @@ export default function EspacePatient() {
 
         {/* RDV */}
         {onglet === 'rdv' && (
-          <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
-            <p className="text-4xl mb-4">📅</p>
-            <p className="font-medium mb-2" style={{ color: '#1c1917' }}>Aucun rendez-vous pour le moment</p>
-            <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>Trouvez un praticien et prenez votre premier rendez-vous</p>
-            <button className="text-white px-6 py-3 rounded-2xl text-sm font-medium" style={{ backgroundColor: '#6b21a8' }} onClick={() => { window.location.href = '/recherche' }}>
-              Trouver un praticien →
-            </button>
+          <div className="flex flex-col gap-4">
+            {rendezVous.length === 0 ? (
+              <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
+                <p className="text-4xl mb-4">📅</p>
+                <p className="font-medium mb-2" style={{ color: '#1c1917' }}>Aucun rendez-vous pour le moment</p>
+                <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>Trouvez un praticien et prenez votre premier rendez-vous</p>
+                <button className="text-white px-6 py-3 rounded-2xl text-sm font-medium" style={{ backgroundColor: '#6b21a8' }} onClick={() => { window.location.href = '/recherche' }}>
+                  Trouver un praticien →
+                </button>
+              </div>
+            ) : (
+              <>
+                {/* À venir */}
+                {rendezVous.filter(r => r.statut === 'en_attente' || r.statut === 'confirme').length > 0 && (
+                  <>
+                    <p className="text-xs font-medium uppercase tracking-wide" style={{ color: '#a8a29e' }}>À venir</p>
+                    {rendezVous
+                      .filter(r => r.statut === 'en_attente' || r.statut === 'confirme')
+                      .map(rdv => (
+                        <div key={rdv.id} className="bg-white rounded-3xl p-6 shadow-sm flex gap-5 items-start" style={{ border: '1px solid #e7e5e4' }}>
+                          {rdv.praticiens?.photo ? (
+                            <img src={rdv.praticiens.photo} alt="" className="w-14 h-14 rounded-2xl object-cover flex-shrink-0" />
+                          ) : (
+                            <div className="w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center text-2xl" style={{ backgroundColor: '#f5f3ff' }}>🌿</div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-3 flex-wrap">
+                              <div>
+                                <p className="font-medium text-sm" style={{ color: '#1c1917' }}>{rdv.praticiens?.nom ?? '—'}</p>
+                                <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>{rdv.praticiens?.specialite}</p>
+                              </div>
+                              <span className="text-xs px-3 py-1 rounded-full font-medium flex-shrink-0" style={{ color: STATUT_CONFIG[rdv.statut]?.color ?? '#44403c', backgroundColor: STATUT_CONFIG[rdv.statut]?.bg ?? '#f5f5f4' }}>
+                                {STATUT_CONFIG[rdv.statut]?.label ?? rdv.statut}
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3">
+                              <p className="text-sm" style={{ color: '#57534e' }}>📅 {rdv.date} à {rdv.heure}</p>
+                              <p className="text-sm" style={{ color: '#57534e' }}>⏱ {rdv.duree}</p>
+                              <p className="text-sm" style={{ color: '#57534e' }}>{rdv.mode === 'Visio' ? '🖥 Visio' : '📍 Cabinet'}</p>
+                            </div>
+                            <div className="flex items-center justify-between mt-3 flex-wrap gap-2">
+                              <div>
+                                <p className="text-xs" style={{ color: '#a8a29e' }}>{rdv.prestation}</p>
+                                {rdv.tarif > 0 && <p className="text-sm font-medium mt-0.5" style={{ color: '#6b21a8' }}>{rdv.tarif}€</p>}
+                              </div>
+                              {rdv.statut !== 'annule' && (
+                                <button
+                                  onClick={() => annulerRdv(rdv.id)}
+                                  disabled={annulationEnCours === rdv.id}
+                                  className="text-xs px-4 py-2 rounded-xl transition"
+                                  style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}
+                                >
+                                  {annulationEnCours === rdv.id ? 'Annulation...' : 'Annuler'}
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </>
+                )}
+
+                {/* Passés */}
+                {rendezVous.filter(r => r.statut === 'termine' || r.statut === 'annule').length > 0 && (
+                  <>
+                    <p className="text-xs font-medium uppercase tracking-wide mt-2" style={{ color: '#a8a29e' }}>Passés</p>
+                    {rendezVous
+                      .filter(r => r.statut === 'termine' || r.statut === 'annule')
+                      .map(rdv => (
+                        <div key={rdv.id} className="bg-white rounded-3xl p-6 shadow-sm flex gap-5 items-start opacity-60" style={{ border: '1px solid #e7e5e4' }}>
+                          {rdv.praticiens?.photo ? (
+                            <img src={rdv.praticiens.photo} alt="" className="w-14 h-14 rounded-2xl object-cover flex-shrink-0" />
+                          ) : (
+                            <div className="w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center text-2xl" style={{ backgroundColor: '#f5f5f4' }}>🌿</div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-3 flex-wrap">
+                              <div>
+                                <p className="font-medium text-sm" style={{ color: '#1c1917' }}>{rdv.praticiens?.nom ?? '—'}</p>
+                                <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>{rdv.praticiens?.specialite}</p>
+                              </div>
+                              <span className="text-xs px-3 py-1 rounded-full font-medium flex-shrink-0" style={{ color: STATUT_CONFIG[rdv.statut]?.color ?? '#44403c', backgroundColor: STATUT_CONFIG[rdv.statut]?.bg ?? '#f5f5f4' }}>
+                                {STATUT_CONFIG[rdv.statut]?.label ?? rdv.statut}
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3">
+                              <p className="text-sm" style={{ color: '#57534e' }}>📅 {rdv.date} à {rdv.heure}</p>
+                              <p className="text-sm" style={{ color: '#57534e' }}>⏱ {rdv.duree}</p>
+                              <p className="text-sm" style={{ color: '#57534e' }}>{rdv.mode === 'Visio' ? '🖥 Visio' : '📍 Cabinet'}</p>
+                            </div>
+                            <p className="text-xs mt-2" style={{ color: '#a8a29e' }}>{rdv.prestation}{rdv.tarif > 0 ? ` · ${rdv.tarif}€` : ''}</p>
+                          </div>
+                        </div>
+                      ))}
+                  </>
+                )}
+              </>
+            )}
           </div>
         )}
 

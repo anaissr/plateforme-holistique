@@ -19,6 +19,31 @@ type PraticienUI = {
   problematiques: string[]
   prestations: { nom: string; duree: string; tarif: string }[]
   ateliers: boolean
+  creneaux: string[]
+}
+
+function formaterDuree(duree: string): string {
+  if (/^\d+$/.test(duree.trim())) return `${duree.trim()} min`
+  return duree
+}
+
+const JOURS_R = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+const JOURS_COURTS_R = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
+const MOIS_R = ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'août', 'sep', 'oct', 'nov', 'déc']
+
+function prochainsCréneaux(agenda: Record<string, string[]>, n: number): string[] {
+  const result: string[] = []
+  const auj = new Date()
+  for (let i = 0; i < 14 && result.length < n; i++) {
+    const d = new Date(auj)
+    d.setDate(auj.getDate() + i)
+    const slots = agenda[JOURS_R[d.getDay()]] || []
+    for (const slot of slots) {
+      if (result.length >= n) break
+      result.push(`${JOURS_COURTS_R[d.getDay()]} ${d.getDate()} ${MOIS_R[d.getMonth()]} ${slot}`)
+    }
+  }
+  return result
 }
 
 const problematiquesListe = [
@@ -73,6 +98,7 @@ function mapPraticien(p: Record<string, unknown>): PraticienUI {
       tarif: parseFloat(String(t.prix)) > 0 ? `${t.prix}€` : 'Sur devis',
     })),
     ateliers: !!(p.propose_ateliers),
+    creneaux: prochainsCréneaux((p.disponibilites as Record<string, string[]>) || {}, 1),
   }
 }
 
@@ -92,7 +118,7 @@ export default function Recherche() {
     const charger = async () => {
       const { data } = await supabase
         .from('praticiens')
-        .select('id, nom, photo, specialite, ville, pays, visio, cabinet, bio, tarifs, specialites, public_cible, note_moyenne, nb_avis, propose_ateliers')
+        .select('id, nom, photo, specialite, ville, pays, visio, cabinet, bio, tarifs, specialites, public_cible, note_moyenne, nb_avis, propose_ateliers, disponibilites')
         .eq('valide', true)
         .eq('actif', true)
 
@@ -360,25 +386,26 @@ export default function Recherche() {
                           <p className="text-sm" style={{ color: '#6b21a8' }}>{praticien.specialite}</p>
                           <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>📍 {praticien.ville}</p>
                           {praticien.public.length > 0 && (
-                            <div className="flex gap-1 flex-wrap mt-2">
+                            <div className="flex gap-1.5 flex-wrap mt-2 items-center">
+                              <span className="text-xs" style={{ color: '#6b21a8' }}>👥</span>
                               {praticien.public.map((p) => (
-                                <span key={p} className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#faf9f7', color: '#78716c', border: '1px solid #e7e5e4' }}>
+                                <span key={p} className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
                                   {p}
                                 </span>
                               ))}
                             </div>
                           )}
                           {praticien.problematiques.length > 0 && (
-                            <div className="flex gap-1 flex-wrap mt-1">
+                            <div className="flex gap-1.5 flex-wrap mt-2 items-center">
+                              <span className="text-xs" style={{ color: '#92400e' }}>🩺</span>
                               {praticien.problematiques.map((pb) => (
                                 <span
                                   key={pb}
-                                  className="text-xs px-2 py-0.5 rounded-full"
+                                  className="text-xs px-2 py-0.5 rounded-full font-medium"
                                   style={{
-                                    backgroundColor: problematiquesSelectionnees.includes(pb) ? '#f5f3ff' : '#faf9f7',
-                                    color: problematiquesSelectionnees.includes(pb) ? '#6b21a8' : '#a8a29e',
-                                    border: problematiquesSelectionnees.includes(pb) ? '1px solid #6b21a8' : '1px solid #e7e5e4',
-                                    fontWeight: problematiquesSelectionnees.includes(pb) ? '600' : '400',
+                                    backgroundColor: problematiquesSelectionnees.includes(pb) ? '#f5f3ff' : '#fef3c7',
+                                    color: problematiquesSelectionnees.includes(pb) ? '#6b21a8' : '#78350f',
+                                    border: problematiquesSelectionnees.includes(pb) ? '1px solid #6b21a8' : 'none',
                                   }}
                                 >
                                   {pb}
@@ -405,16 +432,22 @@ export default function Recherche() {
                               style={{ backgroundColor: '#faf9f7', color: '#57534e', border: '1px solid #e7e5e4', cursor: 'pointer' }}
                               onClick={() => allerVers(praticien.id, `?prestation=${encodeURIComponent(p.nom)}`)}
                             >
-                              {p.nom} · {p.duree} · {p.tarif}
+                              {p.nom} · {formaterDuree(p.duree)} · {p.tarif}
                             </button>
                           ))}
                         </div>
                       )}
 
                       <div className="flex items-center justify-between mt-4 flex-wrap gap-3">
-                        <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>
-                          🟢 Disponible
-                        </span>
+                        <div>
+                          {praticien.creneaux.length > 0 ? (
+                            <p className="text-xs font-medium" style={{ color: '#15803d' }}>
+                              🟢 Prochaine dispo : {praticien.creneaux[0].replace(/(\d{1,2}):(\d{2})$/, (_, h, m) => `à ${parseInt(h)}h${m === '00' ? '' : m}`)}
+                            </p>
+                          ) : (
+                            <p className="text-xs" style={{ color: '#a8a29e' }}>Sur appel</p>
+                          )}
+                        </div>
                         <div className="flex gap-2 flex-wrap">
                           <button
                             className="text-sm px-4 py-2 rounded-xl border transition"

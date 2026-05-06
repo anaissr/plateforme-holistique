@@ -1,16 +1,18 @@
 'use client'
 
 import Nav from '@/app/components/Nav'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
 
 const ateliers = [
   {
     id: 1,
     titre: 'Atelier sophrologie — Gérer le stress au quotidien',
-    praticien: 'Amélie Chen',
+    praticien: 'Sophie Renard',
     specialite: 'Sophrologie',
     photo: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=400&fit=crop&crop=center',
-    photoPraticien: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=80&h=80&fit=crop&crop=face',
+    photoPraticien: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop&crop=face',
     date: 'Samedi 10 mai 2026',
     heure: '10h00 — 12h00',
     format: 'Visio',
@@ -47,10 +49,10 @@ const ateliers = [
   {
     id: 3,
     titre: 'Atelier naturopathie — Santé digestive et microbiote',
-    praticien: 'Sophie Laurent',
+    praticien: 'Julien Martin',
     specialite: 'Naturopathie',
     photo: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=600&h=400&fit=crop&crop=center',
-    photoPraticien: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=80&h=80&fit=crop&crop=face',
+    photoPraticien: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=80&h=80&fit=crop&crop=face',
     date: 'Samedi 17 mai 2026',
     heure: '9h30 — 12h00',
     format: 'Visio',
@@ -87,10 +89,10 @@ const ateliers = [
   {
     id: 5,
     titre: 'Atelier kinésiologie — Libérer les blocages émotionnels',
-    praticien: 'Isabelle Morel',
+    praticien: 'Thomas Favre',
     specialite: 'Kinésiologie',
     photo: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&h=400&fit=crop&crop=center',
-    photoPraticien: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=80&h=80&fit=crop&crop=face',
+    photoPraticien: 'https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=80&h=80&fit=crop&crop=face',
     date: 'Samedi 24 mai 2026',
     heure: '10h00 — 13h00',
     format: 'Présentiel',
@@ -141,6 +143,16 @@ const formats = [
 ]
 
 export default function Ateliers() {
+  const searchParams = useSearchParams()
+  const praticienIdParam = searchParams.get('praticien')
+  const [praticienFiltre, setPraticienFiltre] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!praticienIdParam) { setPraticienFiltre(null); return }
+    supabase.from('praticiens').select('nom').eq('id', praticienIdParam).single()
+      .then(({ data }) => { if (data) setPraticienFiltre(data.nom as string) })
+  }, [praticienIdParam])
+
   const [categorieActive, setCategorieActive] = useState('tous')
   const [formatActif, setFormatActif] = useState('tous')
   const [atelierOuvert, setAtelierOuvert] = useState<number | null>(null)
@@ -159,6 +171,7 @@ export default function Ateliers() {
   const [chargement, setChargement] = useState(false)
 
   const ateliersFiltres = ateliers.filter((a) => {
+    if (praticienFiltre && a.praticien !== praticienFiltre) return false
     const matchCategorie = categorieActive === 'tous' || a.categorie === categorieActive
     const matchFormat = formatActif === 'tous' || a.format === formatActif
     return matchCategorie && matchFormat
@@ -390,6 +403,22 @@ export default function Ateliers() {
 
       {/* LISTE ATELIERS */}
       <section className="max-w-5xl mx-auto px-6 py-12 flex flex-col gap-6">
+
+        {praticienFiltre && (
+          <div className="flex items-center justify-between px-4 py-3 rounded-2xl" style={{ backgroundColor: '#fef3c7', border: '1px solid #fde68a' }}>
+            <p className="text-sm font-medium" style={{ color: '#78350f' }}>
+              🎓 Ateliers de <strong>{praticienFiltre}</strong>
+            </p>
+            <button
+              onClick={() => { setPraticienFiltre(null); window.history.pushState({}, '', '/ateliers') }}
+              className="text-xs px-3 py-1.5 rounded-lg font-medium"
+              style={{ backgroundColor: '#fde68a', color: '#78350f' }}
+            >
+              Voir tous les ateliers ✕
+            </button>
+          </div>
+        )}
+
         {ateliersFiltres.map((atelier) => (
           <div key={atelier.id} className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition" style={{ border: '1px solid #e7e5e4' }}>
             <div className="grid grid-cols-1 lg:grid-cols-3">
@@ -427,7 +456,7 @@ export default function Ateliers() {
                     <img src={atelier.photoPraticien} alt={atelier.praticien} className="w-7 h-7 rounded-full object-cover" />
                     <span className="text-sm" style={{ color: '#57534e' }}>
                       avec{' '}
-                      <strong className="cursor-pointer hover:underline" style={{ color: '#6b21a8' }} onClick={() => { window.location.href = '/praticien' }}>
+                      <strong className="cursor-pointer hover:underline" style={{ color: '#6b21a8' }} onClick={() => { window.location.href = `/recherche?specialite=${encodeURIComponent(atelier.specialite)}` }}>
                         {atelier.praticien}
                       </strong>
                     </span>

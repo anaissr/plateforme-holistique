@@ -5,12 +5,33 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
+const JOURS_SEMAINE = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+const JOURS_COURTS = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
+const MOIS_COURTS = ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'août', 'sep', 'oct', 'nov', 'déc']
+
 function formaterJour(jour: string): string {
+  // ISO date → "12 mai"
   const d = new Date(jour)
   if (!isNaN(d.getTime())) {
-    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })
+    return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })
+  }
+  // Nom de jour français → "Lundi 12 mai" (prochaine occurrence)
+  const idx = JOURS_SEMAINE.findIndex(j => j.toLowerCase() === jour.toLowerCase())
+  if (idx >= 0) {
+    const auj = new Date()
+    let delta = idx - auj.getDay()
+    if (delta < 0) delta += 7
+    const prochaine = new Date(auj)
+    prochaine.setDate(auj.getDate() + delta)
+    const dateStr = prochaine.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })
+    return `${jour} ${dateStr}`
   }
   return jour
+}
+
+function formaterDuree(duree: string): string {
+  if (/^\d+$/.test(duree.trim())) return `${duree.trim()} min`
+  return duree
 }
 
 type Prestation = {
@@ -156,7 +177,6 @@ export default function FichePraticien() {
         setPrestationSelectionnee(idx >= 0 ? idx : 0)
       }
 
-      setJourSelectionne(premierJour)
       setMontantCadeau(prestations[0]?.tarif_num || 0)
       setChargement(false)
     }
@@ -174,7 +194,6 @@ export default function FichePraticien() {
     }
   }, [praticien])
 
-  const creneauxDuJour = praticien?.agenda[jourSelectionne] || []
   const prestation = praticien?.prestations[prestationSelectionnee]
 
   const prendreRdv = async () => {
@@ -338,7 +357,7 @@ export default function FichePraticien() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{prestatoinCadeau.nom}</p>
-                        <p className="text-xs mt-0.5" style={{ color: '#78716c' }}>{prestatoinCadeau.duree}</p>
+                        <p className="text-xs mt-0.5" style={{ color: '#78716c' }}>{formaterDuree(prestatoinCadeau.duree)}</p>
                       </div>
                       <p className="text-2xl font-light" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{prestatoinCadeau.tarif}</p>
                     </div>
@@ -487,7 +506,7 @@ export default function FichePraticien() {
                     </div>
                     <div className="text-right flex-shrink-0 ml-4">
                       <p className="text-sm font-medium" style={{ color: '#6b21a8' }}>{p.tarif}</p>
-                      <p className="text-xs" style={{ color: '#a8a29e' }}>{p.duree}</p>
+                      <p className="text-xs" style={{ color: '#a8a29e' }}>{formaterDuree(p.duree)}</p>
                     </div>
                   </div>
                 ))}
@@ -648,7 +667,7 @@ export default function FichePraticien() {
                         <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>1. Prestation sélectionnée</label>
                         <div className="p-3 rounded-xl mb-4" style={{ backgroundColor: '#f5f3ff' }}>
                           <p className="text-sm font-medium" style={{ color: '#6b21a8' }}>{prestation.nom}</p>
-                          <p className="text-xs" style={{ color: '#7c3aed' }}>{prestation.duree} · {prestation.tarif}</p>
+                          <p className="text-xs" style={{ color: '#7c3aed' }}>{formaterDuree(prestation.duree)} · {prestation.tarif}</p>
                         </div>
                       </>
                     )}
@@ -657,50 +676,55 @@ export default function FichePraticien() {
                       <p className="text-sm mb-4" style={{ color: '#a8a29e' }}>Aucune disponibilité renseignée pour le moment.</p>
                     ) : (
                       <>
-                        <label className="text-xs font-medium block mb-2" style={{ color: '#a8a29e' }}>2. Choisissez un jour</label>
-                        <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
-                          {Object.keys(praticien.agenda).map((jour) => (
-                            <button
-                              key={jour}
-                              onClick={() => { setJourSelectionne(jour); setCreneauSelectionne('') }}
-                              className="flex-shrink-0 px-3 py-2 rounded-xl text-xs font-medium transition"
-                              style={{
-                                backgroundColor: jour === jourSelectionne ? '#6b21a8' : '#faf9f7',
-                                color: jour === jourSelectionne ? '#ffffff' : '#44403c',
-                                border: '1px solid #e7e5e4',
-                              }}
-                            >
-                              {formaterJour(jour)}
-                            </button>
-                          ))}
-                        </div>
-
-                        <label className="text-xs font-medium block mb-2" style={{ color: '#a8a29e' }}>3. Choisissez un créneau</label>
-                        {creneauxDuJour.length === 0 ? (
-                          <p className="text-xs mb-4" style={{ color: '#d6d3d1' }}>Aucun créneau disponible ce jour</p>
-                        ) : (
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {creneauxDuJour.map((c) => (
-                              <button
-                                key={c}
-                                onClick={() => setCreneauSelectionne(c)}
-                                className="text-xs px-3 py-2 rounded-xl border transition"
-                                style={{
-                                  borderColor: c === creneauSelectionne ? '#6b21a8' : '#e7e5e4',
-                                  color: c === creneauSelectionne ? '#6b21a8' : '#44403c',
-                                  backgroundColor: c === creneauSelectionne ? '#f5f3ff' : 'white',
-                                }}
-                              >
-                                {c}
-                              </button>
-                            ))}
+                        <label className="text-xs font-medium block mb-3" style={{ color: '#a8a29e' }}>2. Disponibilités</label>
+                        <div className="overflow-x-auto mb-4" style={{ marginLeft: '-4px', marginRight: '-4px' }}>
+                          <div className="flex gap-2 px-1 pb-1" style={{ width: 'max-content' }}>
+                            {Array.from({ length: 7 }, (_, i) => {
+                              const d = new Date()
+                              d.setDate(d.getDate() + i)
+                              const nomJour = JOURS_SEMAINE[d.getDay()]
+                              const creneaux = praticien.agenda[nomJour] || []
+                              const labelCourt = `${JOURS_COURTS[d.getDay()]} ${d.getDate()} ${MOIS_COURTS[d.getMonth()]}`
+                              const labelFull = `${nomJour} ${d.getDate()} ${MOIS_COURTS[d.getMonth()]}`
+                              return (
+                                <div key={i} className="flex flex-col gap-1.5" style={{ minWidth: '68px' }}>
+                                  <p className="text-xs font-medium text-center pb-1.5" style={{
+                                    color: creneaux.length > 0 ? '#1c1917' : '#d6d3d1',
+                                    borderBottom: '1px solid #f0efee',
+                                  }}>
+                                    {labelCourt}
+                                  </p>
+                                  {creneaux.length === 0 ? (
+                                    <p className="text-xs text-center py-2" style={{ color: '#e7e5e4' }}>—</p>
+                                  ) : (
+                                    creneaux.map(c => {
+                                      const selected = jourSelectionne === labelFull && creneauSelectionne === c
+                                      return (
+                                        <button
+                                          key={c}
+                                          onClick={() => { setJourSelectionne(labelFull); setCreneauSelectionne(c) }}
+                                          className="text-xs py-2 rounded-xl font-medium transition text-center"
+                                          style={{
+                                            backgroundColor: selected ? '#6b21a8' : '#dcfce7',
+                                            color: selected ? '#ffffff' : '#15803d',
+                                            border: selected ? 'none' : '1px solid #bbf7d0',
+                                          }}
+                                        >
+                                          {c}
+                                        </button>
+                                      )
+                                    })
+                                  )}
+                                </div>
+                              )
+                            })}
                           </div>
-                        )}
+                        </div>
                       </>
                     )}
 
                     <div className="mb-4">
-                      <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>{Object.keys(praticien.agenda).length > 0 ? '4.' : '2.'} Message pour le praticien (optionnel)</label>
+                      <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>{Object.keys(praticien.agenda).length > 0 ? '3.' : '2.'} Message pour le praticien (optionnel)</label>
                       <textarea
                         value={messagePatient}
                         onChange={(e) => setMessagePatient(e.target.value)}
@@ -746,7 +770,7 @@ export default function FichePraticien() {
                     >
                       <div>
                         <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{p.nom}</p>
-                        <p className="text-xs" style={{ color: '#a8a29e' }}>{p.duree}</p>
+                        <p className="text-xs" style={{ color: '#a8a29e' }}>{formaterDuree(p.duree)}</p>
                       </div>
                       <span className="text-sm font-medium" style={{ color: '#6b21a8' }}>{p.tarif}</span>
                     </button>

@@ -29,11 +29,20 @@ export const metadata: Metadata = {
     siteName: "Holistia",
     title: "Holistia — Médecine alternative francophone",
     description: "Trouvez votre praticien en médecine alternative — naturopathie, sophrologie, ostéopathie, hypnothérapie — en cabinet ou en visio.",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=1200&h=630&fit=crop&crop=center",
+        width: 1200,
+        height: 630,
+        alt: "Holistia — Praticiens en médecine alternative",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Holistia — Médecine alternative francophone",
     description: "Trouvez votre praticien en médecine alternative en cabinet ou en visio.",
+    images: ["https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=1200&h=630&fit=crop&crop=center"],
   },
   robots: {
     index: true,

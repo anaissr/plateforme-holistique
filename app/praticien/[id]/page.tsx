@@ -1,9 +1,17 @@
 'use client'
 
 import Nav from '@/app/components/Nav'
-import { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
+import { useState, useEffect, useRef } from 'react'
+import { useParams, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+
+function formaterJour(jour: string): string {
+  const d = new Date(jour)
+  if (!isNaN(d.getTime())) {
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })
+  }
+  return jour
+}
 
 type Prestation = {
   nom: string
@@ -26,6 +34,7 @@ type AvisClient = {
 type Praticien = {
   id: number
   nom: string
+  email: string
   photo: string
   specialite: string
   ville: string
@@ -39,10 +48,13 @@ type Praticien = {
   formations: { titre: string; ecole: string; annee: string }[]
   agenda: Record<string, string[]>
   avisClients: AvisClient[]
+  ateliers: boolean
 }
 
 export default function FichePraticien() {
   const params = useParams<{ id: string }>()
+  const searchParams = useSearchParams()
+  const contactRef = useRef<HTMLTextAreaElement>(null)
 
   const [praticien, setPraticien] = useState<Praticien | null>(null)
   const [chargement, setChargement] = useState(true)
@@ -121,6 +133,7 @@ export default function FichePraticien() {
       setPraticien({
         id: data.id as number,
         nom: (data.nom as string) || '',
+        email: (data.email as string) || '',
         photo: (data.photo as string) || '',
         specialite: (data.specialite as string) || '',
         ville: (data.ville as string) || '',
@@ -134,7 +147,14 @@ export default function FichePraticien() {
         formations: (data.diplomes as { titre: string; ecole: string; annee: string }[]) || [],
         agenda,
         avisClients,
+        ateliers: !!(data.propose_ateliers),
       })
+
+      const prestationParam = searchParams.get('prestation')
+      if (prestationParam) {
+        const idx = prestations.findIndex(p => p.nom === prestationParam)
+        setPrestationSelectionnee(idx >= 0 ? idx : 0)
+      }
 
       setJourSelectionne(premierJour)
       setMontantCadeau(prestations[0]?.tarif_num || 0)
@@ -142,7 +162,17 @@ export default function FichePraticien() {
     }
 
     if (params.id) charger()
-  }, [params.id])
+  }, [params.id, searchParams])
+
+  useEffect(() => {
+    if (!praticien) return
+    if (window.location.hash === '#contact') {
+      setTimeout(() => {
+        contactRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        contactRef.current?.focus()
+      }, 100)
+    }
+  }, [praticien])
 
   const creneauxDuJour = praticien?.agenda[jourSelectionne] || []
   const prestation = praticien?.prestations[prestationSelectionnee]
@@ -155,8 +185,7 @@ export default function FichePraticien() {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
-      setErreurRdv('Vous devez être connecté pour prendre un rendez-vous.')
-      setChargementRdv(false)
+      window.location.href = `/connexion?redirect=/praticien/${praticien.id}`
       return
     }
 
@@ -191,6 +220,7 @@ export default function FichePraticien() {
         date: jourSelectionne,
         heure: creneauSelectionne,
         tarif: prestation.tarif,
+        emailPatient: user.email,
       }),
     })
 
@@ -409,7 +439,11 @@ export default function FichePraticien() {
             <button className="px-8 py-3 rounded-2xl font-medium text-sm" style={{ backgroundColor: '#ffffff', color: '#6b21a8' }} onClick={() => setModePaiement('rdv')}>
               Prendre RDV
             </button>
-            <button className="px-8 py-3 rounded-2xl font-medium text-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)' }}>
+            <button
+              className="px-8 py-3 rounded-2xl font-medium text-sm"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)' }}
+              onClick={() => praticien.email && (window.location.href = `mailto:${praticien.email}?subject=Contact via Holistia — ${praticien.specialite}`)}
+            >
               💬 Contacter
             </button>
             <button className="px-8 py-3 rounded-2xl font-medium text-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)' }} onClick={() => setModePaiement('cadeau')}>
@@ -461,14 +495,50 @@ export default function FichePraticien() {
             </div>
           )}
 
-          {praticien.specialites.length > 0 && (
+          {(praticien.public.length > 0 || praticien.specialites.length > 0) && (
             <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
-              <h2 className="text-lg font-medium mb-4" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Spécialités</h2>
-              <div className="flex flex-wrap gap-2">
-                {praticien.specialites.map((s) => (
-                  <span key={s} className="text-sm px-4 py-2 rounded-full" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>{s}</span>
-                ))}
-              </div>
+              {praticien.public.length > 0 && (
+                <div className={praticien.specialites.length > 0 ? 'mb-6' : ''}>
+                  <h2 className="text-base font-medium mb-3 flex items-center gap-2" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
+                    <span>👥</span> Je reçois
+                  </h2>
+                  <div className="flex flex-wrap gap-2">
+                    {praticien.public.map((p) => (
+                      <span key={p} className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>{p}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {praticien.specialites.length > 0 && (
+                <div>
+                  <h2 className="text-base font-medium mb-3 flex items-center gap-2" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
+                    <span>🩺</span> Maux traités
+                  </h2>
+                  <div className="flex flex-wrap gap-2">
+                    {praticien.specialites.map((s) => (
+                      <span key={s} className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ backgroundColor: '#fef3c7', color: '#78350f' }}>{s}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {praticien.ateliers && (
+            <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #fde68a' }}>
+              <h2 className="text-lg font-medium mb-2 flex items-center gap-2" style={{ color: '#92400e', fontFamily: 'var(--font-lora)' }}>
+                <span>🎓</span> Ateliers proposés
+              </h2>
+              <p className="text-sm mb-4" style={{ color: '#78716c' }}>
+                {praticien.nom.split(' ')[0]} anime des ateliers collectifs en ligne ouverts à tous.
+              </p>
+              <button
+                className="text-sm px-5 py-2.5 rounded-xl font-medium transition hover:opacity-80"
+                style={{ backgroundColor: '#fef3c7', color: '#78350f', border: '1px solid #fde68a' }}
+                onClick={() => { window.location.href = `/ateliers?praticien=${praticien.id}` }}
+              >
+                🎓 Voir les ateliers de {praticien.nom.split(' ')[0]}
+              </button>
             </div>
           )}
 
@@ -600,7 +670,7 @@ export default function FichePraticien() {
                                 border: '1px solid #e7e5e4',
                               }}
                             >
-                              {jour}
+                              {formaterJour(jour)}
                             </button>
                           ))}
                         </div>
@@ -694,17 +764,26 @@ export default function FichePraticien() {
             )}
           </div>
 
-          <div className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
+          <div id="contact" className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
             <h2 className="text-base font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Une question ?</h2>
             <p className="text-xs mb-3" style={{ color: '#a8a29e' }}>Échangez avec {praticien.nom.split(' ')[0]} avant de vous engager</p>
             <textarea
+              ref={contactRef}
               value={messageContact}
               onChange={(e) => setMessageContact(e.target.value)}
               className="w-full text-sm rounded-xl p-3 resize-none outline-none"
               style={{ border: '1px solid #e7e5e4', color: '#44403c', height: '80px' }}
               placeholder={`Bonjour ${praticien.nom.split(' ')[0]}, je souffre de...`}
             />
-            <button className="w-full py-3 rounded-2xl text-sm font-medium mt-3" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
+            <button
+              className="w-full py-3 rounded-2xl text-sm font-medium mt-3"
+              style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
+              onClick={() => {
+                const sujet = encodeURIComponent(`Question via Holistia — ${praticien.specialite}`)
+                const corps = encodeURIComponent(messageContact)
+                if (praticien.email) window.location.href = `mailto:${praticien.email}?subject=${sujet}&body=${corps}`
+              }}
+            >
               💬 Envoyer un message
             </button>
           </div>

@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: Request) {
-  const { type, praticien, prestation, date, heure, tarif, nomAcheteur, emailAcheteur, nomDestinataire, emailDestinataire, messageCadeauDestinataire, messageCadeauPraticien } = await request.json()
+  const { type, praticien, prestation, date, heure, tarif, emailPatient, nomAcheteur, emailAcheteur, nomDestinataire, emailDestinataire, messageCadeauDestinataire, messageCadeauPraticien } = await request.json()
 
   try {
     if (type === 'bon_cadeau') {
@@ -53,9 +53,11 @@ export async function POST(request: Request) {
     }
 
     if (type === 'confirmation_patient') {
+      const destinataires = ['anais202@hotmail.com']
+      if (emailPatient && emailPatient !== 'anais202@hotmail.com') destinataires.push(emailPatient)
       await resend.emails.send({
         from: 'Holistia <onboarding@resend.dev>',
-        to: 'anais202@hotmail.com',
+        to: destinataires,
         subject: `✅ RDV confirmé — ${praticien} · ${date} à ${heure}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -85,6 +87,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
+    console.error('[email-rdv]', error)
     return NextResponse.json({ error: 'Erreur envoi email' }, { status: 500 })
   }
 }

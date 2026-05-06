@@ -14,11 +14,11 @@ type PraticienUI = {
   note: number
   avis: number
   tarif_depuis: string
-  dispo: string
   description: string
   public: string[]
   problematiques: string[]
   prestations: { nom: string; duree: string; tarif: string }[]
+  ateliers: boolean
 }
 
 const problematiquesListe = [
@@ -43,10 +43,6 @@ function mapPraticien(p: Record<string, unknown>): PraticienUI {
     .filter(n => n > 0)
   const tarifMin = prix.length > 0 ? Math.min(...prix) : 0
 
-  const disponibilites = (p.disponibilites as Record<string, string[]>) || {}
-  const premieresDispo = Object.entries(disponibilites)
-    .flatMap(([jour, creneaux]) => creneaux.map(h => `${jour} à ${h}`))
-
   const ville = (p.ville as string) || ''
   const pays = (p.pays as string) || ''
   const cabinet = (p.cabinet as boolean) || false
@@ -68,7 +64,6 @@ function mapPraticien(p: Record<string, unknown>): PraticienUI {
     note: (p.note_moyenne as number) || 0,
     avis: (p.nb_avis as number) || 0,
     tarif_depuis: tarifMin > 0 ? `${tarifMin}€` : '—',
-    dispo: premieresDispo[0] || 'Disponible',
     description: (p.bio as string) || '',
     public: (p.public_cible as string[]) || [],
     problematiques: (p.specialites as string[]) || [],
@@ -77,6 +72,7 @@ function mapPraticien(p: Record<string, unknown>): PraticienUI {
       duree: t.duree,
       tarif: parseFloat(String(t.prix)) > 0 ? `${t.prix}€` : 'Sur devis',
     })),
+    ateliers: !!(p.propose_ateliers),
   }
 }
 
@@ -88,14 +84,15 @@ export default function Recherche() {
   const [specialite, setSpecialite] = useState('')
   const [pourQui, setPourQui] = useState('')
   const [mode, setMode] = useState('')
-  const [budget, setBudget] = useState('')
+  const [filtreAteliers, setFiltreAteliers] = useState(false)
   const [afficherTroubles, setAfficherTroubles] = useState(false)
+  const [tri, setTri] = useState('')
 
   useEffect(() => {
     const charger = async () => {
       const { data } = await supabase
         .from('praticiens')
-        .select('id, nom, photo, specialite, ville, pays, visio, cabinet, bio, tarifs, specialites, public_cible, disponibilites, note_moyenne, nb_avis')
+        .select('id, nom, photo, specialite, ville, pays, visio, cabinet, bio, tarifs, specialites, public_cible, note_moyenne, nb_avis, propose_ateliers')
         .eq('valide', true)
         .eq('actif', true)
 
@@ -116,15 +113,7 @@ export default function Recherche() {
     if (pourQui && !p.public.some(pub => pub.toLowerCase().includes(pourQui.toLowerCase()))) return false
     if (mode === 'En visio' && !p.visio) return false
     if (mode === 'En cabinet' && p.ville === 'Visio uniquement') return false
-    if (budget) {
-      const min = parseFloat(p.tarif_depuis)
-      if (!isNaN(min)) {
-        if (budget === 'Moins de 50€' && min >= 50) return false
-        if (budget === '50€ - 80€' && (min < 50 || min > 80)) return false
-        if (budget === '80€ - 120€' && (min < 80 || min > 120)) return false
-        if (budget === 'Plus de 120€' && min <= 120) return false
-      }
-    }
+    if (filtreAteliers && !p.ateliers) return false
     if (problematiquesSelectionnees.length > 0) {
       return problematiquesSelectionnees.some(prob =>
         p.problematiques.some(pp =>
@@ -134,6 +123,14 @@ export default function Recherche() {
       )
     }
     return true
+  }).sort((a, b) => {
+    if (tri === 'note') return b.note - a.note
+    if (tri === 'tarif_asc') {
+      const ta = parseFloat(a.tarif_depuis) || Infinity
+      const tb = parseFloat(b.tarif_depuis) || Infinity
+      return ta - tb
+    }
+    return 0
   })
 
   const allerVers = (id: number, ancre?: string) => {
@@ -194,37 +191,41 @@ export default function Recherche() {
                 <option>En visio</option>
               </select>
             </div>
-            <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
-            <div className="flex-1 min-w-32">
-              <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>Budget max</label>
-              <select value={budget} onChange={(e) => setBudget(e.target.value)} className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
-                <option value="">Tous budgets</option>
-                <option>Moins de 50€</option>
-                <option>50€ - 80€</option>
-                <option>80€ - 120€</option>
-                <option>Plus de 120€</option>
-              </select>
-            </div>
             <button className="text-white px-6 py-3 rounded-xl text-sm font-medium" style={{ backgroundColor: '#6b21a8' }}>
               Rechercher
             </button>
           </div>
 
-          {/* FILTRE PROBLÉMATIQUES */}
+          {/* FILTRES SECONDAIRES */}
           <div className="mt-4">
-            <button
-              onClick={() => setAfficherTroubles(!afficherTroubles)}
-              className="flex items-center gap-2 text-sm px-4 py-2 rounded-full transition"
-              style={{
-                backgroundColor: problematiquesSelectionnees.length > 0 ? '#ffffff' : 'rgba(255,255,255,0.15)',
-                color: problematiquesSelectionnees.length > 0 ? '#6b21a8' : '#ffffff',
-              }}
-            >
-              {problematiquesSelectionnees.length > 0
-                ? `✓ ${problematiquesSelectionnees.length} trouble${problematiquesSelectionnees.length > 1 ? 's' : ''} sélectionné${problematiquesSelectionnees.length > 1 ? 's' : ''}`
-                : '+ Filtrer par problématique'}
-              <span style={{ fontSize: '10px' }}>{afficherTroubles ? '▲' : '▼'}</span>
-            </button>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setFiltreAteliers(!filtreAteliers)}
+                className="flex items-center gap-2 text-sm px-4 py-2 rounded-full transition"
+                style={{
+                  backgroundColor: filtreAteliers ? '#ffffff' : 'rgba(255,255,255,0.15)',
+                  color: filtreAteliers ? '#6b21a8' : '#ffffff',
+                  border: filtreAteliers ? 'none' : '1px solid rgba(255,255,255,0.3)',
+                }}
+              >
+                {filtreAteliers && <span>✓</span>}🎓 Propose des ateliers
+              </button>
+
+              <button
+                onClick={() => setAfficherTroubles(!afficherTroubles)}
+                className="flex items-center gap-2 text-sm px-4 py-2 rounded-full transition"
+                style={{
+                  backgroundColor: problematiquesSelectionnees.length > 0 ? '#ffffff' : 'rgba(255,255,255,0.15)',
+                  color: problematiquesSelectionnees.length > 0 ? '#6b21a8' : '#ffffff',
+                  border: problematiquesSelectionnees.length > 0 ? 'none' : '1px solid rgba(255,255,255,0.3)',
+                }}
+              >
+                {problematiquesSelectionnees.length > 0
+                  ? `✓ ${problematiquesSelectionnees.length} trouble${problematiquesSelectionnees.length > 1 ? 's' : ''} sélectionné${problematiquesSelectionnees.length > 1 ? 's' : ''}`
+                  : '+ Filtrer par problématique'}
+                <span style={{ fontSize: '10px' }}>{afficherTroubles ? '▲' : '▼'}</span>
+              </button>
+            </div>
 
             {afficherTroubles && (
               <div className="mt-3 flex flex-wrap gap-2">
@@ -288,10 +289,15 @@ export default function Recherche() {
                   </div>
                 )}
               </div>
-              <select className="text-sm border rounded-lg px-3 py-2" style={{ borderColor: '#e7e5e4', color: '#44403c' }}>
-                <option>Trier par : Pertinence</option>
-                <option>Trier par : Note</option>
-                <option>Trier par : Tarif croissant</option>
+              <select
+                value={tri}
+                onChange={(e) => setTri(e.target.value)}
+                className="text-sm border rounded-lg px-3 py-2"
+                style={{ borderColor: '#e7e5e4', color: '#44403c' }}
+              >
+                <option value="">Trier par : Pertinence</option>
+                <option value="note">Trier par : Note</option>
+                <option value="tarif_asc">Trier par : Tarif croissant</option>
               </select>
             </div>
 
@@ -307,7 +313,7 @@ export default function Recherche() {
                   </p>
                   {praticiens.length > 0 && (
                     <button
-                      onClick={() => { setProblematiquesSelectionnees([]); setSpecialite(''); setPourQui(''); setMode(''); setBudget('') }}
+                      onClick={() => { setProblematiquesSelectionnees([]); setSpecialite(''); setPourQui(''); setMode(''); setFiltreAteliers(false) }}
                       className="text-white px-6 py-3 rounded-2xl text-sm font-medium"
                       style={{ backgroundColor: '#6b21a8' }}
                     >
@@ -382,14 +388,6 @@ export default function Recherche() {
                           )}
                         </div>
 
-                        <div className="text-right flex-shrink-0 ml-4">
-                          {praticien.tarif_depuis !== '—' && (
-                            <>
-                              <p className="text-xs" style={{ color: '#a8a29e' }}>À partir de</p>
-                              <p className="text-sm font-medium" style={{ color: '#44403c' }}>{praticien.tarif_depuis}</p>
-                            </>
-                          )}
-                        </div>
                       </div>
 
                       {praticien.description && (
@@ -401,25 +399,39 @@ export default function Recherche() {
                       {praticien.prestations.length > 0 && (
                         <div className="flex gap-2 flex-wrap mt-3">
                           {praticien.prestations.map((p) => (
-                            <span key={p.nom} className="text-xs px-3 py-1 rounded-lg" style={{ backgroundColor: '#faf9f7', color: '#57534e', border: '1px solid #e7e5e4' }}>
+                            <button
+                              key={p.nom}
+                              className="text-xs px-3 py-1 rounded-lg transition hover:opacity-80"
+                              style={{ backgroundColor: '#faf9f7', color: '#57534e', border: '1px solid #e7e5e4', cursor: 'pointer' }}
+                              onClick={() => allerVers(praticien.id, `?prestation=${encodeURIComponent(p.nom)}`)}
+                            >
                               {p.nom} · {p.duree} · {p.tarif}
-                            </span>
+                            </button>
                           ))}
                         </div>
                       )}
 
                       <div className="flex items-center justify-between mt-4 flex-wrap gap-3">
                         <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>
-                          🟢 {praticien.dispo}
+                          🟢 Disponible
                         </span>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 flex-wrap">
                           <button
                             className="text-sm px-4 py-2 rounded-xl border transition"
                             style={{ borderColor: '#6b21a8', color: '#6b21a8', backgroundColor: 'white' }}
-                            onClick={() => allerVers(praticien.id)}
+                            onClick={() => allerVers(praticien.id, '#contact')}
                           >
                             💬 Contacter
                           </button>
+                          {praticien.ateliers && (
+                            <button
+                              className="text-sm px-4 py-2 rounded-xl transition"
+                              style={{ backgroundColor: '#fef3c7', color: '#92400e', border: '1px solid #fde68a' }}
+                              onClick={() => { window.location.href = `/ateliers?praticien=${praticien.id}` }}
+                            >
+                              🎓 Voir les ateliers
+                            </button>
+                          )}
                           <button
                             className="text-sm px-4 py-2 rounded-xl transition"
                             style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}

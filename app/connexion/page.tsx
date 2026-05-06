@@ -2,9 +2,13 @@
 
 import Nav from '@/app/components/Nav'
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
 export default function Connexion() {
+  const searchParams = useSearchParams()
+  const redirectUrl = searchParams.get('redirect')
+
   const [type, setType] = useState<'patient' | 'praticien'>('patient')
   const [mode, setMode] = useState<'connexion' | 'inscription'>('connexion')
   const [email, setEmail] = useState('')
@@ -27,7 +31,7 @@ export default function Connexion() {
       return
     }
 
-    window.location.href = type === 'patient' ? '/patient' : '/dashboard'
+    window.location.href = redirectUrl || (type === 'patient' ? '/patient' : '/dashboard')
   }
 
   const sInscrire = async () => {
@@ -66,7 +70,7 @@ export default function Connexion() {
     }
 
     setSucces('Compte créé ! Bienvenue sur Holistia 🌿')
-    setTimeout(() => { window.location.href = '/patient' }, 1500)
+    setTimeout(() => { window.location.href = redirectUrl || '/patient' }, 1500)
     setChargement(false)
   }
 

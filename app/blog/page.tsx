@@ -1,6 +1,10 @@
-'use client'
-
 import Nav from '@/app/components/Nav'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Blog Holistia — Ressources sur les médecines douces et le bien-être',
+  description: 'Articles écrits avec nos praticiens experts pour mieux comprendre les médecines douces, prendre soin de vous et de votre famille.',
+}
 
 const ARTICLES = [
   {

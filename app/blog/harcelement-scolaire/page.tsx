@@ -1,6 +1,15 @@
-'use client'
-
 import Nav from '@/app/components/Nav'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Harcèlement scolaire : comment les approches holistiques peuvent aider votre enfant | Holistia',
+  description: 'Sophrologie, EMDR, psychomotricité — ces thérapies complémentaires offrent des outils puissants pour aider les enfants victimes de harcèlement scolaire à se reconstruire.',
+  openGraph: {
+    title: 'Harcèlement scolaire : comment les approches holistiques peuvent aider votre enfant',
+    description: 'Sophrologie, EMDR, psychomotricité — des outils concrets pour aider les enfants à se reconstruire après un harcèlement scolaire.',
+    type: 'article',
+  },
+}
 
 export default function ArticleHarcelement() {
   return (

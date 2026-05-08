@@ -1,6 +1,15 @@
-'use client'
-
 import Nav from '@/app/components/Nav'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Burn-out : reconnaître les signaux et se reconstruire grâce aux médecines douces | Holistia',
+  description: 'Naturopathie, sophrologie, hypnothérapie, coaching — comment les approches holistiques accompagnent une vraie reconstruction après un burn-out.',
+  openGraph: {
+    title: 'Burn-out : reconnaître les signaux et se reconstruire grâce aux médecines douces',
+    description: 'Naturopathie, sophrologie, hypnothérapie, coaching — comment les approches holistiques accompagnent une vraie reconstruction après un burn-out.',
+    type: 'article',
+  },
+}
 
 export default function ArticleBurnOut() {
   return (

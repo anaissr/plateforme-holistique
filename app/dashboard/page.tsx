@@ -46,6 +46,9 @@ export default function Dashboard() {
   const [soumissionEnCours, setSoumissionEnCours] = useState(false)
   const [praticienId, setPraticienId] = useState<number | null>(null)
   const [actionEnCours, setActionEnCours] = useState<string | null>(null)
+  const [disponibilites, setDisponibilites] = useState<Record<string, string[]>>({})
+  const [sauvDispoEnCours, setSauvDispoEnCours] = useState(false)
+  const [succesDispo, setSuccesDispo] = useState('')
 
   const [profil, setProfil] = useState({
     prenom: '',
@@ -101,6 +104,7 @@ export default function Dashboard() {
         if (data.photo) setPhotoUrl(data.photo)
         if (data.diplomes) setDiplomes(data.diplomes)
         if (data.tarifs) setTarifs(data.tarifs)
+        if (data.disponibilites) setDisponibilites(data.disponibilites)
         setPraticienId(data.id)
         setOnglet(estValide ? 'apercu' : 'monprofil')
 
@@ -157,6 +161,27 @@ export default function Dashboard() {
         : 'Profil sauvegardé ! Complétez les champs obligatoires (*) pour déclencher la validation.')
     }
     setChargementProfil(false)
+  }
+
+  const JOURS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+  const CRENEAUX_DISPO = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00']
+
+  const toggleCreneau = (jour: string, heure: string) => {
+    setDisponibilites(prev => {
+      const actuel = prev[jour] || []
+      const nouveau = actuel.includes(heure) ? actuel.filter(h => h !== heure) : [...actuel, heure].sort()
+      return { ...prev, [jour]: nouveau }
+    })
+    setSuccesDispo('')
+  }
+
+  const sauvegarderDisponibilites = async () => {
+    setSauvDispoEnCours(true)
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+    await supabase.from('praticiens').update({ disponibilites }).eq('user_id', user.id)
+    setSuccesDispo('Disponibilités sauvegardées !')
+    setSauvDispoEnCours(false)
   }
 
   const soumettreValidation = async () => {
@@ -337,6 +362,7 @@ export default function Dashboard() {
             ...(profilValide ? [
               { id: 'apercu', label: 'Aperçu' },
               { id: 'agenda', label: 'Mon agenda' },
+              { id: 'disponibilites', label: 'Mes disponibilités' },
               { id: 'patients', label: 'Mes patients' },
               { id: 'stats', label: 'Statistiques' },
               { id: 'avis', label: 'Mes avis' },
@@ -487,6 +513,61 @@ export default function Dashboard() {
                 )}
               </>
             )}
+          </div>
+        )}
+
+        {onglet === 'disponibilites' && profilValide && (
+          <div className="flex flex-col gap-6">
+            <div className="rounded-2xl p-4" style={{ backgroundColor: '#f5f3ff', border: '1px solid #ede9fe' }}>
+              <p className="text-sm" style={{ color: '#6b21a8' }}>
+                Cochez les créneaux où vous êtes disponible. Ils seront affichés sur votre fiche pour que les patients puissent réserver.
+              </p>
+            </div>
+
+            {JOURS.map(jour => (
+              <div key={jour} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{jour}</p>
+                  <p className="text-xs" style={{ color: '#a8a29e' }}>
+                    {(disponibilites[jour] || []).length} créneau{(disponibilites[jour] || []).length !== 1 ? 'x' : ''} sélectionné{(disponibilites[jour] || []).length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {CRENEAUX_DISPO.map(heure => {
+                    const actif = (disponibilites[jour] || []).includes(heure)
+                    return (
+                      <button
+                        key={heure}
+                        onClick={() => toggleCreneau(jour, heure)}
+                        className="text-xs px-3 py-1.5 rounded-lg transition"
+                        style={{
+                          backgroundColor: actif ? '#6b21a8' : '#faf9f7',
+                          color: actif ? '#ffffff' : '#78716c',
+                          border: actif ? 'none' : '1px solid #e7e5e4',
+                        }}
+                      >
+                        {heure}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {succesDispo && (
+              <div className="p-4 rounded-2xl text-sm text-center" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>
+                ✅ {succesDispo}
+              </div>
+            )}
+
+            <button
+              onClick={sauvegarderDisponibilites}
+              disabled={sauvDispoEnCours}
+              className="w-full text-white py-4 rounded-2xl font-medium text-sm"
+              style={{ backgroundColor: sauvDispoEnCours ? '#a855f7' : '#6b21a8' }}
+            >
+              {sauvDispoEnCours ? 'Sauvegarde...' : '💾 Sauvegarder mes disponibilités'}
+            </button>
           </div>
         )}
 

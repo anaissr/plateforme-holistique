@@ -18,6 +18,19 @@ function ConnexionContent() {
   const [chargement, setChargement] = useState(false)
   const [erreur, setErreur] = useState('')
   const [succes, setSucces] = useState('')
+  const [motDePasseOublie, setMotDePasseOublie] = useState(false)
+
+  const reinitialiserMotDePasse = async () => {
+    if (!email) { setErreur('Entrez votre email pour recevoir un lien de réinitialisation.'); return }
+    setChargement(true)
+    setErreur('')
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/callback?next=/connexion`,
+    })
+    if (error) { setErreur(error.message); setChargement(false); return }
+    setSucces('Email envoyé ! Vérifiez votre boîte mail.')
+    setChargement(false)
+  }
 
   const seConnecter = async () => {
     setChargement(true)
@@ -179,11 +192,37 @@ function ConnexionContent() {
               />
             </div>
 
-            {mode === 'connexion' && (
+            {mode === 'connexion' && !motDePasseOublie && (
               <div className="text-right">
-                <button className="text-xs underline" style={{ color: '#6b21a8' }}>
+                <button
+                  className="text-xs underline"
+                  style={{ color: '#6b21a8' }}
+                  onClick={() => setMotDePasseOublie(true)}
+                >
                   Mot de passe oublié ?
                 </button>
+              </div>
+            )}
+            {motDePasseOublie && (
+              <div className="p-3 rounded-xl text-sm" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
+                Entrez votre email ci-dessus puis cliquez sur "Envoyer le lien".
+                <div className="flex gap-2 mt-2">
+                  <button
+                    onClick={reinitialiserMotDePasse}
+                    disabled={chargement}
+                    className="text-xs px-3 py-1.5 rounded-lg text-white"
+                    style={{ backgroundColor: '#6b21a8' }}
+                  >
+                    Envoyer le lien
+                  </button>
+                  <button
+                    onClick={() => setMotDePasseOublie(false)}
+                    className="text-xs px-3 py-1.5 rounded-lg"
+                    style={{ border: '1px solid #6b21a8', color: '#6b21a8' }}
+                  >
+                    Annuler
+                  </button>
+                </div>
               </div>
             )}
 

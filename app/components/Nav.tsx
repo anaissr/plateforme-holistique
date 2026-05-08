@@ -1,9 +1,23 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase'
 
 export default function Nav() {
   const [menuOuvert, setMenuOuvert] = useState(false)
+  const [utilisateur, setUtilisateur] = useState<{ role: 'praticien' | 'patient' | null }>({ role: null })
+
+  useEffect(() => {
+    const chargerSession = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+      const { data: prat } = await supabase.from('praticiens').select('id').eq('user_id', user.id).single()
+      setUtilisateur({ role: prat ? 'praticien' : 'patient' })
+    }
+    chargerSession()
+    const { data: listener } = supabase.auth.onAuthStateChange(() => chargerSession())
+    return () => listener.subscription.unsubscribe()
+  }, [])
 
   return (
     <nav className="flex justify-between items-center px-8 py-5 bg-white shadow-sm sticky top-0 z-50">
@@ -41,20 +55,41 @@ export default function Nav() {
 
       {/* BOUTONS DROITE */}
       <div className="hidden md:flex gap-3 items-center">
-        <button
-          className="text-sm font-medium hover:underline"
-          style={{ color: '#6b21a8' }}
-          onClick={() => { window.location.href = '/connexion' }}
-        >
-          Connexion
-        </button>
-        <button
-          className="text-white text-sm px-4 py-2 rounded-full transition"
-          style={{ backgroundColor: '#6b21a8' }}
-          onClick={() => { window.location.href = '/inscription' }}
-        >
-          Vous êtes praticien ?
-        </button>
+        {utilisateur.role ? (
+          <>
+            <button
+              className="text-sm font-medium hover:underline"
+              style={{ color: '#6b21a8' }}
+              onClick={() => { window.location.href = utilisateur.role === 'praticien' ? '/dashboard' : '/patient' }}
+            >
+              Mon espace
+            </button>
+            <button
+              className="text-white text-sm px-4 py-2 rounded-full transition"
+              style={{ backgroundColor: '#6b21a8' }}
+              onClick={async () => { await supabase.auth.signOut(); window.location.href = '/' }}
+            >
+              Déconnexion
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className="text-sm font-medium hover:underline"
+              style={{ color: '#6b21a8' }}
+              onClick={() => { window.location.href = '/connexion' }}
+            >
+              Connexion
+            </button>
+            <button
+              className="text-white text-sm px-4 py-2 rounded-full transition"
+              style={{ backgroundColor: '#6b21a8' }}
+              onClick={() => { window.location.href = '/inscription' }}
+            >
+              Vous êtes praticien ?
+            </button>
+          </>
+        )}
       </div>
 
       {/* BURGER MOBILE */}
@@ -88,20 +123,41 @@ export default function Nav() {
             </button>
           ))}
           <div className="flex flex-col gap-2 px-8 pt-3 border-t mt-2" style={{ borderColor: '#e7e5e4' }}>
-            <button
-              className="text-sm font-medium text-left"
-              style={{ color: '#6b21a8' }}
-              onClick={() => { window.location.href = '/connexion' }}
-            >
-              Connexion
-            </button>
-            <button
-              className="text-white text-sm px-4 py-2 rounded-full text-center"
-              style={{ backgroundColor: '#6b21a8' }}
-              onClick={() => { window.location.href = '/inscription' }}
-            >
-              Vous êtes praticien ?
-            </button>
+            {utilisateur.role ? (
+              <>
+                <button
+                  className="text-sm font-medium text-left"
+                  style={{ color: '#6b21a8' }}
+                  onClick={() => { window.location.href = utilisateur.role === 'praticien' ? '/dashboard' : '/patient'; setMenuOuvert(false) }}
+                >
+                  Mon espace
+                </button>
+                <button
+                  className="text-white text-sm px-4 py-2 rounded-full text-center"
+                  style={{ backgroundColor: '#6b21a8' }}
+                  onClick={async () => { await supabase.auth.signOut(); window.location.href = '/'; setMenuOuvert(false) }}
+                >
+                  Déconnexion
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="text-sm font-medium text-left"
+                  style={{ color: '#6b21a8' }}
+                  onClick={() => { window.location.href = '/connexion'; setMenuOuvert(false) }}
+                >
+                  Connexion
+                </button>
+                <button
+                  className="text-white text-sm px-4 py-2 rounded-full text-center"
+                  style={{ backgroundColor: '#6b21a8' }}
+                  onClick={() => { window.location.href = '/inscription'; setMenuOuvert(false) }}
+                >
+                  Vous êtes praticien ?
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

@@ -201,6 +201,7 @@ export default function Recherche() {
                   <option>EMDR</option>
                   <option>Hypnothérapie</option>
                   <option>Orthophonie</option>
+                  <option>Psychologie clinique</option>
                   <option>Psychopraticien</option>
                   <option>Sexologie</option>
                   <option>Sophrologie</option>

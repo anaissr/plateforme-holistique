@@ -4,6 +4,28 @@ import Nav from '@/app/components/Nav'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
+type RendezVous = {
+  id: string
+  patient_id: string
+  date: string
+  heure: string
+  duree: string
+  mode: string
+  statut: string
+  prestation: string
+  tarif: number
+  notes_praticien: string
+  patient_prenom?: string
+  patient_email?: string
+}
+
+const STATUT_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
+  en_attente: { label: 'En attente',  color: '#92400e', bg: '#fef3c7' },
+  confirme:   { label: 'Confirmé',    color: '#166534', bg: '#dcfce7' },
+  annule:     { label: 'Annulé',      color: '#991b1b', bg: '#fee2e2' },
+  termine:    { label: 'Terminé',     color: '#44403c', bg: '#f5f5f4' },
+}
+
 export default function Dashboard() {
   const [onglet, setOnglet] = useState<string | null>(null)
   const [profilValide, setProfilValide] = useState(false)
@@ -19,6 +41,9 @@ export default function Dashboard() {
   const [photoUrl, setPhotoUrl] = useState('')
   const [uploadEnCours, setUploadEnCours] = useState(false)
   const [erreurPhoto, setErreurPhoto] = useState('')
+  const [rendezVous, setRendezVous] = useState<RendezVous[]>([])
+  const [praticienId, setPraticienId] = useState<number | null>(null)
+  const [actionEnCours, setActionEnCours] = useState<string | null>(null)
 
   const [profil, setProfil] = useState({
     prenom: '',
@@ -74,7 +99,16 @@ export default function Dashboard() {
         if (data.photo) setPhotoUrl(data.photo)
         if (data.diplomes) setDiplomes(data.diplomes)
         if (data.tarifs) setTarifs(data.tarifs)
+        setPraticienId(data.id)
         setOnglet(estValide ? 'apercu' : 'monprofil')
+
+        // Charge les RDV du praticien
+        const { data: rdvData } = await supabase
+          .from('rendez-vous')
+          .select('*')
+          .eq('praticien_id', data.id)
+          .order('date', { ascending: false })
+        setRendezVous((rdvData as RendezVous[]) || [])
       } else {
         setOnglet('apercu')
       }
@@ -122,6 +156,32 @@ export default function Dashboard() {
     }
     setChargementProfil(false)
   }
+
+  const changerStatutRdv = async (id: string, statut: string) => {
+    setActionEnCours(id)
+    await supabase.from('rendez-vous').update({ statut }).eq('id', id)
+    setRendezVous(prev => prev.map(r => r.id === id ? { ...r, statut } : r))
+    if (statut === 'confirme') {
+      const rdv = rendezVous.find(r => r.id === id)
+      if (rdv?.patient_email) {
+        await fetch('/api/email-rdv', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'confirmation_patient',
+            praticien: `${profil.prenom} ${profil.nom}`,
+            prestation: rdv.prestation,
+            date: rdv.date,
+            heure: rdv.heure,
+            tarif: rdv.tarif,
+            emailPatient: rdv.patient_email,
+          }),
+        })
+      }
+    }
+    setActionEnCours(null)
+  }
+
 
   const uploadPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fichier = e.target.files?.[0]
@@ -278,16 +338,21 @@ export default function Dashboard() {
         </div>
 
         {/* APERÇU */}
-        {onglet === 'apercu' && profilValide && (
+        {onglet === 'apercu' && profilValide && (() => {
+          const moisCourant = new Date().toISOString().slice(0, 7)
+          const rdvCeMois = rendezVous.filter(r => r.date?.startsWith(moisCourant))
+          const enAttente = rendezVous.filter(r => r.statut === 'en_attente').length
+          const revenusMois = rdvCeMois.filter(r => r.statut === 'termine').reduce((s, r) => s + (r.tarif || 0), 0)
+          const patientsUniques = new Set(rendezVous.map(r => r.patient_id)).size
+          return (
           <div className="flex flex-col gap-6">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
               {[
-                { label: 'RDV ce mois', value: '—', emoji: '📅', color: '#6b21a8' },
-                { label: 'En attente', value: '—', emoji: '⏳', color: '#f59e0b' },
-                { label: 'Taux occupation', value: '—', emoji: '📊', color: '#10b981' },
-                { label: 'Revenus du mois', value: '—', emoji: '💶', color: '#6b21a8' },
-                { label: 'Vues du profil', value: '—', emoji: '👁', color: '#3b82f6' },
-                { label: 'Nouveaux patients', value: '—', emoji: '🌱', color: '#10b981' },
+                { label: 'RDV ce mois', value: rdvCeMois.length || '—', emoji: '📅', color: '#6b21a8' },
+                { label: 'En attente', value: enAttente || '—', emoji: '⏳', color: '#f59e0b' },
+                { label: 'Revenus du mois', value: revenusMois ? `${revenusMois}€` : '—', emoji: '💶', color: '#10b981' },
+                { label: 'Patients au total', value: patientsUniques || '—', emoji: '🌱', color: '#3b82f6' },
+                { label: 'Avis reçus', value: rendezVous.filter(r => r.statut === 'termine').length || '—', emoji: '⭐', color: '#6b21a8' },
               ].map((stat) => (
                 <div key={stat.label} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
                   <p className="text-xl mb-1">{stat.emoji}</p>
@@ -301,12 +366,107 @@ export default function Dashboard() {
               <p className="text-xs" style={{ color: '#7c3aed' }}>Votre profil est visible par les patients. Les statistiques et RDV apparaîtront ici au fur et à mesure.</p>
             </div>
           </div>
-        )}
+          )
+        })()}
 
         {onglet === 'agenda' && profilValide && (
-          <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
-            <p className="text-4xl mb-4">📅</p>
-            <p className="text-sm" style={{ color: '#a8a29e' }}>Votre agenda apparaîtra ici une fois les premiers RDV pris.</p>
+          <div className="flex flex-col gap-6">
+            {rendezVous.length === 0 ? (
+              <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
+                <p className="text-4xl mb-4">📅</p>
+                <p className="text-sm" style={{ color: '#a8a29e' }}>Aucun rendez-vous pour le moment.</p>
+              </div>
+            ) : (
+              <>
+                {/* En attente */}
+                {rendezVous.filter(r => r.statut === 'en_attente').length > 0 && (
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wide mb-3" style={{ color: '#92400e' }}>⏳ En attente de confirmation</p>
+                    <div className="flex flex-col gap-3">
+                      {rendezVous.filter(r => r.statut === 'en_attente').map(rdv => (
+                        <div key={rdv.id} className="bg-white rounded-2xl p-5 shadow-sm flex flex-col gap-3" style={{ border: '2px solid #fde68a' }}>
+                          <div className="flex items-start justify-between gap-3 flex-wrap">
+                            <div>
+                              <p className="font-medium text-sm" style={{ color: '#1c1917' }}>{rdv.prestation}</p>
+                              <p className="text-xs mt-1" style={{ color: '#78716c' }}>📅 {rdv.date} à {rdv.heure} · {rdv.duree} · {rdv.mode}</p>
+                              {rdv.tarif > 0 && <p className="text-xs" style={{ color: '#6b21a8' }}>💶 {rdv.tarif}€</p>}
+                              {rdv.notes_praticien && <p className="text-xs mt-1 italic" style={{ color: '#78716c' }}>"{rdv.notes_praticien}"</p>}
+                            </div>
+                            <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ color: STATUT_CONFIG.en_attente.color, backgroundColor: STATUT_CONFIG.en_attente.bg }}>
+                              En attente
+                            </span>
+                          </div>
+                          <div className="flex gap-2 flex-wrap">
+                            <button
+                              onClick={() => changerStatutRdv(rdv.id, 'confirme')}
+                              disabled={actionEnCours === rdv.id}
+                              className="text-sm px-4 py-2 rounded-xl font-medium text-white"
+                              style={{ backgroundColor: '#16a34a' }}
+                            >
+                              {actionEnCours === rdv.id ? '...' : '✓ Confirmer'}
+                            </button>
+                            <button
+                              onClick={() => changerStatutRdv(rdv.id, 'annule')}
+                              disabled={actionEnCours === rdv.id}
+                              className="text-sm px-4 py-2 rounded-xl"
+                              style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}
+                            >
+                              ✕ Refuser
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Confirmés */}
+                {rendezVous.filter(r => r.statut === 'confirme').length > 0 && (
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wide mb-3" style={{ color: '#166534' }}>✅ Confirmés</p>
+                    <div className="flex flex-col gap-3">
+                      {rendezVous.filter(r => r.statut === 'confirme').map(rdv => (
+                        <div key={rdv.id} className="bg-white rounded-2xl p-5 shadow-sm flex items-center justify-between gap-3 flex-wrap" style={{ border: '1px solid #bbf7d0' }}>
+                          <div>
+                            <p className="font-medium text-sm" style={{ color: '#1c1917' }}>{rdv.prestation}</p>
+                            <p className="text-xs mt-1" style={{ color: '#78716c' }}>📅 {rdv.date} à {rdv.heure} · {rdv.duree} · {rdv.mode}</p>
+                            {rdv.tarif > 0 && <p className="text-xs" style={{ color: '#6b21a8' }}>💶 {rdv.tarif}€</p>}
+                          </div>
+                          <button
+                            onClick={() => changerStatutRdv(rdv.id, 'termine')}
+                            disabled={actionEnCours === rdv.id}
+                            className="text-sm px-4 py-2 rounded-xl flex-shrink-0"
+                            style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
+                          >
+                            {actionEnCours === rdv.id ? '...' : 'Marquer terminé'}
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Historique */}
+                {rendezVous.filter(r => r.statut === 'termine' || r.statut === 'annule').length > 0 && (
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wide mb-3" style={{ color: '#a8a29e' }}>Historique</p>
+                    <div className="flex flex-col gap-2">
+                      {rendezVous.filter(r => r.statut === 'termine' || r.statut === 'annule').map(rdv => (
+                        <div key={rdv.id} className="bg-white rounded-2xl p-4 flex items-center justify-between gap-3 flex-wrap opacity-70" style={{ border: '1px solid #e7e5e4' }}>
+                          <div>
+                            <p className="text-sm" style={{ color: '#1c1917' }}>{rdv.prestation}</p>
+                            <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>📅 {rdv.date} à {rdv.heure}</p>
+                          </div>
+                          <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ color: STATUT_CONFIG[rdv.statut]?.color, backgroundColor: STATUT_CONFIG[rdv.statut]?.bg }}>
+                            {STATUT_CONFIG[rdv.statut]?.label}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         )}
 
@@ -316,7 +476,31 @@ export default function Dashboard() {
               <span className="text-lg">🔍</span>
               <input type="text" value={recherchePat} onChange={(e) => setRecherchePat(e.target.value)} placeholder="Rechercher un patient..." className="flex-1 text-sm outline-none bg-transparent" style={{ color: '#1c1917' }} />
             </div>
-            <p className="text-sm text-center py-8" style={{ color: '#a8a29e' }}>Vos patients apparaîtront ici une fois les premiers RDV pris.</p>
+            {rendezVous.length === 0 ? (
+              <p className="text-sm text-center py-8" style={{ color: '#a8a29e' }}>Vos patients apparaîtront ici une fois les premiers RDV pris.</p>
+            ) : (
+              <div className="flex flex-col gap-3">
+                {Array.from(new Map(rendezVous.map(r => [r.patient_id, r])).values())
+                  .filter(r => !recherchePat || r.patient_email?.toLowerCase().includes(recherchePat.toLowerCase()))
+                  .map(rdv => {
+                    const rdvPatient = rendezVous.filter(r => r.patient_id === rdv.patient_id)
+                    return (
+                      <div key={rdv.patient_id} className="bg-white rounded-2xl p-5 shadow-sm flex items-center justify-between gap-3 flex-wrap" style={{ border: '1px solid #e7e5e4' }}>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ backgroundColor: '#f5f3ff' }}>🌿</div>
+                          <div>
+                            <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{rdv.patient_prenom || 'Patient'}</p>
+                            <p className="text-xs" style={{ color: '#a8a29e' }}>{rdvPatient.length} RDV · dernier : {rdvPatient[0]?.date}</p>
+                          </div>
+                        </div>
+                        <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
+                          {rdvPatient.filter(r => r.statut === 'confirme' || r.statut === 'termine').length} consultation(s)
+                        </span>
+                      </div>
+                    )
+                  })}
+              </div>
+            )}
           </div>
         )}
 

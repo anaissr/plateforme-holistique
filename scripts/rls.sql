@@ -165,3 +165,21 @@ CREATE POLICY "ateliers_delete_praticien"
         AND praticiens.user_id = auth.uid()
     )
   );
+
+
+-- ================================================================
+-- 5. TABLE avis
+--    Lecture publique | Écriture par le patient authentifié
+-- ================================================================
+
+ALTER TABLE avis ENABLE ROW LEVEL SECURITY;
+
+-- Tout visiteur peut lire les avis (affichés sur la fiche praticien)
+CREATE POLICY "avis_select_public"
+  ON avis FOR SELECT
+  USING (true);
+
+-- Un patient authentifié peut soumettre un avis
+CREATE POLICY "avis_insert_patient"
+  ON avis FOR INSERT
+  WITH CHECK (auth.uid()::text = patient_id);

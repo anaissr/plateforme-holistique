@@ -78,12 +78,6 @@ export default function Home() {
             flex: '0 0 55%',
           }}
         >
-          {/* Courbe HAUT */}
-          <div className="absolute top-0 left-0 w-full overflow-hidden z-10" style={{ marginTop: '-1px' }}>
-            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-              <path d="M0,30 C480,60 960,0 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
-            </svg>
-          </div>
           {/* Courbe BAS */}
           <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10" style={{ marginBottom: '-1px' }}>
             <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>

@@ -31,6 +31,9 @@ export default function Nav() {
         <button onClick={() => { window.location.href = '/ateliers' }} className="hover:opacity-70 transition">
           Ateliers
         </button>
+        <button onClick={() => { window.location.href = '/webinaires' }} className="hover:opacity-70 transition">
+          Webinaires
+        </button>
         <button className="hover:opacity-70 transition">
           Blog
         </button>
@@ -72,6 +75,7 @@ export default function Nav() {
             { label: 'Orientation', href: '/orientation' },
             { label: 'Spécialités', href: '/specialites' },
             { label: 'Ateliers', href: '/ateliers' },
+            { label: 'Webinaires', href: '/webinaires' },
             { label: 'Blog', href: '#' },
           ].map((lien) => (
             <button

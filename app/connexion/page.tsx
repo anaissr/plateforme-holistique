@@ -1,11 +1,11 @@
 'use client'
 
 import Nav from '@/app/components/Nav'
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
-export default function Connexion() {
+function ConnexionContent() {
   const searchParams = useSearchParams()
   const redirectUrl = searchParams.get('redirect')
 
@@ -241,5 +241,13 @@ export default function Connexion() {
 
       </div>
     </main>
+  )
+}
+
+export default function Connexion() {
+  return (
+    <Suspense>
+      <ConnexionContent />
+    </Suspense>
   )
 }

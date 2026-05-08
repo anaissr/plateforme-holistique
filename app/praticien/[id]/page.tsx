@@ -1,7 +1,7 @@
 'use client'
 
 import Nav from '@/app/components/Nav'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
@@ -72,7 +72,7 @@ type Praticien = {
   ateliers: boolean
 }
 
-export default function FichePraticien() {
+function FichePraticienContent() {
   const params = useParams<{ id: string }>()
   const searchParams = useSearchParams()
   const contactRef = useRef<HTMLTextAreaElement>(null)
@@ -815,5 +815,13 @@ export default function FichePraticien() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function FichePraticien() {
+  return (
+    <Suspense>
+      <FichePraticienContent />
+    </Suspense>
   )
 }

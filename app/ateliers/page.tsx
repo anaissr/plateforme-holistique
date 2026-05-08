@@ -1,7 +1,7 @@
 'use client'
 
 import Nav from '@/app/components/Nav'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
@@ -142,7 +142,7 @@ const formats = [
   { label: 'Présentiel', valeur: 'Présentiel' },
 ]
 
-export default function Ateliers() {
+function AteliersContent() {
   const searchParams = useSearchParams()
   const praticienIdParam = searchParams.get('praticien')
   const [praticienFiltre, setPraticienFiltre] = useState<string | null>(null)
@@ -591,5 +591,13 @@ export default function Ateliers() {
       </section>
 
     </main>
+  )
+}
+
+export default function Ateliers() {
+  return (
+    <Suspense>
+      <AteliersContent />
+    </Suspense>
   )
 }

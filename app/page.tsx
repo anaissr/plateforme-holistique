@@ -72,19 +72,12 @@ export default function Home() {
 
         {/* Colonne texte */}
         <div
-          className="flex flex-col justify-center items-center text-center px-6 sm:px-12 py-14 sm:py-20 relative w-full lg:w-auto"
+          className="flex flex-col justify-center items-center text-center px-6 sm:px-12 py-14 sm:py-20 w-full lg:w-auto"
           style={{
             background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)',
             flex: '0 0 55%',
           }}
         >
-          {/* Courbe BAS */}
-          <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10" style={{ marginBottom: '-1px' }}>
-            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-              <path d="M0,30 C480,0 960,60 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
-            </svg>
-          </div>
-
           <p className="text-xs font-medium mb-3 uppercase tracking-widest" style={{ color: '#c4b5fd' }}>
             Prenez rendez-vous avec un
           </p>
@@ -134,19 +127,6 @@ export default function Home() {
 
         {/* Colonne photo rotative — cachée sur mobile */}
         <div className="relative hidden lg:block overflow-hidden" style={{ flex: '0 0 45%', minHeight: '580px' }}>
-          {/* Courbe HAUT photo */}
-          <div className="absolute top-0 left-0 w-full overflow-hidden z-10" style={{ marginTop: '-1px' }}>
-            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-              <path d="M0,30 C480,60 960,0 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
-            </svg>
-          </div>
-          {/* Courbe BAS photo */}
-          <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10" style={{ marginBottom: '-1px' }}>
-            <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-              <path d="M0,30 C480,0 960,60 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
-            </svg>
-          </div>
-
           {photosRotatives.map((photo, i) => (
             <img
               key={photo.url}
@@ -201,13 +181,8 @@ export default function Home() {
       </section>
 
       {/* POURQUOI NOUS FAIRE CONFIANCE */}
-      <section className="py-20 px-6 relative" style={{ backgroundColor: '#faf9f7' }}>
-        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
-          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-            <path d="M0,30 C480,60 960,0 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
-          </svg>
-        </div>
-        <div className="max-w-5xl mx-auto pt-8">
+      <section className="py-20 px-6" style={{ backgroundColor: '#faf9f7' }}>
+        <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Pourquoi nous faire confiance ?
           </h2>
@@ -233,13 +208,8 @@ export default function Home() {
       </section>
 
       {/* SPÉCIALITÉS */}
-      <section className="py-20 px-6 relative bg-white">
-        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
-          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-            <path d="M0,0 C360,60 1080,0 1440,60 L1440,0 L0,0 Z" fill="#faf9f7" />
-          </svg>
-        </div>
-        <div className="max-w-5xl mx-auto pt-8">
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Les spécialités les plus recherchées
           </h2>
@@ -281,13 +251,8 @@ export default function Home() {
       </section>
 
       {/* PAR PROBLÉMATIQUE */}
-      <section className="py-20 px-6 relative" style={{ backgroundColor: '#f5f3ff' }}>
-        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
-          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-            <path d="M0,60 C480,0 960,60 1440,0 L1440,0 L0,0 Z" fill="#ffffff" />
-          </svg>
-        </div>
-        <div className="max-w-5xl mx-auto pt-8">
+      <section className="py-20 px-6" style={{ backgroundColor: '#f5f3ff' }}>
+        <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Vous ne savez pas par où commencer ?
           </h2>
@@ -307,7 +272,7 @@ export default function Home() {
                 key={pb.label}
                 className="bg-white rounded-2xl py-6 px-4 flex items-center gap-3 transition hover:shadow-md"
                 style={{ border: '1px solid #ede9fe' }}
-onClick={() => { window.location.href = `/orientation?probleme=${encodeURIComponent(pb.label)}` }}
+                onClick={() => { window.location.href = `/orientation?probleme=${encodeURIComponent(pb.label)}` }}
               >
                 <span className="text-2xl">{pb.emoji}</span>
                 <span className="text-base font-medium" style={{ color: '#57534e' }}>{pb.label}</span>
@@ -318,13 +283,8 @@ onClick={() => { window.location.href = `/orientation?probleme=${encodeURICompon
       </section>
 
       {/* PRATICIENS EN VEDETTE */}
-      <section className="py-20 px-6 relative bg-white">
-        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
-          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-            <path d="M0,0 C360,60 1080,0 1440,60 L1440,0 L0,0 Z" fill="#f5f3ff" />
-          </svg>
-        </div>
-        <div className="max-w-5xl mx-auto pt-8">
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Des praticiens de confiance, partout dans le monde
           </h2>
@@ -371,13 +331,8 @@ onClick={() => { window.location.href = `/orientation?probleme=${encodeURICompon
       </section>
 
       {/* TÉMOIGNAGES */}
-      <section className="py-20 px-6 relative" style={{ backgroundColor: '#faf9f7' }}>
-        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
-          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-            <path d="M0,60 C480,0 960,60 1440,0 L1440,0 L0,0 Z" fill="#ffffff" />
-          </svg>
-        </div>
-        <div className="max-w-3xl mx-auto pt-8 text-center">
+      <section className="py-20 px-6" style={{ backgroundColor: '#faf9f7' }}>
+        <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-light mb-10" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Ils ont trouvé leur accompagnement
           </h2>
@@ -414,13 +369,8 @@ onClick={() => { window.location.href = `/orientation?probleme=${encodeURICompon
       </section>
 
       {/* CTA PRATICIEN */}
-      <section className="py-20 px-6 relative bg-white">
-        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
-          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
-            <path d="M0,0 C360,60 1080,0 1440,60 L1440,0 L0,0 Z" fill="#faf9f7" />
-          </svg>
-        </div>
-        <div className="max-w-5xl mx-auto pt-8 text-center">
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-2xl font-light mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Vous êtes praticien ?
           </h2>
@@ -457,13 +407,8 @@ onClick={() => { window.location.href = `/orientation?probleme=${encodeURICompon
       </section>
 
       {/* FOOTER */}
-      <footer className="py-10 px-8 text-sm relative" style={{ backgroundColor: '#1c1917', color: '#a8a29e' }}>
-        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
-          <svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '40px', width: '100%' }}>
-            <path d="M0,20 C480,40 960,0 1440,20 L1440,0 L0,0 Z" fill="#ffffff" />
-          </svg>
-        </div>
-        <div className="max-w-5xl mx-auto flex justify-between items-center pt-4">
+      <footer className="py-10 px-8 text-sm" style={{ backgroundColor: '#1c1917', color: '#a8a29e' }}>
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
           <div className="text-white font-medium" style={{ fontFamily: 'var(--font-lora)' }}>🌿 Holistia</div>
           <div className="flex gap-6">
             {['À propos', 'Charte qualité', 'Blog', 'Contact', 'CGU'].map((link) => (

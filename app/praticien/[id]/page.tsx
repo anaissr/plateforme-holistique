@@ -240,10 +240,12 @@ function FichePraticienContent() {
         heure: creneauSelectionne,
         tarif: prestation.tarif,
         emailPatient: user.email,
+        emailPraticien: praticien.email,
+        messagePatient,
       }),
     })
 
-    setSuccesRdv(`RDV confirmé — ${jourSelectionne} à ${creneauSelectionne} avec ${praticien.nom}`)
+    setSuccesRdv(`Demande envoyée — ${praticien.nom} va confirmer votre RDV du ${jourSelectionne} à ${creneauSelectionne}`)
     setChargementRdv(false)
   }
 
@@ -649,7 +651,7 @@ function FichePraticienContent() {
                   <div className="text-center py-4">
                     <p className="text-3xl mb-3">🎉</p>
                     <p className="text-sm font-medium mb-1" style={{ color: '#16a34a' }}>{succesRdv}</p>
-                    <p className="text-xs" style={{ color: '#a8a29e' }}>Un email de confirmation vous a été envoyé</p>
+                    <p className="text-xs" style={{ color: '#a8a29e' }}>Un email de récapitulatif vous a été envoyé · confirmation du praticien sous 24h</p>
                     <button
                       className="mt-4 text-sm px-4 py-2 rounded-xl"
                       style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}

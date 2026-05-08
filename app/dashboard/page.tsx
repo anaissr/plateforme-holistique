@@ -716,19 +716,48 @@ export default function Dashboard() {
                     style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
                   >
                     <option value="">Choisissez votre spécialité</option>
-                    <option>Sophrologie</option>
-                    <option>Naturopathie</option>
-                    <option>Ostéopathie</option>
-                    <option>Hypnothérapie</option>
-                    <option>Kinésiologie</option>
-                    <option>Acupuncture</option>
-                    <option>Réflexologie</option>
-                    <option>Thérapies brèves</option>
-                    <option>Médecine traditionnelle chinoise</option>
-                    <option>Fasciathérapie</option>
-                    <option>Ayurveda</option>
-                    <option>Coaching holistique</option>
-                    <option>Psychopraticien</option>
+                    <optgroup label="Corps et toucher">
+                      <option>Acupuncture</option>
+                      <option>Chiropractie</option>
+                      <option>Ergothérapie</option>
+                      <option>Fasciathérapie</option>
+                      <option>Kinésiologie</option>
+                      <option>Ostéopathie</option>
+                      <option>Pilates thérapeutique</option>
+                      <option>Podologie</option>
+                      <option>Psychomotricité</option>
+                      <option>Réflexologie</option>
+                      <option>Yoga thérapeutique</option>
+                    </optgroup>
+                    <optgroup label="Parole et émotion">
+                      <option>Coaching</option>
+                      <option>EFT</option>
+                      <option>EMDR</option>
+                      <option>Hypnothérapie</option>
+                      <option>Kinésiologie</option>
+                      <option>Orthophonie</option>
+                      <option>Psychomotricité</option>
+                      <option>Psychopraticien</option>
+                      <option>Sexologie</option>
+                      <option>Sophrologie</option>
+                      <option>Thérapie de couple</option>
+                      <option>Thérapies brèves</option>
+                    </optgroup>
+                    <optgroup label="Énergie et tradition">
+                      <option>Acupuncture</option>
+                      <option>Ayurveda</option>
+                      <option>Homéopathie</option>
+                      <option>Médecine traditionnelle chinoise</option>
+                      <option>Reiki</option>
+                    </optgroup>
+                    <optgroup label="Alimentation et plantes">
+                      <option>Aromathérapie</option>
+                      <option>Ayurveda</option>
+                      <option>Diététique-nutrition</option>
+                      <option>Médecine traditionnelle chinoise</option>
+                      <option>Naturopathie</option>
+                      <option>Phytothérapie</option>
+                    </optgroup>
                     <option>Autre</option>
                   </select>
                 </div>

@@ -116,17 +116,24 @@ export default function Recherche() {
 
   useEffect(() => {
     const charger = async () => {
-      const { data } = await supabase
+      setChargement(true)
+      let query = supabase
         .from('praticiens')
         .select('id, nom, photo, specialite, ville, pays, visio, cabinet, bio, tarifs, specialites, public_cible, note_moyenne, nb_avis, propose_ateliers, disponibilites')
         .eq('valide', true)
         .eq('actif', true)
 
+      if (specialite) query = query.eq('specialite', specialite)
+      if (mode === 'En visio') query = query.eq('visio', true)
+      if (mode === 'En cabinet') query = query.eq('cabinet', true)
+      if (filtreAteliers) query = query.eq('propose_ateliers', true)
+
+      const { data } = await query
       setPraticiens((data || []).map(p => mapPraticien(p as Record<string, unknown>)))
       setChargement(false)
     }
     charger()
-  }, [])
+  }, [specialite, mode, filtreAteliers])
 
   const toggleProblematique = (label: string) => {
     setProblematiquesSelectionnees(prev =>
@@ -135,11 +142,8 @@ export default function Recherche() {
   }
 
   const praticiensFiltres = praticiens.filter(p => {
-    if (specialite && p.specialite !== specialite) return false
+    // specialite, mode, filtreAteliers sont déjà filtrés côté serveur
     if (pourQui && !p.public.some(pub => pub.toLowerCase().includes(pourQui.toLowerCase()))) return false
-    if (mode === 'En visio' && !p.visio) return false
-    if (mode === 'En cabinet' && p.ville === 'Visio uniquement') return false
-    if (filtreAteliers && !p.ateliers) return false
     if (problematiquesSelectionnees.length > 0) {
       return problematiquesSelectionnees.some(prob =>
         p.problematiques.some(pp =>

@@ -182,4 +182,4 @@ CREATE POLICY "avis_select_public"
 -- Un patient authentifié peut soumettre un avis
 CREATE POLICY "avis_insert_patient"
   ON avis FOR INSERT
-  WITH CHECK (auth.uid()::text = patient_id);
+  WITH CHECK (auth.uid() = patient_id);

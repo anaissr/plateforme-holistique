@@ -4,9 +4,36 @@ import { NextResponse } from 'next/server'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: Request) {
-  const { nom, email, accepte, motif } = await request.json()
+  const { type, nom, email, accepte, motif, specialite, ville, pays } = await request.json()
 
   try {
+    // Notification admin quand un praticien soumet son dossier complet
+    if (type === 'soumission_dossier') {
+      await resend.emails.send({
+        from: 'Holistia <onboarding@resend.dev>',
+        to: 'anais202@hotmail.com',
+        subject: `📋 Dossier complet à vérifier — ${nom} (${specialite})`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background: #faf9f7; border-radius: 16px;">
+            <h2 style="color: #6b21a8;">📋 Nouveau dossier à valider</h2>
+            <p style="color: #57534e;">${nom} vient de soumettre son profil complet pour validation.</p>
+            <div style="background: #f5f3ff; border-radius: 12px; padding: 20px; margin: 20px 0; border: 1px solid #ede9fe;">
+              <p style="margin: 0; color: #1c1917;"><strong>Nom :</strong> ${nom}</p>
+              <p style="margin: 8px 0 0; color: #1c1917;"><strong>Email :</strong> ${email}</p>
+              <p style="margin: 8px 0 0; color: #1c1917;"><strong>Spécialité :</strong> ${specialite}</p>
+              <p style="margin: 8px 0 0; color: #1c1917;"><strong>Ville :</strong> ${ville}, ${pays}</p>
+            </div>
+            <div style="text-align: center; margin: 24px 0;">
+              <a href="https://plateforme-holistique.vercel.app/admin" style="background: #6b21a8; color: white; padding: 14px 32px; border-radius: 12px; text-decoration: none; font-weight: 500;">
+                Valider ce dossier →
+              </a>
+            </div>
+          </div>
+        `,
+      })
+      return NextResponse.json({ success: true })
+    }
+
     await resend.emails.send({
       from: 'Holistia <onboarding@resend.dev>',
       to: email,

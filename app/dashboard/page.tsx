@@ -42,6 +42,8 @@ export default function Dashboard() {
   const [uploadEnCours, setUploadEnCours] = useState(false)
   const [erreurPhoto, setErreurPhoto] = useState('')
   const [rendezVous, setRendezVous] = useState<RendezVous[]>([])
+  const [dossierSoumis, setDossierSoumis] = useState(false)
+  const [soumissionEnCours, setSoumissionEnCours] = useState(false)
   const [praticienId, setPraticienId] = useState<number | null>(null)
   const [actionEnCours, setActionEnCours] = useState<string | null>(null)
 
@@ -155,6 +157,24 @@ export default function Dashboard() {
         : 'Profil sauvegardé ! Complétez les champs obligatoires (*) pour déclencher la validation.')
     }
     setChargementProfil(false)
+  }
+
+  const soumettreValidation = async () => {
+    setSoumissionEnCours(true)
+    await fetch('/api/email-validation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'soumission_dossier',
+        nom: `${profil.prenom} ${profil.nom}`,
+        email: profil.email,
+        specialite: profil.specialite,
+        ville: profil.ville,
+        pays: profil.pays,
+      }),
+    })
+    setDossierSoumis(true)
+    setSoumissionEnCours(false)
   }
 
   const changerStatutRdv = async (id: string, statut: string) => {
@@ -832,6 +852,24 @@ export default function Dashboard() {
             >
               {chargementProfil ? 'Sauvegarde en cours...' : '💾 Sauvegarder mon profil'}
             </button>
+
+            {/* Bouton de soumission — visible uniquement si profil complet et pas encore validé */}
+            {!profilValide && profil.prenom && profil.nom && profil.specialite && profil.assurance && diplomes.some(d => d.titre) && tarifs.some(t => t.prix) && (
+              dossierSoumis ? (
+                <div className="p-4 rounded-2xl text-sm text-center" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>
+                  ✅ Dossier soumis — notre équipe reviendra vers vous sous 48h.
+                </div>
+              ) : (
+                <button
+                  onClick={soumettreValidation}
+                  disabled={soumissionEnCours}
+                  className="w-full py-4 rounded-2xl font-medium text-sm"
+                  style={{ backgroundColor: '#f5f3ff', color: '#6b21a8', border: '2px solid #6b21a8' }}
+                >
+                  {soumissionEnCours ? 'Envoi en cours...' : '🚀 Soumettre mon dossier pour validation'}
+                </button>
+              )
+            )}
 
           </div>
         )}

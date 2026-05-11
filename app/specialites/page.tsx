@@ -69,7 +69,7 @@ const specialites = [
     slug: 'psychomotricite',
     emoji: '🤸',
     nom: 'Psychomotricité',
-    categorie: 'corps',
+    categorie: ['corps', 'parole'],
     accroche: 'Harmonisez le corps et l\'esprit grâce à une approche qui unit mouvement et émotions.',
     problematiques: ['Troubles du tonus', 'Agitation et hyperactivité', 'Troubles de la coordination', 'Anxiété somatique', 'Enfants et adolescents'],
     praticiens: 52,
@@ -287,7 +287,7 @@ const specialites = [
     slug: 'ayurveda',
     emoji: '🪷',
     nom: 'Ayurveda',
-    categorie: 'energie',
+    categorie: ['energie', 'plantes'],
     accroche: 'Retrouvez l\'équilibre corps-esprit grâce à la médecine traditionnelle indienne.',
     problematiques: ['Fatigue chronique', 'Troubles digestifs', 'Stress', 'Déséquilibres hormonaux', 'Bien-être global'],
     praticiens: 32,
@@ -299,7 +299,7 @@ const specialites = [
     slug: 'medecine-chinoise',
     emoji: '☯️',
     nom: 'Médecine traditionnelle chinoise',
-    categorie: 'energie',
+    categorie: ['energie', 'plantes'],
     accroche: 'Rééquilibrez votre énergie vitale grâce à 3000 ans de sagesse médicale chinoise.',
     problematiques: ['Douleurs chroniques', 'Troubles digestifs', 'Stress et anxiété', 'Fertilité', 'Troubles du sommeil'],
     praticiens: 76,
@@ -360,10 +360,10 @@ const specialites = [
 
 const categories = [
   { label: 'Toutes', valeur: 'toutes' },
-  { label: 'Corps et toucher', valeur: 'corps' },
-  { label: 'Parole et émotion', valeur: 'parole' },
-  { label: 'Alimentation et plantes', valeur: 'plantes' },
-  { label: 'Énergie et tradition', valeur: 'energie' },
+  { label: 'Corps & Toucher', valeur: 'corps' },
+  { label: 'Parole & Émotion', valeur: 'parole' },
+  { label: 'Alimentation & Plantes', valeur: 'plantes' },
+  { label: 'Énergie & Tradition', valeur: 'energie' },
 ]
 
 export default function Specialites() {
@@ -371,7 +371,7 @@ export default function Specialites() {
 
   const specialitesFiltrees = categorieActive === 'toutes'
     ? specialites
-    : specialites.filter(s => s.categorie === categorieActive)
+    : specialites.filter(s => Array.isArray(s.categorie) ? s.categorie.includes(categorieActive) : s.categorie === categorieActive)
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>

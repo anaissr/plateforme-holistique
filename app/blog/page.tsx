@@ -14,7 +14,7 @@ const ARTICLES = [
     categorie: 'Enfants & adolescents',
     date: '2 mai 2026',
     lecture: '6 min',
-    emoji: '🎒',
+    photo: 'https://plus.unsplash.com/premium_photo-1661373604896-48e3fa2ff3ef?w=200&auto=format&fit=crop&q=80',
   },
   {
     slug: 'burn-out',
@@ -23,7 +23,7 @@ const ARTICLES = [
     categorie: 'Santé mentale & travail',
     date: '8 mai 2026',
     lecture: '7 min',
-    emoji: '🔥',
+    photo: 'https://plus.unsplash.com/premium_photo-1678980766534-c8be07e3c92a?w=200&auto=format&fit=crop&q=80',
   },
 ]
 
@@ -54,12 +54,11 @@ export default function Blog() {
             className="bg-white rounded-3xl p-8 shadow-sm flex gap-6 items-start hover:shadow-md transition-shadow"
             style={{ border: '1px solid #e7e5e4', textDecoration: 'none' }}
           >
-            <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0"
-              style={{ backgroundColor: '#f5f3ff' }}
-            >
-              {article.emoji}
-            </div>
+            <img
+              src={article.photo}
+              alt={article.titre}
+              className="w-16 h-16 rounded-2xl object-cover flex-shrink-0"
+            />
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2 flex-wrap">
                 <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>

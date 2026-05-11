@@ -20,15 +20,15 @@ export const metadata: Metadata = {
     default: "Holistia — Médecine alternative francophone",
     template: "%s | Holistia",
   },
-  description: "Trouvez votre praticien en médecine alternative — naturopathie, sophrologie, ostéopathie, hypnothérapie — en cabinet ou en visio, partout dans le monde francophone.",
-  keywords: ["médecine alternative", "naturopathe", "sophrologue", "ostéopathe", "hypnothérapeute", "bien-être", "holistique", "praticien", "visio"],
+  description: "Trouvez votre praticien vérifié en médecine holistique et médecines douces — naturopathie, sophrologie, ostéopathie, hypnothérapie — accompagnement bienveillant en cabinet ou en visio, accessible à toute la communauté francophone.",
+  keywords: ["médecine holistique", "médecines douces", "praticien vérifié", "accompagnement", "approche intégrative", "santé globale", "bien-être", "naturopathe", "sophrologue", "ostéopathe", "hypnothérapeute", "francophone", "visio", "authentique", "collaboration"],
   authors: [{ name: "Holistia" }],
   openGraph: {
     type: "website",
     locale: "fr_FR",
     siteName: "Holistia",
-    title: "Holistia — Médecine alternative francophone",
-    description: "Trouvez votre praticien en médecine alternative — naturopathie, sophrologie, ostéopathie, hypnothérapie — en cabinet ou en visio.",
+    title: "Holistia — Médecine holistique francophone",
+    description: "Praticiens vérifiés en médecines douces — accompagnement bienveillant, approche intégrative, santé globale. En cabinet ou en visio, accessible à toute la communauté francophone.",
     images: [
       {
         url: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=1200&h=630&fit=crop&crop=center",

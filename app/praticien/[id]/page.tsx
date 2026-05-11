@@ -546,8 +546,8 @@ function FichePraticienContent() {
           )}
 
           {praticien.ateliers && (
-            <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #fde68a' }}>
-              <h2 className="text-lg font-medium mb-2 flex items-center gap-2" style={{ color: '#92400e', fontFamily: 'var(--font-lora)' }}>
+            <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #ede9fe' }}>
+              <h2 className="text-lg font-medium mb-2 flex items-center gap-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
                 <span>🎓</span> Ateliers proposés
               </h2>
               <p className="text-sm mb-4" style={{ color: '#78716c' }}>
@@ -555,7 +555,7 @@ function FichePraticienContent() {
               </p>
               <button
                 className="text-sm px-5 py-2.5 rounded-xl font-medium transition hover:opacity-80"
-                style={{ backgroundColor: '#fef3c7', color: '#78350f', border: '1px solid #fde68a' }}
+                style={{ backgroundColor: '#f5f3ff', color: '#6b21a8', border: '1px solid #ede9fe' }}
                 onClick={() => { window.location.href = `/ateliers?praticien=${praticien.id}` }}
               >
                 🎓 Voir les ateliers de {praticien.nom.split(' ')[0]}

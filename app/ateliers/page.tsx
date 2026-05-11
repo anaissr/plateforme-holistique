@@ -360,20 +360,17 @@ function AteliersContent() {
           ✨ Ateliers collectifs avec des praticiens vérifiés
         </span>
         <h1 className="text-4xl font-light text-white mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
-          Ateliers et formations
+          Ateliers & Formations
         </h1>
         <p className="text-lg max-w-2xl mx-auto mb-6" style={{ color: '#d8b4fe' }}>
-          Explorez les médecines alternatives en groupe — une façon douce et accessible de découvrir une approche avant de consulter individuellement.
+          Une manière douce et accessible de découvrir une approche ou un praticien.
         </p>
         <div className="flex gap-4 justify-center flex-wrap">
           <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-            <span className="text-sm text-white">👥 Petits groupes (max 15 personnes)</span>
+            <span className="text-sm text-white">👥 Petits groupes</span>
           </div>
           <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-            <span className="text-sm text-white">🖥 Visio ou présentiel</span>
-          </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-            <span className="text-sm text-white">💶 À partir de 25€</span>
+            <span className="text-sm text-white">🖥 Visio ou Présentiel</span>
           </div>
         </div>
       </section>

@@ -104,7 +104,7 @@ export default function Home() {
           </p>
 
           <p className="font-bold mb-8 max-w-sm" style={{ color: '#e9d5ff', fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: 'clamp(0.9rem, 2vw, 1.15rem)' }}>
-            un praticien, ou plusieurs, qui travaillent ensemble pour vous.
+            un praticien, ou plusieurs, qui travaillent ensemble pour votre santé.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center w-full max-w-md">
@@ -166,11 +166,12 @@ export default function Home() {
 
       {/* STATS */}
       <section className="bg-white py-12 px-6 shadow-sm">
-        <div className="max-w-5xl mx-auto grid grid-cols-3 gap-8 text-center">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
           {[
             { value: '1 200+', label: 'praticiens vérifiés' },
             { value: '30+', label: 'spécialités référencées' },
-            { value: '0%', label: 'de commission' },
+            { value: '100%', label: 'francophone' },
+            { value: '10+', label: 'pays & en visio' },
           ].map((stat) => (
             <div key={stat.label}>
               <div className="text-3xl font-light mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{stat.value}</div>
@@ -181,7 +182,12 @@ export default function Home() {
       </section>
 
       {/* POURQUOI NOUS FAIRE CONFIANCE */}
-      <section className="py-20 px-6" style={{ backgroundColor: '#faf9f7' }}>
+      <section className="relative py-20 px-6" style={{ backgroundColor: '#faf9f7' }}>
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,30 C480,0 960,60 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
+          </svg>
+        </div>
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Pourquoi nous faire confiance ?
@@ -208,7 +214,12 @@ export default function Home() {
       </section>
 
       {/* SPÉCIALITÉS */}
-      <section className="py-20 px-6 bg-white">
+      <section className="relative py-20 px-6 bg-white">
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,30 C480,0 960,60 1440,30 L1440,0 L0,0 Z" fill="#faf9f7" />
+          </svg>
+        </div>
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Les spécialités les plus recherchées
@@ -251,7 +262,12 @@ export default function Home() {
       </section>
 
       {/* PAR PROBLÉMATIQUE */}
-      <section className="py-20 px-6" style={{ backgroundColor: '#f5f3ff' }}>
+      <section className="relative py-20 px-6" style={{ backgroundColor: '#f5f3ff' }}>
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,30 C480,0 960,60 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
+          </svg>
+        </div>
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Vous ne savez pas par où commencer ?
@@ -283,7 +299,12 @@ export default function Home() {
       </section>
 
       {/* PRATICIENS EN VEDETTE */}
-      <section className="py-20 px-6 bg-white">
+      <section className="relative py-20 px-6 bg-white">
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,30 C480,0 960,60 1440,30 L1440,0 L0,0 Z" fill="#f5f3ff" />
+          </svg>
+        </div>
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Des praticiens de confiance, partout dans le monde
@@ -331,7 +352,12 @@ export default function Home() {
       </section>
 
       {/* TÉMOIGNAGES */}
-      <section className="py-20 px-6" style={{ backgroundColor: '#faf9f7' }}>
+      <section className="relative py-20 px-6" style={{ backgroundColor: '#faf9f7' }}>
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,30 C480,0 960,60 1440,30 L1440,0 L0,0 Z" fill="#ffffff" />
+          </svg>
+        </div>
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-light mb-10" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Ils ont trouvé leur accompagnement
@@ -369,7 +395,12 @@ export default function Home() {
       </section>
 
       {/* CTA PRATICIEN */}
-      <section className="py-20 px-6 bg-white">
+      <section className="relative py-20 px-6 bg-white">
+        <div className="absolute top-0 left-0 w-full overflow-hidden" style={{ marginTop: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,30 C480,0 960,60 1440,30 L1440,0 L0,0 Z" fill="#faf9f7" />
+          </svg>
+        </div>
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-2xl font-light mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Vous êtes praticien ?

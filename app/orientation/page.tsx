@@ -239,9 +239,14 @@ const problemeUrl = typeof window !== 'undefined'
       <Nav />
 
       <section
-        className="px-6 py-12 text-center"
+        className="relative px-6 py-12 text-center"
         style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}
       >
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden" style={{ marginBottom: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
+          </svg>
+        </div>
         <span className="inline-block text-xs px-4 py-1.5 rounded-full mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
           Orientation personnalisée
         </span>

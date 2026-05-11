@@ -21,7 +21,7 @@ export default function Webinaires() {
           Webinaires Holistia
         </h1>
         <p className="text-lg max-w-2xl mx-auto" style={{ color: '#d8b4fe' }}>
-          Des rencontres en ligne pour mieux comprendre les médecines douces et leurs interactions — avec nos praticiens experts.
+          Des rencontres en ligne avec nos praticiens experts pour mieux comprendre les médecines douces et leurs interactions — et comment elles peuvent aider à une meilleure santé globale.
         </p>
       </section>
 

@@ -172,7 +172,12 @@ export default function Recherche() {
       <Nav />
 
       {/* BARRE DE RECHERCHE */}
-      <section className="px-6 py-10" style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}>
+      <section className="relative px-6 py-10" style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}>
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden" style={{ marginBottom: '-1px' }}>
+          <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
+            <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
+          </svg>
+        </div>
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl font-light text-white mb-6 text-center" style={{ fontFamily: 'var(--font-lora)' }}>
             Trouvez votre praticien

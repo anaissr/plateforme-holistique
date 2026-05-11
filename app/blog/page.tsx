@@ -41,7 +41,7 @@ export default function Blog() {
           Le Blog Holistia
         </h1>
         <p className="text-lg max-w-2xl mx-auto" style={{ color: '#d8b4fe' }}>
-          Des articles écrits avec nos praticiens experts pour mieux comprendre les médecines douces et prendre soin de vous.
+          Des articles écrits avec nos praticiens experts pour mieux comprendre les différentes spécialités et pratiques — et comment elles peuvent s'intégrer dans un parcours de soin holistique.
         </p>
       </section>
 

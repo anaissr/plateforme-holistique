@@ -136,7 +136,9 @@ export default function EspacePatient() {
 
     const { error } = await supabase
       .from('patients')
-      .update({
+      .upsert({
+        user_id: user.id,
+        email: user.email,
         prenom: profil.prenom,
         nom: profil.nom,
         telephone: telComplet,
@@ -151,8 +153,7 @@ export default function EspacePatient() {
         approches_deja: approchesDeja,
         approches_interesse: approchesInteresse,
         enfants,
-      })
-      .eq('user_id', user.id)
+      }, { onConflict: 'user_id' })
 
     if (error) setErreurProfil(error.message)
     else setSuccesProfil('Profil sauvegardé !')

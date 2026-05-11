@@ -27,6 +27,17 @@ export default function ArticleBurnOut() {
         <p className="text-sm" style={{ color: '#c4b5fd' }}>8 mai 2026 · 7 min de lecture</p>
       </section>
 
+      {/* PHOTO */}
+      <div className="max-w-2xl mx-auto px-6 pt-10">
+        <img
+          src="https://plus.unsplash.com/premium_photo-1678980766534-c8be07e3c92a?w=900&auto=format&fit=crop&q=80"
+          alt="Burn-out — épuisement professionnel, reconstruction grâce aux médecines douces"
+          className="w-full rounded-3xl object-cover"
+          style={{ maxHeight: '340px' }}
+          loading="lazy"
+        />
+      </div>
+
       {/* CONTENU */}
       <article className="max-w-2xl mx-auto px-6 py-14" style={{ color: '#44403c' }}>
 

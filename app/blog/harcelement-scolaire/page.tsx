@@ -27,6 +27,17 @@ export default function ArticleHarcelement() {
         <p className="text-sm" style={{ color: '#c4b5fd' }}>2 mai 2026 · 6 min de lecture</p>
       </section>
 
+      {/* PHOTO */}
+      <div className="max-w-2xl mx-auto px-6 pt-10">
+        <img
+          src="https://plus.unsplash.com/premium_photo-1661373604896-48e3fa2ff3ef?w=900&auto=format&fit=crop&q=80"
+          alt="Harcèlement scolaire — enfant en souffrance, accompagnement holistique"
+          className="w-full rounded-3xl object-cover"
+          style={{ maxHeight: '340px' }}
+          loading="lazy"
+        />
+      </div>
+
       {/* CONTENU */}
       <article className="max-w-2xl mx-auto px-6 py-14" style={{ color: '#44403c' }}>
 

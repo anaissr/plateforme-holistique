@@ -402,14 +402,14 @@ function AteliersContent() {
       <section className="max-w-5xl mx-auto px-6 py-12 flex flex-col gap-6">
 
         {praticienFiltre && (
-          <div className="flex items-center justify-between px-4 py-3 rounded-2xl" style={{ backgroundColor: '#fef3c7', border: '1px solid #fde68a' }}>
-            <p className="text-sm font-medium" style={{ color: '#78350f' }}>
+          <div className="flex items-center justify-between px-4 py-3 rounded-2xl" style={{ backgroundColor: '#f5f3ff', border: '1px solid #ede9fe' }}>
+            <p className="text-sm font-medium" style={{ color: '#6b21a8' }}>
               🎓 Ateliers de <strong>{praticienFiltre}</strong>
             </p>
             <button
               onClick={() => { setPraticienFiltre(null); window.history.pushState({}, '', '/ateliers') }}
               className="text-xs px-3 py-1.5 rounded-lg font-medium"
-              style={{ backgroundColor: '#fde68a', color: '#78350f' }}
+              style={{ backgroundColor: '#ede9fe', color: '#6b21a8' }}
             >
               Voir tous les ateliers ✕
             </button>

@@ -250,10 +250,10 @@ const problemeUrl = typeof window !== 'undefined'
         <span className="inline-block text-xs px-4 py-1.5 rounded-full mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
           Orientation personnalisée
         </span>
-        <h1 className="text-3xl font-light text-white mb-3" style={{ fontFamily: 'var(--font-lora)' }}>
+        <h1 className="text-4xl font-light text-white mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
           Quel praticien peut vous aider ?
         </h1>
-        <p className="text-sm max-w-md mx-auto" style={{ color: '#d8b4fe' }}>
+        <p className="text-lg max-w-2xl mx-auto" style={{ color: '#d8b4fe' }}>
           Répondez à quelques questions simples — nous vous orientons vers les approches les plus adaptées.
         </p>
       </section>

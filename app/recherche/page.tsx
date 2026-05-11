@@ -179,7 +179,7 @@ export default function Recherche() {
           </svg>
         </div>
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-2xl font-light text-white mb-6 text-center" style={{ fontFamily: 'var(--font-lora)' }}>
+          <h1 className="text-4xl font-light text-white mb-6 text-center" style={{ fontFamily: 'var(--font-lora)' }}>
             Trouvez votre praticien
           </h1>
           <div className="bg-white rounded-2xl p-4 flex flex-wrap gap-3 items-end shadow-lg">

@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     title: 'Harcèlement scolaire : comment les approches holistiques peuvent aider votre enfant',
     description: 'Sophrologie, EMDR, psychomotricité — des outils concrets pour aider les enfants à se reconstruire après un harcèlement scolaire.',
     type: 'article',
+    images: [
+      {
+        url: 'https://plus.unsplash.com/premium_photo-1661373604896-48e3fa2ff3ef?w=1200&auto=format&fit=crop&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Harcèlement scolaire — accompagnement holistique pour enfants',
+      },
+    ],
   },
 }
 
@@ -118,6 +126,28 @@ export default function ArticleHarcelement() {
       <div className="max-w-2xl mx-auto px-6 pb-16">
         <a href="/blog" className="text-sm" style={{ color: '#a8a29e' }}>← Retour au blog</a>
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Harcèlement scolaire : comment les approches holistiques peuvent aider votre enfant',
+            description: 'Sophrologie, EMDR, psychomotricité — ces thérapies complémentaires offrent des outils puissants pour aider les enfants victimes de harcèlement scolaire à se reconstruire.',
+            image: 'https://plus.unsplash.com/premium_photo-1661373604896-48e3fa2ff3ef?w=1200&auto=format&fit=crop&q=80',
+            datePublished: '2026-05-02',
+            dateModified: '2026-05-02',
+            author: { '@type': 'Organization', name: 'Holistia' },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Holistia',
+              url: 'https://plateforme-holistique.vercel.app',
+            },
+            mainEntityOfPage: 'https://plateforme-holistique.vercel.app/blog/harcelement-scolaire',
+          }),
+        }}
+      />
 
     </main>
   )

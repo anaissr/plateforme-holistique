@@ -59,6 +59,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.5,
     },
+    {
+      url: `${BASE_URL}/webinaires`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog/harcelement-scolaire`,
+      lastModified: new Date('2026-05-02'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/blog/burn-out`,
+      lastModified: new Date('2026-05-08'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
     ...praticienUrls,
   ]
 }

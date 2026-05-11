@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     title: 'Burn-out : reconnaître les signaux et se reconstruire grâce aux médecines douces',
     description: 'Naturopathie, sophrologie, hypnothérapie, coaching — comment les approches holistiques accompagnent une vraie reconstruction après un burn-out.',
     type: 'article',
+    images: [
+      {
+        url: 'https://plus.unsplash.com/premium_photo-1678980766534-c8be07e3c92a?w=1200&auto=format&fit=crop&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Burn-out — reconstruction grâce aux médecines douces',
+      },
+    ],
   },
 }
 
@@ -127,6 +135,28 @@ export default function ArticleBurnOut() {
       <div className="max-w-2xl mx-auto px-6 pb-16">
         <a href="/blog" className="text-sm" style={{ color: '#a8a29e' }}>← Retour au blog</a>
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Burn-out : reconnaître les signaux et se reconstruire grâce aux médecines douces',
+            description: 'Naturopathie, sophrologie, hypnothérapie, coaching — comment les approches holistiques accompagnent une vraie reconstruction après un burn-out.',
+            image: 'https://plus.unsplash.com/premium_photo-1678980766534-c8be07e3c92a?w=1200&auto=format&fit=crop&q=80',
+            datePublished: '2026-05-08',
+            dateModified: '2026-05-08',
+            author: { '@type': 'Organization', name: 'Holistia' },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Holistia',
+              url: 'https://plateforme-holistique.vercel.app',
+            },
+            mainEntityOfPage: 'https://plateforme-holistique.vercel.app/blog/burn-out',
+          }),
+        }}
+      />
 
     </main>
   )

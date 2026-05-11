@@ -137,6 +137,7 @@ export default function Dashboard() {
       telephone: telComplet,
       ville: profil.ville,
       pays: profil.pays,
+      specialite: profil.specialite,
       bio: profil.bio,
       assurance: profil.assurance,
       assureur: profil.assureur,
@@ -157,7 +158,7 @@ export default function Dashboard() {
         diplomes.some(d => d.titre && d.ecole && d.annee) &&
         tarifs.some(t => t.label && t.prix)
       setSuccesProfil(toutComplet
-        ? 'Profil sauvegardé ! Notre équipe va vérifier vos informations sous 48h.'
+        ? 'Profil sauvegardé ! Notre équipe va vérifier vos informations sous 72h.'
         : 'Profil sauvegardé ! Complétez les champs obligatoires (*) pour déclencher la validation.')
     }
     setChargementProfil(false)
@@ -635,7 +636,7 @@ export default function Dashboard() {
                 <p className="text-xs" style={{ color: profilValide ? '#15803d' : '#92400e' }}>
                   {profilValide
                     ? 'Vous pouvez continuer à mettre à jour vos informations à tout moment.'
-                    : 'Complétez les champs obligatoires (*) pour déclencher la validation. Notre équipe vous répond sous 48h.'}
+                    : 'Complétez les champs obligatoires (*) pour déclencher la validation. Notre équipe vous répond sous 72h.'}
                 </p>
               </div>
             </div>
@@ -716,11 +717,12 @@ export default function Dashboard() {
                     style={{ border: '1px solid #e7e5e4', color: '#1c1917' }}
                   >
                     <option value="">Choisissez votre spécialité</option>
-                    <optgroup label="Corps et toucher">
+                    <optgroup label="Corps & Toucher">
                       <option>Acupuncture</option>
                       <option>Chiropractie</option>
                       <option>Ergothérapie</option>
                       <option>Fasciathérapie</option>
+                      <option>Kinésithérapie</option>
                       <option>Kinésiologie</option>
                       <option>Ostéopathie</option>
                       <option>Pilates thérapeutique</option>
@@ -729,7 +731,8 @@ export default function Dashboard() {
                       <option>Réflexologie</option>
                       <option>Yoga thérapeutique</option>
                     </optgroup>
-                    <optgroup label="Parole et émotion">
+                    <optgroup label="Parole & Émotion">
+                      <option>Approche systémique</option>
                       <option>Coaching</option>
                       <option>EFT</option>
                       <option>EMDR</option>
@@ -743,17 +746,17 @@ export default function Dashboard() {
                       <option>Thérapie de couple</option>
                       <option>Thérapies brèves</option>
                     </optgroup>
-                    <optgroup label="Énergie et tradition">
+                    <optgroup label="Énergie & Tradition">
                       <option>Acupuncture</option>
                       <option>Ayurveda</option>
                       <option>Homéopathie</option>
                       <option>Médecine traditionnelle chinoise</option>
                       <option>Reiki</option>
                     </optgroup>
-                    <optgroup label="Alimentation et plantes">
+                    <optgroup label="Alimentation & Plantes">
                       <option>Aromathérapie</option>
                       <option>Ayurveda</option>
-                      <option>Diététique-nutrition</option>
+                      <option>Diététique-Nutrition</option>
                       <option>Médecine traditionnelle chinoise</option>
                       <option>Naturopathie</option>
                       <option>Phytothérapie</option>
@@ -967,7 +970,7 @@ export default function Dashboard() {
             {!profilValide && profil.prenom && profil.nom && profil.specialite && profil.assurance && diplomes.some(d => d.titre) && tarifs.some(t => t.prix) && (
               dossierSoumis ? (
                 <div className="p-4 rounded-2xl text-sm text-center" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>
-                  ✅ Dossier soumis — notre équipe reviendra vers vous sous 48h.
+                  ✅ Dossier soumis — notre équipe reviendra vers vous sous 72h.
                 </div>
               ) : (
                 <button

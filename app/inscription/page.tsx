@@ -100,7 +100,7 @@ visio: form.visio,
       }),
     })
 
-setSucces('Inscription réussie ! Un email vient de vous être envoyé pour compléter votre profil. Votre dossier sera validé sous 48h une fois toutes vos informations renseignées.')
+setSucces('Inscription réussie ! Un email vient de vous être envoyé pour compléter votre profil. Votre dossier sera validé sous 72h une fois toutes vos informations renseignées.')
     setChargement(false)
     setTimeout(() => {
       window.location.href = '/dashboard'

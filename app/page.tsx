@@ -448,7 +448,7 @@ export default function Home() {
             Créer mon profil gratuitement
           </button>
           <p className="text-xs mt-3" style={{ color: '#a8a29e' }}>
-            Gratuit pendant 12 mois · Aucun engagement · Profil en ligne sous 48h
+            Gratuit pendant 12 mois · Aucun engagement · Profil en ligne sous 72h
           </p>
         </div>
       </section>

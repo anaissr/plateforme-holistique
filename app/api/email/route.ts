@@ -41,7 +41,7 @@ export async function POST(request: Request) {
               </a>
             </div>
             <p style="color: #a8a29e; font-size: 13px; line-height: 1.6;">
-              Une fois toutes vos informations renseignées, notre équipe vérifiera votre dossier et validera votre profil sous <strong>48h</strong>. Vous serez alors visible par les patients.
+              Une fois toutes vos informations renseignées, notre équipe vérifiera votre dossier et validera votre profil sous <strong>72h</strong>. Vous serez alors visible par les patients.
             </p>
             <p style="color: #57534e;">À très bientôt,<br><strong>L'équipe Holistia</strong></p>
           </div>

@@ -55,7 +55,7 @@ export default function Webinaires() {
                   Proposition envoyée !
                 </h2>
                 <p className="text-sm mb-6" style={{ color: '#57534e' }}>
-                  Merci pour votre intérêt. Notre équipe reviendra vers vous sous 48h pour discuter de votre proposition de webinaire.
+                  Merci pour votre intérêt. Notre équipe reviendra vers vous sous 72h pour discuter de votre proposition de webinaire.
                 </p>
                 <button
                   onClick={reinitialiser}
@@ -73,7 +73,7 @@ export default function Webinaires() {
                     Proposer un webinaire
                   </h2>
                   <p className="text-sm" style={{ color: '#a8a29e' }}>
-                    Notre équipe vous recontactera sous 48h.
+                    Notre équipe vous recontactera sous 72h.
                   </p>
                 </div>
 

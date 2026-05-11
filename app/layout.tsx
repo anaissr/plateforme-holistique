@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   description: "Trouvez votre praticien vérifié en médecine holistique et médecines douces — naturopathie, sophrologie, ostéopathie, hypnothérapie — accompagnement bienveillant en cabinet ou en visio, accessible à toute la communauté francophone.",
   keywords: ["médecine holistique", "médecines douces", "praticien vérifié", "accompagnement", "approche intégrative", "santé globale", "bien-être", "naturopathe", "sophrologue", "ostéopathe", "hypnothérapeute", "francophone", "visio", "authentique", "collaboration"],
   authors: [{ name: "Holistia" }],
+  verification: {
+    google: 'MmL4k04zEH7mzBSq4pj_huuOFpUOfuK-3jL0H9-ZPlU',
+  },
   openGraph: {
     type: "website",
     locale: "fr_FR",

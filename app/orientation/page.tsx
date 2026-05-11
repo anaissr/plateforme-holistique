@@ -17,7 +17,7 @@ const questions = [
       { label: 'Troubles du sommeil', emoji: '😴' },
       { label: 'Equilibre hormonal ou fertilité', emoji: '🌸' },
       { label: 'Soutien émotionnel ou traumatisme', emoji: '💙' },
-      { label: 'Autre / Je ne sais pas', emoji: '🤷' },
+      { label: 'Autre', emoji: '🤷' },
     ],
   },
   {
@@ -138,6 +138,7 @@ const problemeUrl = typeof window !== 'undefined'
   )
   const [selectionMulti, setSelectionMulti] = useState<string[]>([])
   const [autreTexte, setAutreTexte] = useState('')
+  const [autreChoixActif, setAutreChoixActif] = useState(false)
   const [termine, setTermine] = useState(false)
 
   const question = questions[etape]
@@ -149,6 +150,13 @@ const problemeUrl = typeof window !== 'undefined'
         prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label]
       )
     } else {
+      if (label === 'Autre') {
+        setReponses({ ...reponses, [question.id]: ['Autre'] })
+        setAutreChoixActif(true)
+        return
+      }
+      setAutreChoixActif(false)
+      setAutreTexte('')
       const nouvelles = { ...reponses, [question.id]: [label] }
       setReponses(nouvelles)
       if (etape < questions.length - 1) {
@@ -156,6 +164,18 @@ const problemeUrl = typeof window !== 'undefined'
       } else {
         setTimeout(() => setTermine(true), 300)
       }
+    }
+  }
+
+  const validerAutreChoix = () => {
+    const valeur = autreTexte.trim() || 'Autre'
+    setReponses({ ...reponses, [question.id]: [valeur] })
+    setAutreChoixActif(false)
+    setAutreTexte('')
+    if (etape < questions.length - 1) {
+      setTimeout(() => setEtape(etape + 1), 300)
+    } else {
+      setTimeout(() => setTermine(true), 300)
     }
   }
 
@@ -301,7 +321,30 @@ const problemeUrl = typeof window !== 'undefined'
           })}
         </div>
 
-        {/* Champ libre si "Autre" sélectionné */}
+        {/* Champ libre si "Autre" sélectionné sur question choix */}
+        {question.type === 'choix' && autreChoixActif && (
+          <div className="mb-4 flex flex-col gap-3">
+            <textarea
+              autoFocus
+              value={autreTexte}
+              onChange={(e) => setAutreTexte(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); validerAutreChoix() } }}
+              placeholder="Décrivez votre situation en quelques mots..."
+              rows={3}
+              className="w-full text-sm rounded-2xl px-4 py-3 outline-none resize-none"
+              style={{ border: '2px solid #6b21a8', color: '#1c1917', backgroundColor: '#faf9f7' }}
+            />
+            <button
+              onClick={validerAutreChoix}
+              className="w-full py-3 rounded-2xl text-sm font-medium text-white"
+              style={{ backgroundColor: '#6b21a8' }}
+            >
+              Continuer →
+            </button>
+          </div>
+        )}
+
+        {/* Champ libre si "Autre" sélectionné sur question multi */}
         {question.type === 'multi' && selectionMulti.includes('Autre') && (
           <div className="mb-4">
             <input

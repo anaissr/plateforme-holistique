@@ -19,7 +19,7 @@ const specialites = [
   },
   {
     slug: 'fasciatherapie',
-    emoji: '🌊',
+    emoji: '🫀',
     nom: 'Fasciathérapie',
     categorie: 'corps',
     accroche: 'Libérez les tensions profondes du corps grâce au travail sur les fascias.',
@@ -31,7 +31,7 @@ const specialites = [
   },
   {
     slug: 'kinesitherapie',
-    emoji: '🏃‍♂️',
+    emoji: '💪',
     nom: 'Kinésithérapie',
     categorie: 'corps',
     accroche: 'Rééduquez votre corps et retrouvez mobilité et force grâce à la kinésithérapie.',
@@ -127,7 +127,7 @@ const specialites = [
   },
   {
     slug: 'pilates-therapeutique',
-    emoji: '🏃',
+    emoji: '🏋️',
     nom: 'Pilates thérapeutique',
     categorie: 'corps',
     accroche: 'Renforcez votre corps en profondeur et corrigez votre posture grâce au Pilates adapté.',
@@ -139,7 +139,7 @@ const specialites = [
   },
   {
     slug: 'acupuncture',
-    emoji: '🌸',
+    emoji: '🪡',
     nom: 'Acupuncture',
     categorie: 'corps',
     accroche: 'Rééquilibrez votre énergie vitale grâce aux aiguilles et à la médecine traditionnelle chinoise.',
@@ -188,7 +188,7 @@ const specialites = [
   },
   {
     slug: 'psychopraticien',
-    emoji: '💙',
+    emoji: '💬',
     nom: 'Psychopraticien',
     categorie: 'parole',
     accroche: 'Un accompagnement bienveillant pour traverser les difficultés émotionnelles et relationnelles.',
@@ -285,7 +285,7 @@ const specialites = [
   // ── ÉNERGIE & TRADITION ──────────────────────────────────────
   {
     slug: 'reiki',
-    emoji: '✨',
+    emoji: '🙌',
     nom: 'Reiki',
     categorie: 'energie',
     accroche: 'Rééquilibrez votre énergie et favorisez la guérison naturelle par imposition des mains.',

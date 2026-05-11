@@ -83,6 +83,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    ...[
+      'osteopathie', 'fasciatherapie', 'kinesitherapie', 'kinesiologie', 'reflexologie',
+      'ergotherapie', 'psychomotricite', 'podologie', 'chiropractie', 'yoga-therapeutique',
+      'pilates-therapeutique', 'acupuncture', 'sophrologie', 'hypnotherapie', 'therapies-breves',
+      'psychopraticien', 'coaching', 'emdr', 'eft', 'sexologie', 'approche-systemique',
+      'therapie-de-couple', 'orthophonie', 'reiki', 'homeopathie', 'ayurveda',
+      'medecine-chinoise', 'naturopathie', 'dietetique-nutrition', 'phytotherapie', 'aromatherapie',
+    ].map((slug) => ({
+      url: `${BASE_URL}/specialites/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.65,
+    })),
     ...praticienUrls,
   ]
 }

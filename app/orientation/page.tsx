@@ -268,13 +268,16 @@ const problemeUrl = typeof window !== 'undefined'
           </svg>
         </div>
         <span className="inline-block text-xs px-4 py-1.5 rounded-full mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
-          Orientation personnalisée
+          Orientation personnalisée · Version bêta
         </span>
         <h1 className="text-4xl font-light text-white mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
           Quel praticien peut vous aider ?
         </h1>
-        <p className="text-lg max-w-2xl mx-auto" style={{ color: '#d8b4fe' }}>
+        <p className="text-lg max-w-2xl mx-auto mb-3" style={{ color: '#d8b4fe' }}>
           Répondez à quelques questions simples — nous vous orientons vers les approches les plus adaptées.
+        </p>
+        <p className="text-xs max-w-xl mx-auto" style={{ color: 'rgba(255,255,255,0.5)' }}>
+          Cet outil est encore basique — il s'améliorera progressivement. Vos retours sont les bienvenus.
         </p>
       </section>
 
@@ -287,7 +290,7 @@ const problemeUrl = typeof window !== 'undefined'
 
       <div className="max-w-2xl mx-auto px-6 py-10">
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-light mb-2" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
+          <h2 className="text-2xl font-light mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             {question.question}
           </h2>
           <p className="text-sm" style={{ color: '#a8a29e' }}>{question.sous_titre}</p>

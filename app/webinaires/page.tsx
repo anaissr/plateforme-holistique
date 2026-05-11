@@ -15,13 +15,13 @@ export default function Webinaires() {
           </svg>
         </div>
         <span className="inline-block text-xs px-4 py-1.5 rounded-full mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
-          🎙️ En ligne · Gratuit ou à tarif libre
+          🎙️ Rencontres en ligne avec nos praticiens experts
         </span>
         <h1 className="text-4xl font-light text-white mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
           Webinaires Holistia
         </h1>
         <p className="text-lg max-w-2xl mx-auto" style={{ color: '#d8b4fe' }}>
-          Des rencontres en ligne avec nos praticiens experts pour mieux comprendre les médecines douces et leurs interactions — et comment elles peuvent aider à une meilleure santé globale.
+          Pour mieux comprendre les médecines douces et leurs interactions, et comment elles peuvent contribuer à une meilleure santé globale.
         </p>
       </section>
 

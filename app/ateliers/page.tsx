@@ -130,10 +130,10 @@ const ateliers = [
 
 const categories = [
   { label: 'Tous les ateliers', valeur: 'tous' },
-  { label: 'Corps et toucher', valeur: 'corps' },
-  { label: 'Parole et émotion', valeur: 'parole' },
-  { label: 'Alimentation et plantes', valeur: 'plantes' },
-  { label: 'Énergie et tradition', valeur: 'energie' },
+  { label: 'Corps & Toucher', valeur: 'corps' },
+  { label: 'Parole & Émotion', valeur: 'parole' },
+  { label: 'Alimentation & Plantes', valeur: 'plantes' },
+  { label: 'Énergie & Tradition', valeur: 'energie' },
 ]
 
 const formats = [
@@ -362,17 +362,9 @@ function AteliersContent() {
         <h1 className="text-4xl font-light text-white mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
           Ateliers & Formations
         </h1>
-        <p className="text-lg max-w-2xl mx-auto mb-6" style={{ color: '#d8b4fe' }}>
-          Une manière douce et accessible de découvrir une approche ou un praticien.
+        <p className="text-lg max-w-2xl mx-auto" style={{ color: '#d8b4fe' }}>
+          Une manière douce et accessible de découvrir une approche et un praticien, en petits groupes, en visio ou en présentiel.
         </p>
-        <div className="flex gap-4 justify-center flex-wrap">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-            <span className="text-sm text-white">👥 Petits groupes</span>
-          </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-            <span className="text-sm text-white">🖥 Visio ou Présentiel</span>
-          </div>
-        </div>
       </section>
 
       {/* FILTRES */}

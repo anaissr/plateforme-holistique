@@ -29,7 +29,7 @@ const photosRotatives = [
     label: 'Psychothérapie',
   },
   {
-    url: 'https://plus.unsplash.com/premium_photo-1661373604896-48e3fa2ff3ef?w=900&auto=format&fit=crop&q=80',
+    url: 'https://plus.unsplash.com/premium_photo-1661724579910-96f4dba073ac?w=900&auto=format&fit=crop&q=80',
     label: 'Orthophonie',
   },
   {

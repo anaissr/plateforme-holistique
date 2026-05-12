@@ -83,6 +83,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}/blog/comment-choisir-son-naturopathe`,
+      lastModified: new Date('2026-05-12'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/blog/sophrologie-et-anxiete`,
+      lastModified: new Date('2026-05-12'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/blog/osteopathe-ou-kinesitherapeute`,
+      lastModified: new Date('2026-05-12'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/blog/fasciatherapie-tout-comprendre`,
+      lastModified: new Date('2026-05-12'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/blog/psychomotricien-enfant`,
+      lastModified: new Date('2026-05-12'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
     ...[
       'osteopathie', 'fasciatherapie', 'kinesitherapie', 'kinesiologie', 'reflexologie',
       'ergotherapie', 'psychomotricite', 'podologie', 'chiropractie', 'yoga-therapeutique',

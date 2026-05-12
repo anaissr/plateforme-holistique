@@ -104,7 +104,7 @@ export default function Home() {
           </p>
 
           <p className="font-bold mb-8 max-w-sm" style={{ color: '#e9d5ff', fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: 'clamp(0.9rem, 2vw, 1.15rem)' }}>
-            un praticien, ou plusieurs, qui travaillent ensemble pour votre santé.
+            un praticien, ou plusieurs, qui travaillent ensemble pour votre bien-être.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center w-full max-w-md">
@@ -503,8 +503,14 @@ export default function Home() {
         <div className="max-w-5xl mx-auto flex justify-between items-center">
           <div className="text-white font-medium" style={{ fontFamily: 'var(--font-lora)' }}>🌿 Holistia</div>
           <div className="flex gap-6">
-            {['À propos', 'Charte qualité', 'Blog', 'Contact', 'CGU'].map((link) => (
-              <button key={link} className="hover:text-white transition">{link}</button>
+            {[
+              { label: 'Blog', href: '/blog' },
+              { label: 'Spécialités', href: '/specialites' },
+              { label: 'Orientation', href: '/orientation' },
+              { label: 'Ateliers', href: '/ateliers' },
+              { label: 'Praticiens', href: '/inscription' },
+            ].map((link) => (
+              <button key={link.label} className="hover:text-white transition" onClick={() => { window.location.href = link.href }}>{link.label}</button>
             ))}
           </div>
         </div>

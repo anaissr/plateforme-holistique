@@ -152,6 +152,7 @@ export default function Recherche() {
   const [mode, setMode] = useState('')
   const [filtreAteliers, setFiltreAteliers] = useState(false)
   const [afficherTroubles, setAfficherTroubles] = useState(false)
+  const [afficherPourQui, setAfficherPourQui] = useState(false)
   const [tri, setTri] = useState('')
   const [saisieSpecialite, setSaisieSpecialite] = useState('')
   const [showSugg, setShowSugg] = useState(false)
@@ -276,21 +277,6 @@ export default function Recherche() {
               )}
             </div>
             <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
-            <div className="flex-1 min-w-36">
-              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Pour qui ?</label>
-              <select value={pourQui} onChange={(e) => setPourQui(e.target.value)} className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
-                <option value="">Tout public</option>
-                <option>Adultes</option>
-                <option>Enfants</option>
-                <option>Adolescents</option>
-                <option>Bébés</option>
-                <option>Couples</option>
-                <option>Femmes enceintes</option>
-                <option>PMA et fertilité</option>
-                <option>Sportifs</option>
-              </select>
-            </div>
-            <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
             <div className="flex-1 min-w-32">
               <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Mode</label>
               <select value={mode} onChange={(e) => setMode(e.target.value)} className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
@@ -333,6 +319,19 @@ export default function Recherche() {
                   : '+ Filtrer par problématique'}
                 <span style={{ fontSize: '10px' }}>{afficherTroubles ? '▲' : '▼'}</span>
               </button>
+
+              <button
+                onClick={() => setAfficherPourQui(!afficherPourQui)}
+                className="flex items-center gap-2 text-sm px-4 py-2 rounded-full transition"
+                style={{
+                  backgroundColor: pourQui ? '#ffffff' : 'rgba(255,255,255,0.15)',
+                  color: pourQui ? '#6b21a8' : '#ffffff',
+                  border: pourQui ? 'none' : '1px solid rgba(255,255,255,0.3)',
+                }}
+              >
+                {pourQui ? `✓ ${pourQui}` : '👥 Pour qui ?'}
+                <span style={{ fontSize: '10px' }}>{afficherPourQui ? '▲' : '▼'}</span>
+              </button>
             </div>
 
             {afficherTroubles && (
@@ -359,7 +358,36 @@ export default function Recherche() {
                     className="px-3 py-1.5 rounded-full text-sm"
                     style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: '#e9d5ff' }}
                   >
-                    Effacer les filtres
+                    Effacer
+                  </button>
+                )}
+              </div>
+            )}
+
+            {afficherPourQui && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {['Adultes', 'Enfants', 'Adolescents', 'Bébés', 'Couples', 'Femmes enceintes', 'PMA et fertilité', 'Sportifs'].map((pub) => (
+                  <button
+                    key={pub}
+                    onClick={() => setPourQui(pourQui === pub ? '' : pub)}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition"
+                    style={{
+                      backgroundColor: pourQui === pub ? '#ffffff' : 'rgba(255,255,255,0.15)',
+                      color: pourQui === pub ? '#6b21a8' : '#ffffff',
+                      border: pourQui === pub ? 'none' : '1px solid rgba(255,255,255,0.3)',
+                    }}
+                  >
+                    {pub}
+                    {pourQui === pub && <span>✓</span>}
+                  </button>
+                ))}
+                {pourQui && (
+                  <button
+                    onClick={() => setPourQui('')}
+                    className="px-3 py-1.5 rounded-full text-sm"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: '#e9d5ff' }}
+                  >
+                    Effacer
                   </button>
                 )}
               </div>
@@ -421,7 +449,7 @@ export default function Recherche() {
                   </p>
                   {praticiens.length > 0 && (
                     <button
-                      onClick={() => { setProblematiquesSelectionnees([]); setSpecialite(''); setSaisieSpecialite(''); setPourQui(''); setMode(''); setFiltreAteliers(false) }}
+                      onClick={() => { setProblematiquesSelectionnees([]); setSpecialite(''); setSaisieSpecialite(''); setPourQui(''); setMode(''); setFiltreAteliers(false); setAfficherPourQui(false); setAfficherTroubles(false) }}
                       className="text-white px-6 py-3 rounded-2xl text-sm font-medium"
                       style={{ backgroundColor: '#6b21a8' }}
                     >

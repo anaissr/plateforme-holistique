@@ -117,7 +117,7 @@ En France, l acupuncture peut être pratiquée par des médecins, sages-femmes e
           {specialite.description_longue.split('\n\n').map((para, i) => (
             <p key={i} className="text-sm leading-relaxed mb-4" style={{ color: '#57534e' }}>{para}</p>
           ))}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+          <div className="grid grid-cols-2 gap-4 mt-6">
             {[
               { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
               { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },

@@ -28,6 +28,10 @@ const photosRotatives = [
     url: 'https://images.unsplash.com/photo-1539920951450-2b2d59cff66d?w=800&auto=format&fit=crop&q=75&fm=webp',
     label: 'Yoga thérapeutique',
   },
+  {
+    url: 'https://images.pexels.com/photos/368260/pexels-photo-368260.jpeg?auto=compress&cs=tinysrgb&w=800',
+    label: 'Massage thérapeutique',
+  },
 ]
 
 export default function Home() {

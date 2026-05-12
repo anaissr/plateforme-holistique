@@ -368,6 +368,16 @@ function FichePraticienContent() {
                   <span className="text-sm" style={{ color: '#c4b5fd' }}>({praticien.avis} avis)</span>
                 </div>
               )}
+              {praticien.formations.length > 0 && (() => {
+                const anneeMin = Math.min(...praticien.formations.map(f => parseInt(f.annee) || new Date().getFullYear()))
+                const ans = new Date().getFullYear() - anneeMin
+                return ans > 0 ? (
+                  <div className="flex items-center gap-1.5">
+                    <span style={{ color: '#c4b5fd' }}>🎓</span>
+                    <span className="text-sm" style={{ color: '#c4b5fd' }}>{ans} an{ans > 1 ? 's' : ''} d&apos;expérience</span>
+                  </div>
+                ) : null
+              })()}
               {praticien.public.length > 0 && (
                 <div className="flex gap-2 flex-wrap">
                   {praticien.public.map((p) => (

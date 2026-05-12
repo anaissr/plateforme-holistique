@@ -10,9 +10,17 @@ export default function Osteopathie() {
     accroche: 'Soulagez vos douleurs et retrouvez votre mobilité grâce au toucher thérapeutique.',
     description_longue: `L ostéopathie est une médecine manuelle qui considère le corps dans sa globalité. Elle repose sur le principe que la structure et la fonction du corps sont interdépendantes — lorsqu une zone perd sa mobilité, l ensemble de l organisme peut en être affecté.
 
-L ostéopathe utilise ses mains pour diagnostiquer et traiter les restrictions de mobilité des os, des muscles, des ligaments et des organes. Ses manipulations sont douces, précises et adaptées à chaque patient — du nourrisson au senior.
+L ostéopathe utilise ses mains pour diagnostiquer et traiter les restrictions de mobilité des os, des muscles, des ligaments et des organes. Il existe plusieurs grands courants techniques — chaque praticien a sa propre formation et ses propres outils.
 
-Complémentaire à la médecine conventionnelle, l ostéopathie est particulièrement efficace pour les douleurs chroniques, les troubles posturaux et la récupération après un traumatisme ou une opération.`,
+L ostéopathie structurelle s adresse aux articulations et à la colonne vertébrale. Elle inclut des manipulations à haute vélocité (le craquement articulaire) mais aussi des techniques de mobilisation douces qui conviennent à tous, y compris aux personnes plus fragiles.
+
+L ostéopathie crânio-sacrée travaille sur les membranes et les fluides qui entourent le cerveau et la moelle épinière. Les manipulations sont imperceptibles — cette approche est particulièrement utilisée chez les nourrissons (plagiocéphalie, coliques, reflux), les personnes âgées et en post-opératoire.
+
+L ostéopathie viscérale s intéresse à la mobilité des organes internes — foie, intestins, utérus, reins. Elle est souvent mobilisée pour les troubles digestifs chroniques, les douleurs pelviennes ou les suites d opérations abdominales.
+
+L ostéopathie myofasciale travaille sur les fascias — les enveloppes conjonctives qui relient tous les tissus du corps. Elle est douce, profonde, et particulièrement efficace pour les tensions chroniques et les douleurs sans cause structurelle identifiée.
+
+Complémentaire à la médecine conventionnelle, l ostéopathie est reconnue par l HAS pour les lombalgies communes. Elle est partiellement remboursée par de nombreuses mutuelles.`,
     pour_qui: [
       { label: 'Adultes', emoji: '🧑' },
       { label: 'Nourrissons et bébés', emoji: '🍼' },
@@ -130,7 +138,7 @@ Complémentaire à la médecine conventionnelle, l ostéopathie est particulièr
           {specialite.description_longue.split('\n\n').map((para, i) => (
             <p key={i} className="text-sm leading-relaxed mb-4" style={{ color: '#57534e' }}>{para}</p>
           ))}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+          <div className="grid grid-cols-2 gap-4 mt-6">
             {[
               { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
               { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },

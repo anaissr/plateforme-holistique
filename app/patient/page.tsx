@@ -195,7 +195,7 @@ export default function EspacePatient() {
       <main className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#faf9f7' }}>
         <div className="text-center">
           <p className="text-4xl mb-4">🌿</p>
-          <p className="text-sm" style={{ color: '#a8a29e' }}>Chargement...</p>
+          <p className="text-sm" style={{ color: '#78716c' }}>Chargement...</p>
         </div>
       </main>
     )
@@ -212,7 +212,7 @@ export default function EspacePatient() {
             <h1 className="text-2xl font-light" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
               Bonjour {profil.prenom} 👋
             </h1>
-            <p className="text-sm mt-1" style={{ color: '#a8a29e' }}>Votre espace personnel Holistia</p>
+            <p className="text-sm mt-1" style={{ color: '#78716c' }}>Votre espace personnel Holistia</p>
           </div>
           <div className="flex gap-3">
             <button
@@ -245,7 +245,7 @@ export default function EspacePatient() {
               onClick={() => setOnglet(o.id)}
               className="px-4 py-3 text-sm font-medium transition border-b-2 -mb-px whitespace-nowrap"
               style={{
-                color: onglet === o.id ? '#6b21a8' : '#a8a29e',
+                color: onglet === o.id ? '#6b21a8' : '#78716c',
                 borderBottomColor: onglet === o.id ? '#6b21a8' : 'transparent',
               }}
             >
@@ -261,7 +261,7 @@ export default function EspacePatient() {
               <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
                 <p className="text-4xl mb-4">📅</p>
                 <p className="font-medium mb-2" style={{ color: '#1c1917' }}>Aucun rendez-vous pour le moment</p>
-                <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>Trouvez un praticien et prenez votre premier rendez-vous</p>
+                <p className="text-sm mb-6" style={{ color: '#78716c' }}>Trouvez un praticien et prenez votre premier rendez-vous</p>
                 <button className="text-white px-6 py-3 rounded-2xl text-sm font-medium" style={{ backgroundColor: '#6b21a8' }} onClick={() => { window.location.href = '/recherche' }}>
                   Trouver un praticien →
                 </button>
@@ -271,7 +271,7 @@ export default function EspacePatient() {
                 {/* À venir */}
                 {rendezVous.filter(r => r.statut === 'en_attente' || r.statut === 'confirme').length > 0 && (
                   <>
-                    <p className="text-xs font-medium uppercase tracking-wide" style={{ color: '#a8a29e' }}>À venir</p>
+                    <p className="text-xs font-medium uppercase tracking-wide" style={{ color: '#78716c' }}>À venir</p>
                     {rendezVous
                       .filter(r => r.statut === 'en_attente' || r.statut === 'confirme')
                       .map(rdv => (
@@ -285,7 +285,7 @@ export default function EspacePatient() {
                             <div className="flex items-start justify-between gap-3 flex-wrap">
                               <div>
                                 <p className="font-medium text-sm" style={{ color: '#1c1917' }}>{rdv.praticiens?.nom ?? '—'}</p>
-                                <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>{rdv.praticiens?.specialite}</p>
+                                <p className="text-xs mt-0.5" style={{ color: '#78716c' }}>{rdv.praticiens?.specialite}</p>
                               </div>
                               <span className="text-xs px-3 py-1 rounded-full font-medium flex-shrink-0" style={{ color: STATUT_CONFIG[rdv.statut]?.color ?? '#44403c', backgroundColor: STATUT_CONFIG[rdv.statut]?.bg ?? '#f5f5f4' }}>
                                 {STATUT_CONFIG[rdv.statut]?.label ?? rdv.statut}
@@ -298,7 +298,7 @@ export default function EspacePatient() {
                             </div>
                             <div className="flex items-center justify-between mt-3 flex-wrap gap-2">
                               <div>
-                                <p className="text-xs" style={{ color: '#a8a29e' }}>{rdv.prestation}</p>
+                                <p className="text-xs" style={{ color: '#78716c' }}>{rdv.prestation}</p>
                                 {rdv.tarif > 0 && <p className="text-sm font-medium mt-0.5" style={{ color: '#6b21a8' }}>{rdv.tarif}€</p>}
                               </div>
                               {rdv.statut !== 'annule' && (
@@ -321,7 +321,7 @@ export default function EspacePatient() {
                 {/* Passés */}
                 {rendezVous.filter(r => r.statut === 'termine' || r.statut === 'annule').length > 0 && (
                   <>
-                    <p className="text-xs font-medium uppercase tracking-wide mt-2" style={{ color: '#a8a29e' }}>Passés</p>
+                    <p className="text-xs font-medium uppercase tracking-wide mt-2" style={{ color: '#78716c' }}>Passés</p>
                     {rendezVous
                       .filter(r => r.statut === 'termine' || r.statut === 'annule')
                       .map(rdv => (
@@ -335,7 +335,7 @@ export default function EspacePatient() {
                             <div className="flex items-start justify-between gap-3 flex-wrap">
                               <div>
                                 <p className="font-medium text-sm" style={{ color: '#1c1917' }}>{rdv.praticiens?.nom ?? '—'}</p>
-                                <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>{rdv.praticiens?.specialite}</p>
+                                <p className="text-xs mt-0.5" style={{ color: '#78716c' }}>{rdv.praticiens?.specialite}</p>
                               </div>
                               <span className="text-xs px-3 py-1 rounded-full font-medium flex-shrink-0" style={{ color: STATUT_CONFIG[rdv.statut]?.color ?? '#44403c', backgroundColor: STATUT_CONFIG[rdv.statut]?.bg ?? '#f5f5f4' }}>
                                 {STATUT_CONFIG[rdv.statut]?.label ?? rdv.statut}
@@ -346,7 +346,7 @@ export default function EspacePatient() {
                               <p className="text-sm" style={{ color: '#57534e' }}>⏱ {rdv.duree}</p>
                               <p className="text-sm" style={{ color: '#57534e' }}>{rdv.mode === 'Visio' ? '🖥 Visio' : '📍 Cabinet'}</p>
                             </div>
-                            <p className="text-xs mt-2" style={{ color: '#a8a29e' }}>{rdv.prestation}{rdv.tarif > 0 ? ` · ${rdv.tarif}€` : ''}</p>
+                            <p className="text-xs mt-2" style={{ color: '#78716c' }}>{rdv.prestation}{rdv.tarif > 0 ? ` · ${rdv.tarif}€` : ''}</p>
                           </div>
                         </div>
                       ))}
@@ -362,7 +362,7 @@ export default function EspacePatient() {
           <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
             <p className="text-4xl mb-4">📁</p>
             <p className="font-medium mb-2" style={{ color: '#1c1917' }}>Aucun dossier pour le moment</p>
-            <p className="text-sm" style={{ color: '#a8a29e' }}>Vos dossiers apparaîtront après vos premières consultations</p>
+            <p className="text-sm" style={{ color: '#78716c' }}>Vos dossiers apparaîtront après vos premières consultations</p>
           </div>
         )}
 
@@ -371,7 +371,7 @@ export default function EspacePatient() {
           <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
             <p className="text-4xl mb-4">🩺</p>
             <p className="font-medium mb-2" style={{ color: '#1c1917' }}>Aucun praticien sauvegardé</p>
-            <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>Sauvegardez vos praticiens préférés pour les retrouver facilement</p>
+            <p className="text-sm mb-6" style={{ color: '#78716c' }}>Sauvegardez vos praticiens préférés pour les retrouver facilement</p>
             <button className="text-white px-6 py-3 rounded-2xl text-sm font-medium" style={{ backgroundColor: '#6b21a8' }} onClick={() => { window.location.href = '/recherche' }}>
               Trouver un praticien →
             </button>
@@ -485,7 +485,7 @@ export default function EspacePatient() {
             {/* TÉLÉPHONE */}
             <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
               <h2 className="font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Téléphone</h2>
-              <p className="text-xs mb-4" style={{ color: '#a8a29e' }}>
+              <p className="text-xs mb-4" style={{ color: '#78716c' }}>
                 Optionnel — vous permettra de recevoir des rappels de RDV par SMS ou WhatsApp.
               </p>
               <div className="flex gap-2">
@@ -524,7 +524,7 @@ export default function EspacePatient() {
             {/* PROBLÉMATIQUES */}
             <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
               <h2 className="font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Vos problématiques</h2>
-              <p className="text-xs mb-5" style={{ color: '#a8a29e' }}>
+              <p className="text-xs mb-5" style={{ color: '#78716c' }}>
                 Qu'est-ce qui vous amène sur Holistia ? Sélectionnez tout ce qui vous correspond.
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -549,7 +549,7 @@ export default function EspacePatient() {
             {/* PARCOURS BIEN-ÊTRE */}
             <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
               <h2 className="font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Votre parcours bien-être</h2>
-              <p className="text-xs mb-5" style={{ color: '#a8a29e' }}>
+              <p className="text-xs mb-5" style={{ color: '#78716c' }}>
                 Avez-vous déjà essayé certaines approches ? Et lesquelles vous attirent ? Cela nous évite de vous orienter vers ce que vous avez déjà testé.
               </p>
               <p className="text-xs font-medium mb-3" style={{ color: '#57534e' }}>Approches déjà essayées :</p>
@@ -608,7 +608,7 @@ export default function EspacePatient() {
             {/* ENFANTS */}
             <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
               <h2 className="font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Vos enfants</h2>
-              <p className="text-xs mb-5" style={{ color: '#a8a29e' }}>
+              <p className="text-xs mb-5" style={{ color: '#78716c' }}>
                 Si vous cherchez aussi des praticiens pour vos enfants, indiquez leur prénom et âge pour qu'on vous oriente vers les spécialistes adaptés.
               </p>
               <div className="flex flex-col gap-3">

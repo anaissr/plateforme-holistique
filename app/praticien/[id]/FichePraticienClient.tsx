@@ -291,7 +291,7 @@ function FichePraticienContent() {
       <main className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
         <Nav />
         <div className="flex items-center justify-center h-96">
-          <p className="text-sm" style={{ color: '#a8a29e' }}>Chargement du profil...</p>
+          <p className="text-sm" style={{ color: '#78716c' }}>Chargement du profil...</p>
         </div>
       </main>
     )
@@ -303,7 +303,7 @@ function FichePraticienContent() {
         <Nav />
         <div className="flex flex-col items-center justify-center h-96 gap-3">
           <p className="text-lg font-medium" style={{ color: '#1c1917' }}>Profil introuvable</p>
-          <p className="text-sm" style={{ color: '#a8a29e' }}>Ce praticien n&apos;existe pas ou n&apos;est plus disponible.</p>
+          <p className="text-sm" style={{ color: '#78716c' }}>Ce praticien n&apos;existe pas ou n&apos;est plus disponible.</p>
           <button
             className="mt-2 text-sm px-5 py-2 rounded-xl"
             style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
@@ -425,11 +425,11 @@ function FichePraticienContent() {
                   >
                     <div className="flex-1">
                       <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{p.nom}</p>
-                      {p.description && <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>{p.description}</p>}
+                      {p.description && <p className="text-xs mt-0.5" style={{ color: '#78716c' }}>{p.description}</p>}
                     </div>
                     <div className="text-right flex-shrink-0 ml-4">
                       <p className="text-sm font-medium" style={{ color: '#6b21a8' }}>{p.tarif}</p>
-                      <p className="text-xs" style={{ color: '#a8a29e' }}>{formaterDuree(p.duree)}</p>
+                      <p className="text-xs" style={{ color: '#78716c' }}>{formaterDuree(p.duree)}</p>
                     </div>
                   </div>
                 ))}
@@ -493,7 +493,7 @@ function FichePraticienContent() {
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm flex-shrink-0" style={{ backgroundColor: '#f5f3ff' }}>🎓</div>
                     <div className="flex-1">
                       <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{f.titre}</p>
-                      <p className="text-xs" style={{ color: '#a8a29e' }}>{f.ecole} · {f.annee}</p>
+                      <p className="text-xs" style={{ color: '#78716c' }}>{f.ecole} · {f.annee}</p>
                     </div>
                     <span className="text-xs px-3 py-1 rounded-full flex-shrink-0" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>✓ Vérifié</span>
                   </div>
@@ -510,13 +510,13 @@ function FichePraticienContent() {
                   <span className="text-2xl font-light" style={{ color: '#6b21a8' }}>{praticien.note}</span>
                   <div>
                     <div className="flex gap-0.5">{[1,2,3,4,5].map((i) => <span key={i} className="text-sm">{i <= Math.round(praticien.note) ? '⭐' : '☆'}</span>)}</div>
-                    <p className="text-xs" style={{ color: '#a8a29e' }}>{praticien.avis} avis vérifiés</p>
+                    <p className="text-xs" style={{ color: '#78716c' }}>{praticien.avis} avis vérifiés</p>
                   </div>
                 </div>
               )}
             </div>
             {praticien.avisClients.length === 0 ? (
-              <p className="text-sm" style={{ color: '#a8a29e' }}>Aucun avis pour le moment.</p>
+              <p className="text-sm" style={{ color: '#78716c' }}>Aucun avis pour le moment.</p>
             ) : (
               <div className="flex flex-col gap-6">
                 {praticien.avisClients.map((avis, i) => (
@@ -524,7 +524,7 @@ function FichePraticienContent() {
                     <div className="flex items-center justify-between mb-2">
                       <div>
                         <span className="text-sm font-medium" style={{ color: '#1c1917' }}>{avis.prenom}</span>
-                        <span className="text-xs ml-2" style={{ color: '#a8a29e' }}>{avis.date}</span>
+                        <span className="text-xs ml-2" style={{ color: '#78716c' }}>{avis.date}</span>
                       </div>
                       <div className="flex gap-0.5">{[1,2,3,4,5].map((i) => <span key={i} className="text-xs">{i <= avis.note ? '⭐' : '☆'}</span>)}</div>
                     </div>
@@ -547,7 +547,7 @@ function FichePraticienContent() {
                 onClick={() => setModePaiement('rdv')}
                 className="flex-1 py-3 text-sm font-medium transition"
                 style={{
-                  color: modePaiement === 'rdv' ? '#6b21a8' : '#a8a29e',
+                  color: modePaiement === 'rdv' ? '#6b21a8' : '#78716c',
                   borderBottom: modePaiement === 'rdv' ? '2px solid #6b21a8' : '2px solid transparent',
                 }}
               >
@@ -557,7 +557,7 @@ function FichePraticienContent() {
                 onClick={() => setModePaiement('cadeau')}
                 className="flex-1 py-3 text-sm font-medium transition"
                 style={{
-                  color: modePaiement === 'cadeau' ? '#6b21a8' : '#a8a29e',
+                  color: modePaiement === 'cadeau' ? '#6b21a8' : '#78716c',
                   borderBottom: modePaiement === 'cadeau' ? '2px solid #6b21a8' : '2px solid transparent',
                 }}
               >
@@ -572,7 +572,7 @@ function FichePraticienContent() {
                   <div className="text-center py-4">
                     <p className="text-3xl mb-3">🎉</p>
                     <p className="text-sm font-medium mb-1" style={{ color: '#16a34a' }}>{succesRdv}</p>
-                    <p className="text-xs" style={{ color: '#a8a29e' }}>Un email de récapitulatif vous a été envoyé · confirmation du praticien sous 24h</p>
+                    <p className="text-xs" style={{ color: '#78716c' }}>Un email de récapitulatif vous a été envoyé · confirmation du praticien sous 24h</p>
                     <button
                       className="mt-4 text-sm px-4 py-2 rounded-xl"
                       style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}
@@ -587,7 +587,7 @@ function FichePraticienContent() {
 
                     {prestation && (
                       <>
-                        <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>1. Prestation sélectionnée</label>
+                        <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>1. Prestation sélectionnée</label>
                         <div className="p-3 rounded-xl mb-4" style={{ backgroundColor: '#f5f3ff' }}>
                           <p className="text-sm font-medium" style={{ color: '#6b21a8' }}>{prestation.nom}</p>
                           <p className="text-xs" style={{ color: '#7c3aed' }}>{formaterDuree(prestation.duree)} · {prestation.tarif}</p>
@@ -596,10 +596,10 @@ function FichePraticienContent() {
                     )}
 
                     {Object.keys(praticien.agenda).length === 0 ? (
-                      <p className="text-sm mb-4" style={{ color: '#a8a29e' }}>Aucune disponibilité renseignée pour le moment.</p>
+                      <p className="text-sm mb-4" style={{ color: '#78716c' }}>Aucune disponibilité renseignée pour le moment.</p>
                     ) : (
                       <>
-                        <label className="text-xs font-medium block mb-3" style={{ color: '#a8a29e' }}>2. Disponibilités</label>
+                        <label className="text-xs font-medium block mb-3" style={{ color: '#78716c' }}>2. Disponibilités</label>
                         <div className="overflow-x-auto mb-4" style={{ marginLeft: '-4px', marginRight: '-4px' }}>
                           <div className="flex gap-2 px-1 pb-1" style={{ width: 'max-content' }}>
                             {Array.from({ length: 7 }, (_, i) => {
@@ -647,7 +647,7 @@ function FichePraticienContent() {
                     )}
 
                     <div className="mb-4">
-                      <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>{Object.keys(praticien.agenda).length > 0 ? '3.' : '2.'} Message pour le praticien (optionnel)</label>
+                      <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>{Object.keys(praticien.agenda).length > 0 ? '3.' : '2.'} Message pour le praticien (optionnel)</label>
                       <textarea
                         value={messagePatient}
                         onChange={(e) => setMessagePatient(e.target.value)}
@@ -665,7 +665,7 @@ function FichePraticienContent() {
                     >
                       {chargementRdv ? 'Confirmation...' : creneauSelectionne ? `Confirmer — ${jourSelectionne} à ${creneauSelectionne}` : 'Choisissez un créneau'}
                     </button>
-                    <p className="text-xs text-center mt-2" style={{ color: '#a8a29e' }}>Annulation gratuite jusqu&apos;à 24h avant</p>
+                    <p className="text-xs text-center mt-2" style={{ color: '#78716c' }}>Annulation gratuite jusqu&apos;à 24h avant</p>
                   </>
                 )}
               </div>
@@ -679,7 +679,7 @@ function FichePraticienContent() {
                   <p className="text-sm font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Offrez une consultation avec {praticien.nom}</p>
                   <p className="text-xs" style={{ color: '#78716c' }}>Un bon cadeau envoyé par email, valable 1 an</p>
                 </div>
-                <label className="text-xs font-medium block mb-2" style={{ color: '#a8a29e' }}>Choisissez une prestation</label>
+                <label className="text-xs font-medium block mb-2" style={{ color: '#78716c' }}>Choisissez une prestation</label>
                 <div className="flex flex-col gap-2 mb-4">
                   {praticien.prestations.map((p) => (
                     <button
@@ -693,7 +693,7 @@ function FichePraticienContent() {
                     >
                       <div>
                         <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{p.nom}</p>
-                        <p className="text-xs" style={{ color: '#a8a29e' }}>{formaterDuree(p.duree)}</p>
+                        <p className="text-xs" style={{ color: '#78716c' }}>{formaterDuree(p.duree)}</p>
                       </div>
                       <span className="text-sm font-medium" style={{ color: '#6b21a8' }}>{p.tarif}</span>
                     </button>
@@ -706,14 +706,14 @@ function FichePraticienContent() {
                 >
                   Offrir ce bon cadeau — {montantCadeau > 0 ? `${montantCadeau}€` : '—'}
                 </button>
-                <p className="text-xs text-center mt-2" style={{ color: '#a8a29e' }}>Envoyé par email · Valable 1 an · Remboursable si non utilisé</p>
+                <p className="text-xs text-center mt-2" style={{ color: '#78716c' }}>Envoyé par email · Valable 1 an · Remboursable si non utilisé</p>
               </div>
             )}
           </div>
 
           <div id="contact" className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
             <h2 className="text-base font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Une question ?</h2>
-            <p className="text-xs mb-3" style={{ color: '#a8a29e' }}>Échangez avec {praticien.nom.split(' ')[0]} avant de vous engager</p>
+            <p className="text-xs mb-3" style={{ color: '#78716c' }}>Échangez avec {praticien.nom.split(' ')[0]} avant de vous engager</p>
             <textarea
               ref={contactRef}
               value={messageContact}

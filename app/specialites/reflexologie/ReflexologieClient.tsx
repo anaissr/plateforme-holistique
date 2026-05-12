@@ -73,7 +73,7 @@ export default function Reflexologie() {
           ].map((stat) => (
             <div key={stat.label}>
               <div className="text-3xl font-light mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{stat.value}</div>
-              <div className="text-sm" style={{ color: '#a8a29e' }}>{stat.label}</div>
+              <div className="text-sm" style={{ color: '#78716c' }}>{stat.label}</div>
             </div>
           ))}
         </div>
@@ -157,7 +157,7 @@ export default function Reflexologie() {
                 <img src={p.photo} alt={p.nom} className="w-full h-40 object-cover object-top" />
                 <div className="p-4">
                   <p className="font-medium text-sm mb-0.5" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{p.nom}</p>
-                  <p className="text-xs mb-1" style={{ color: '#a8a29e' }}>📍 {p.ville}</p>
+                  <p className="text-xs mb-1" style={{ color: '#78716c' }}>📍 {p.ville}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-xs" style={{ color: '#1c1917' }}>⭐ {p.note} ({p.avis})</span>
                     <span className="text-xs font-medium" style={{ color: '#6b21a8' }}>À partir de {p.tarif}</span>

@@ -72,7 +72,7 @@ export default function Webinaires() {
                   <h2 className="text-xl font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
                     Proposer un webinaire
                   </h2>
-                  <p className="text-sm" style={{ color: '#a8a29e' }}>
+                  <p className="text-sm" style={{ color: '#78716c' }}>
                     Notre équipe vous recontactera sous 72h.
                   </p>
                 </div>
@@ -146,7 +146,7 @@ export default function Webinaires() {
                 >
                   {chargement ? 'Envoi en cours...' : 'Envoyer ma proposition'}
                 </button>
-                <button onClick={() => setModaleOuverte(false)} className="w-full py-2 text-sm" style={{ color: '#a8a29e' }}>
+                <button onClick={() => setModaleOuverte(false)} className="w-full py-2 text-sm" style={{ color: '#78716c' }}>
                   Annuler
                 </button>
               </>
@@ -181,7 +181,7 @@ export default function Webinaires() {
         <div className="bg-white rounded-3xl p-12 text-center shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
           <p className="text-4xl mb-4">📅</p>
           <p className="font-medium mb-2" style={{ color: '#1c1917' }}>Aucun webinaire programmé pour le moment</p>
-          <p className="text-sm" style={{ color: '#a8a29e' }}>Revenez bientôt — de nouveaux webinaires sont en cours de préparation.</p>
+          <p className="text-sm" style={{ color: '#78716c' }}>Revenez bientôt — de nouveaux webinaires sont en cours de préparation.</p>
         </div>
       </section>
 
@@ -192,7 +192,7 @@ export default function Webinaires() {
         </h2>
         <div className="bg-white rounded-3xl p-12 text-center shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
           <p className="text-4xl mb-4">🎙️</p>
-          <p className="text-sm" style={{ color: '#a8a29e' }}>Les replays apparaîtront ici après chaque webinaire.</p>
+          <p className="text-sm" style={{ color: '#78716c' }}>Les replays apparaîtront ici après chaque webinaire.</p>
         </div>
       </section>
 

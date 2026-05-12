@@ -157,7 +157,7 @@ export default function ArticleBurnOut() {
 
       {/* RETOUR BLOG */}
       <div className="max-w-2xl mx-auto px-6 pb-16">
-        <a href="/blog" className="text-sm" style={{ color: '#a8a29e' }}>← Retour au blog</a>
+        <a href="/blog" className="text-sm" style={{ color: '#78716c' }}>← Retour au blog</a>
       </div>
 
       <script

@@ -64,7 +64,7 @@ export default function Blog() {
                 <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
                   {article.categorie}
                 </span>
-                <span className="text-xs" style={{ color: '#a8a29e' }}>{article.date} · {article.lecture} de lecture</span>
+                <span className="text-xs" style={{ color: '#78716c' }}>{article.date} · {article.lecture} de lecture</span>
               </div>
               <h2 className="text-lg font-medium mb-2 leading-snug" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
                 {article.titre}

@@ -184,7 +184,7 @@ export default function Recherche() {
           </h1>
           <div className="bg-white rounded-2xl p-4 flex flex-wrap gap-3 items-end shadow-lg">
             <div className="flex-1 min-w-36">
-              <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>Spécialité</label>
+              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Spécialité</label>
               <select value={specialite} onChange={(e) => setSpecialite(e.target.value)} className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
                 <option value="">Toutes les spécialités</option>
                 <optgroup label="Corps et toucher">
@@ -232,7 +232,7 @@ export default function Recherche() {
             </div>
             <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
             <div className="flex-1 min-w-36">
-              <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>Pour qui ?</label>
+              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Pour qui ?</label>
               <select value={pourQui} onChange={(e) => setPourQui(e.target.value)} className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
                 <option value="">Tout public</option>
                 <option>Adultes</option>
@@ -247,7 +247,7 @@ export default function Recherche() {
             </div>
             <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
             <div className="flex-1 min-w-32">
-              <label className="text-xs font-medium block mb-1" style={{ color: '#a8a29e' }}>Mode</label>
+              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Mode</label>
               <select value={mode} onChange={(e) => setMode(e.target.value)} className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
                 <option value="">Cabinet ou visio</option>
                 <option>En cabinet</option>
@@ -329,7 +329,7 @@ export default function Recherche() {
         {chargement ? (
           <div className="flex flex-col items-center justify-center py-24 gap-3">
             <p className="text-3xl">🌿</p>
-            <p className="text-sm" style={{ color: '#a8a29e' }}>Chargement des praticiens...</p>
+            <p className="text-sm" style={{ color: '#78716c' }}>Chargement des praticiens...</p>
           </div>
         ) : (
           <>
@@ -371,7 +371,7 @@ export default function Recherche() {
                   <p className="font-medium mb-2" style={{ color: '#1c1917' }}>
                     {praticiens.length === 0 ? 'Aucun praticien disponible pour le moment' : 'Aucun praticien trouvé'}
                   </p>
-                  <p className="text-sm mb-6" style={{ color: '#a8a29e' }}>
+                  <p className="text-sm mb-6" style={{ color: '#78716c' }}>
                     {praticiens.length === 0 ? 'Les premiers praticiens arrivent bientôt !' : 'Essayez de modifier vos filtres'}
                   </p>
                   {praticiens.length > 0 && (
@@ -421,7 +421,7 @@ export default function Recherche() {
                             </h2>
                           </div>
                           <p className="text-sm" style={{ color: '#6b21a8' }}>{praticien.specialite}</p>
-                          <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>📍 {praticien.ville}</p>
+                          <p className="text-xs mt-0.5" style={{ color: '#78716c' }}>📍 {praticien.ville}</p>
                           {praticien.public.length > 0 && (
                             <div className="flex gap-1.5 flex-wrap mt-2 items-center">
                               <span className="text-xs" style={{ color: '#6b21a8' }}>👥</span>
@@ -482,7 +482,7 @@ export default function Recherche() {
                               🟢 Prochaine dispo : {praticien.creneaux[0].replace(/(\d{1,2}):(\d{2})$/, (_, h, m) => `à ${parseInt(h)}h${m === '00' ? '' : m}`)}
                             </p>
                           ) : (
-                            <p className="text-xs" style={{ color: '#a8a29e' }}>Sur appel</p>
+                            <p className="text-xs" style={{ color: '#78716c' }}>Sur appel</p>
                           )}
                         </div>
                         <div className="flex gap-2 flex-wrap">

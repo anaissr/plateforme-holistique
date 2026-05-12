@@ -199,11 +199,11 @@ La thérapie brève systémique (inspirée de la thérapie de Palo Alto) est par
                 <div className="p-4">
                   <p className="font-medium text-sm" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{p.nom}</p>
                   <p className="text-xs mt-0.5" style={{ color: '#6b21a8' }}>{p.specialisation}</p>
-                  <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>📍 {p.ville}</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#78716c' }}>📍 {p.ville}</p>
                   <div className="flex items-center gap-1 mt-2">
                     <span className="text-xs">⭐</span>
                     <span className="text-xs font-medium" style={{ color: '#1c1917' }}>{p.note}</span>
-                    <span className="text-xs" style={{ color: '#a8a29e' }}>({p.avis} avis)</span>
+                    <span className="text-xs" style={{ color: '#78716c' }}>({p.avis} avis)</span>
                     <span className="text-xs ml-auto px-2 py-0.5 rounded-full" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>Vérifié</span>
                   </div>
                 </div>

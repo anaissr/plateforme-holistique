@@ -277,7 +277,7 @@ function AteliersContent() {
                   <h2 className="text-xl font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
                     Offrir cet atelier
                   </h2>
-                  <p className="text-sm" style={{ color: '#a8a29e' }}>{modaleCadeau.titre}</p>
+                  <p className="text-sm" style={{ color: '#78716c' }}>{modaleCadeau.titre}</p>
                 </div>
 
                 <div className="rounded-2xl p-4 mb-5" style={{ backgroundColor: '#f5f3ff' }}>
@@ -337,10 +337,10 @@ function AteliersContent() {
                 >
                   {chargement ? 'Envoi en cours...' : `Envoyer ma demande — ${modaleCadeau.tarif}`}
                 </button>
-                <p className="text-xs text-center mb-4" style={{ color: '#a8a29e' }}>
+                <p className="text-xs text-center mb-4" style={{ color: '#78716c' }}>
                   {modaleCadeau.praticien} vous contactera rapidement pour finaliser le paiement.
                 </p>
-                <button onClick={() => setModaleCadeau(null)} className="w-full py-2 text-sm" style={{ color: '#a8a29e' }}>
+                <button onClick={() => setModaleCadeau(null)} className="w-full py-2 text-sm" style={{ color: '#78716c' }}>
                   Annuler
                 </button>
               </>
@@ -379,13 +379,13 @@ function AteliersContent() {
           </div>
           <div className="flex gap-2 justify-center">
             {formats.map((f) => (
-              <button key={f.valeur} onClick={() => setFormatActif(f.valeur)} className="text-xs px-4 py-1.5 rounded-full transition" style={{ backgroundColor: formatActif === f.valeur ? '#f5f3ff' : '#faf9f7', color: formatActif === f.valeur ? '#6b21a8' : '#a8a29e', border: formatActif === f.valeur ? '1px solid #6b21a8' : '1px solid #e7e5e4' }}>
+              <button key={f.valeur} onClick={() => setFormatActif(f.valeur)} className="text-xs px-4 py-1.5 rounded-full transition" style={{ backgroundColor: formatActif === f.valeur ? '#f5f3ff' : '#faf9f7', color: formatActif === f.valeur ? '#6b21a8' : '#78716c', border: formatActif === f.valeur ? '1px solid #6b21a8' : '1px solid #e7e5e4' }}>
                 {f.label}
               </button>
             ))}
           </div>
         </div>
-        <p className="text-center text-xs mt-3" style={{ color: '#a8a29e' }}>
+        <p className="text-center text-xs mt-3" style={{ color: '#78716c' }}>
           {ateliersFiltres.length} atelier{ateliersFiltres.length > 1 ? 's' : ''} disponible{ateliersFiltres.length > 1 ? 's' : ''}
         </p>
       </section>
@@ -437,7 +437,7 @@ function AteliersContent() {
                     </div>
                     <div className="text-right flex-shrink-0">
                       <p className="text-2xl font-light" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{atelier.tarif}</p>
-                      <p className="text-xs" style={{ color: '#a8a29e' }}>par personne</p>
+                      <p className="text-xs" style={{ color: '#78716c' }}>par personne</p>
                     </div>
                   </div>
 

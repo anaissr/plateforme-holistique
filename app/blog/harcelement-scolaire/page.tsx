@@ -53,7 +53,7 @@ export default function ArticleHarcelement() {
           Le harcèlement scolaire touche 1 enfant sur 10 en France. Derrière les mots — insultes, exclusion, cyberharcèlement — se cachent des blessures invisibles qui peuvent marquer durablement le développement psychologique et émotionnel d'un enfant. Anxiété chronique, troubles du sommeil, perte d'estime de soi, refus d'aller à l'école : les signaux sont là, mais les familles ne savent pas toujours vers qui se tourner.
         </p>
 
-        <p className="text-sm leading-relaxed mb-6" style={{ color: '#a8a29e' }}>
+        <p className="text-sm leading-relaxed mb-6" style={{ color: '#78716c' }}>
           Cet article ne remplace pas l'accompagnement médical ou psychologique. Si votre enfant est en souffrance, consultez d'abord votre médecin traitant ou un psychologue clinicien.
         </p>
 
@@ -127,7 +127,7 @@ export default function ArticleHarcelement() {
 
       {/* RETOUR BLOG */}
       <div className="max-w-2xl mx-auto px-6 pb-16">
-        <a href="/blog" className="text-sm" style={{ color: '#a8a29e' }}>← Retour au blog</a>
+        <a href="/blog" className="text-sm" style={{ color: '#78716c' }}>← Retour au blog</a>
       </div>
 
       <script

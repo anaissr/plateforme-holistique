@@ -63,7 +63,7 @@ export async function POST(request: Request) {
             ${carteAtelier(body.atelier, body.praticien, body.date, body.heure, body.format)}
             ${bouton('https://plateforme-holistique.vercel.app/praticien', `Voir la fiche de ${body.praticien} →`)}
             ${bouton('https://plateforme-holistique.vercel.app/ateliers', 'Voir tous les ateliers →')}
-            <p style="color: #a8a29e; font-size: 13px; line-height: 1.6;">
+            <p style="color: #78716c; font-size: 13px; line-height: 1.6;">
               Une question ? Répondez simplement à cet email, notre équipe est là pour vous aider.
             </p>
             <p style="color: #57534e;">À très bientôt,<br><strong>L'équipe Holistia 🌿</strong></p>
@@ -89,7 +89,7 @@ export async function POST(request: Request) {
             ${body.message ? `
               <div style="background: white; border-radius: 12px; padding: 16px; margin: 16px 0; border: 1px solid #e7e5e4;">
                 <p style="margin: 0; color: #78716c; font-size: 13px; font-style: italic;">"${body.message}"</p>
-                <p style="margin: 8px 0 0; color: #a8a29e; font-size: 12px;">— ${body.nomPatient}</p>
+                <p style="margin: 8px 0 0; color: #78716c; font-size: 12px;">— ${body.nomPatient}</p>
               </div>
             ` : ''}
             ${bouton(`mailto:${body.emailPatient}?subject=Votre réservation — ${body.atelier}&body=Bonjour ${body.nomPatient},%0D%0A%0D%0AJ'ai bien reçu votre demande de réservation pour l'atelier "${body.atelier}".%0D%0A%0D%0A`, `Répondre à ${body.nomPatient} →`)}
@@ -165,7 +165,7 @@ export async function POST(request: Request) {
               Vous recevrez très bientôt un email de confirmation de <strong>${body.praticien}</strong> avec tous les détails pratiques pour participer.
             </p>
             ${bouton('https://plateforme-holistique.vercel.app/inscription', 'Créer mon compte Holistia — c\'est gratuit 🌿')}
-            <p style="color: #a8a29e; font-size: 13px; line-height: 1.6;">
+            <p style="color: #78716c; font-size: 13px; line-height: 1.6;">
               Rejoindre Holistia vous permet de retrouver facilement vos praticiens, gérer vos RDV et découvrir d'autres ateliers bien-être.
             </p>
             <p style="color: #57534e;">À très bientôt,<br><strong>L'équipe Holistia 🌿</strong></p>

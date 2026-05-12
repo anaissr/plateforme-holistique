@@ -441,7 +441,7 @@ export default function Specialites() {
             </button>
           ))}
         </div>
-        <p className="text-center text-xs mt-3" style={{ color: '#a8a29e' }}>
+        <p className="text-center text-xs mt-3" style={{ color: '#78716c' }}>
           {specialitesFiltrees.length} spécialité{specialitesFiltrees.length > 1 ? 's' : ''} affichée{specialitesFiltrees.length > 1 ? 's' : ''}
         </p>
       </section>
@@ -475,13 +475,13 @@ export default function Specialites() {
                     </span>
                   ))}
                   {spec.problematiques.length > 3 && (
-                    <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#faf9f7', color: '#a8a29e', border: '1px solid #e7e5e4' }}>
+                    <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#faf9f7', color: '#78716c', border: '1px solid #e7e5e4' }}>
                       +{spec.problematiques.length - 3}
                     </span>
                   )}
                 </div>
 
-                <div className="flex items-center justify-between mb-4 text-xs" style={{ color: '#a8a29e' }}>
+                <div className="flex items-center justify-between mb-4 text-xs" style={{ color: '#78716c' }}>
                   <span>👩‍⚕️ {spec.praticiens} praticiens</span>
                   <span>⭐ {spec.satisfaction}/5</span>
                   <span>À partir de {spec.tarif_depuis}</span>

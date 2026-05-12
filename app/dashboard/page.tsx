@@ -313,7 +313,7 @@ export default function Dashboard() {
       <main className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#faf9f7' }}>
         <div className="text-center">
           <p className="text-4xl mb-4">🌿</p>
-          <p className="text-sm" style={{ color: '#a8a29e' }}>Chargement...</p>
+          <p className="text-sm" style={{ color: '#78716c' }}>Chargement...</p>
         </div>
       </main>
     )
@@ -330,7 +330,7 @@ export default function Dashboard() {
             <h1 className="text-2xl font-light" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
               Bonjour {profil.prenom} 👋
             </h1>
-            <p className="text-sm mt-1" style={{ color: '#a8a29e' }}>Voici votre tableau de bord</p>
+            <p className="text-sm mt-1" style={{ color: '#78716c' }}>Voici votre tableau de bord</p>
           </div>
           <div className="flex gap-3 items-center flex-wrap">
             {profilValide && (
@@ -375,7 +375,7 @@ export default function Dashboard() {
               onClick={() => setOnglet(o.id)}
               className="px-4 py-3 text-sm font-medium transition border-b-2 -mb-px whitespace-nowrap"
               style={{
-                color: onglet === o.id ? '#6b21a8' : '#a8a29e',
+                color: onglet === o.id ? '#6b21a8' : '#78716c',
                 borderBottomColor: onglet === o.id ? '#6b21a8' : 'transparent',
               }}
             >
@@ -404,7 +404,7 @@ export default function Dashboard() {
                 <div key={stat.label} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
                   <p className="text-xl mb-1">{stat.emoji}</p>
                   <p className="text-2xl font-light mb-1" style={{ color: stat.color, fontFamily: 'var(--font-lora)' }}>{stat.value}</p>
-                  <p className="text-xs" style={{ color: '#a8a29e' }}>{stat.label}</p>
+                  <p className="text-xs" style={{ color: '#78716c' }}>{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -421,7 +421,7 @@ export default function Dashboard() {
             {rendezVous.length === 0 ? (
               <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
                 <p className="text-4xl mb-4">📅</p>
-                <p className="text-sm" style={{ color: '#a8a29e' }}>Aucun rendez-vous pour le moment.</p>
+                <p className="text-sm" style={{ color: '#78716c' }}>Aucun rendez-vous pour le moment.</p>
               </div>
             ) : (
               <>
@@ -496,13 +496,13 @@ export default function Dashboard() {
                 {/* Historique */}
                 {rendezVous.filter(r => r.statut === 'termine' || r.statut === 'annule').length > 0 && (
                   <div>
-                    <p className="text-xs font-medium uppercase tracking-wide mb-3" style={{ color: '#a8a29e' }}>Historique</p>
+                    <p className="text-xs font-medium uppercase tracking-wide mb-3" style={{ color: '#78716c' }}>Historique</p>
                     <div className="flex flex-col gap-2">
                       {rendezVous.filter(r => r.statut === 'termine' || r.statut === 'annule').map(rdv => (
                         <div key={rdv.id} className="bg-white rounded-2xl p-4 flex items-center justify-between gap-3 flex-wrap opacity-70" style={{ border: '1px solid #e7e5e4' }}>
                           <div>
                             <p className="text-sm" style={{ color: '#1c1917' }}>{rdv.prestation}</p>
-                            <p className="text-xs mt-0.5" style={{ color: '#a8a29e' }}>📅 {rdv.date} à {rdv.heure}</p>
+                            <p className="text-xs mt-0.5" style={{ color: '#78716c' }}>📅 {rdv.date} à {rdv.heure}</p>
                           </div>
                           <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ color: STATUT_CONFIG[rdv.statut]?.color, backgroundColor: STATUT_CONFIG[rdv.statut]?.bg }}>
                             {STATUT_CONFIG[rdv.statut]?.label}
@@ -529,7 +529,7 @@ export default function Dashboard() {
               <div key={jour} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
                 <div className="flex items-center justify-between mb-4">
                   <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{jour}</p>
-                  <p className="text-xs" style={{ color: '#a8a29e' }}>
+                  <p className="text-xs" style={{ color: '#78716c' }}>
                     {(disponibilites[jour] || []).length} créneau{(disponibilites[jour] || []).length !== 1 ? 'x' : ''} sélectionné{(disponibilites[jour] || []).length !== 1 ? 's' : ''}
                   </p>
                 </div>
@@ -579,7 +579,7 @@ export default function Dashboard() {
               <input type="text" value={recherchePat} onChange={(e) => setRecherchePat(e.target.value)} placeholder="Rechercher un patient..." className="flex-1 text-sm outline-none bg-transparent" style={{ color: '#1c1917' }} />
             </div>
             {rendezVous.length === 0 ? (
-              <p className="text-sm text-center py-8" style={{ color: '#a8a29e' }}>Vos patients apparaîtront ici une fois les premiers RDV pris.</p>
+              <p className="text-sm text-center py-8" style={{ color: '#78716c' }}>Vos patients apparaîtront ici une fois les premiers RDV pris.</p>
             ) : (
               <div className="flex flex-col gap-3">
                 {Array.from(new Map(rendezVous.map(r => [r.patient_id, r])).values())
@@ -592,7 +592,7 @@ export default function Dashboard() {
                           <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ backgroundColor: '#f5f3ff' }}>🌿</div>
                           <div>
                             <p className="text-sm font-medium" style={{ color: '#1c1917' }}>{rdv.patient_prenom || 'Patient'}</p>
-                            <p className="text-xs" style={{ color: '#a8a29e' }}>{rdvPatient.length} RDV · dernier : {rdvPatient[0]?.date}</p>
+                            <p className="text-xs" style={{ color: '#78716c' }}>{rdvPatient.length} RDV · dernier : {rdvPatient[0]?.date}</p>
                           </div>
                         </div>
                         <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: '#f5f3ff', color: '#6b21a8' }}>
@@ -609,14 +609,14 @@ export default function Dashboard() {
         {onglet === 'stats' && profilValide && (
           <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
             <p className="text-4xl mb-4">📊</p>
-            <p className="text-sm" style={{ color: '#a8a29e' }}>Vos statistiques apparaîtront après vos premières consultations.</p>
+            <p className="text-sm" style={{ color: '#78716c' }}>Vos statistiques apparaîtront après vos premières consultations.</p>
           </div>
         )}
 
         {onglet === 'avis' && profilValide && (
           <div className="bg-white rounded-3xl p-8 shadow-sm text-center" style={{ border: '1px solid #e7e5e4' }}>
             <p className="text-4xl mb-4">⭐</p>
-            <p className="text-sm" style={{ color: '#a8a29e' }}>Vos avis patients apparaîtront après vos premières consultations.</p>
+            <p className="text-sm" style={{ color: '#78716c' }}>Vos avis patients apparaîtront après vos premières consultations.</p>
           </div>
         )}
 
@@ -781,7 +781,7 @@ export default function Dashboard() {
                         className="flex-1 py-3 rounded-xl text-sm font-medium transition"
                         style={{
                           backgroundColor: profil[mode.champ as keyof typeof profil] ? '#f5f3ff' : '#faf9f7',
-                          color: profil[mode.champ as keyof typeof profil] ? '#6b21a8' : '#a8a29e',
+                          color: profil[mode.champ as keyof typeof profil] ? '#6b21a8' : '#78716c',
                           border: profil[mode.champ as keyof typeof profil] ? '2px solid #6b21a8' : '1px solid #e7e5e4',
                         }}
                       >
@@ -833,7 +833,7 @@ export default function Dashboard() {
                       onChange={uploadPhoto}
                     />
                   </label>
-                  <p className="text-xs" style={{ color: '#a8a29e' }}>JPG, PNG ou WebP · 5 Mo max</p>
+                  <p className="text-xs" style={{ color: '#78716c' }}>JPG, PNG ou WebP · 5 Mo max</p>
                   {photoUrl && (
                     <p className="text-xs" style={{ color: '#16a34a' }}>✓ Photo enregistrée</p>
                   )}
@@ -844,7 +844,7 @@ export default function Dashboard() {
             {/* BIO */}
             <div className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
               <h2 className="font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Présentation</h2>
-              <p className="text-xs mb-4" style={{ color: '#a8a29e' }}>Optionnel — mais fortement recommandé pour rassurer les patients.</p>
+              <p className="text-xs mb-4" style={{ color: '#78716c' }}>Optionnel — mais fortement recommandé pour rassurer les patients.</p>
               <textarea
                 value={profil.bio}
                 onChange={(e) => setProfil(prev => ({ ...prev, bio: e.target.value }))}
@@ -859,7 +859,7 @@ export default function Dashboard() {
               <h2 className="font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
                 Formations et diplômes <span style={{ color: '#dc2626' }}>*</span>
               </h2>
-              <p className="text-xs mb-6" style={{ color: '#a8a29e' }}>Obligatoire — ces informations permettent à notre équipe de vérifier votre formation auprès de l'école.</p>
+              <p className="text-xs mb-6" style={{ color: '#78716c' }}>Obligatoire — ces informations permettent à notre équipe de vérifier votre formation auprès de l'école.</p>
               <div className="flex flex-col gap-4">
                 {diplomes.map((diplome, index) => (
                   <div key={index} className="p-4 rounded-2xl" style={{ backgroundColor: '#faf9f7', border: '1px solid #e7e5e4' }}>
@@ -893,7 +893,7 @@ export default function Dashboard() {
                 <p className="text-xs font-medium mb-1" style={{ color: '#6b21a8' }}>
                   Assurance RC Pro <span style={{ color: '#dc2626' }}>*</span>
                 </p>
-                <p className="text-xs mb-3" style={{ color: '#a8a29e' }}>
+                <p className="text-xs mb-3" style={{ color: '#78716c' }}>
                   Obligatoire pour exercer. La RC Pro (Responsabilité Civile Professionnelle) vous couvre en cas de litige avec un patient. Renseignez votre assureur et votre numéro de police.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -914,7 +914,7 @@ export default function Dashboard() {
               <h2 className="font-medium mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
                 Prestations et tarifs <span style={{ color: '#dc2626' }}>*</span>
               </h2>
-              <p className="text-xs mb-6" style={{ color: '#a8a29e' }}>Obligatoire — au moins une prestation. Les prix sont affichés en euros (€).</p>
+              <p className="text-xs mb-6" style={{ color: '#78716c' }}>Obligatoire — au moins une prestation. Les prix sont affichés en euros (€).</p>
               <div className="flex flex-col gap-4">
                 {tarifs.map((tarif, index) => (
                   <div key={index} className="p-4 rounded-2xl" style={{ backgroundColor: '#faf9f7', border: '1px solid #e7e5e4' }}>

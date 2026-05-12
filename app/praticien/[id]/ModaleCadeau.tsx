@@ -82,7 +82,7 @@ export default function ModaleCadeau({
             <div className="text-center mb-6">
               <p className="text-4xl mb-3">🎁</p>
               <h2 className="text-xl font-medium mb-1" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>Offrir une consultation</h2>
-              <p className="text-sm" style={{ color: '#a8a29e' }}>avec {praticien.nom}</p>
+              <p className="text-sm" style={{ color: '#78716c' }}>avec {praticien.nom}</p>
             </div>
 
             {prestatoinCadeau && (
@@ -141,10 +141,10 @@ export default function ModaleCadeau({
             >
               {chargementCadeau ? 'Envoi en cours...' : `Envoyer ma demande — ${prestatoinCadeau?.tarif ?? '—'}`}
             </button>
-            <p className="text-xs text-center mb-4" style={{ color: '#a8a29e' }}>
+            <p className="text-xs text-center mb-4" style={{ color: '#78716c' }}>
               {praticien.nom} vous contactera rapidement pour finaliser le paiement.
             </p>
-            <button onClick={reinitialiserCadeau} className="w-full py-2 text-sm" style={{ color: '#a8a29e' }}>
+            <button onClick={reinitialiserCadeau} className="w-full py-2 text-sm" style={{ color: '#78716c' }}>
               Annuler
             </button>
           </>

@@ -96,7 +96,7 @@ export default function Admin() {
             <h1 className="text-2xl font-light" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>
               Dashboard Admin 🌿
             </h1>
-            <p className="text-sm mt-1" style={{ color: '#a8a29e' }}>
+            <p className="text-sm mt-1" style={{ color: '#78716c' }}>
               {enAttente.length} dossier{enAttente.length > 1 ? 's' : ''} en attente · {valides.length} praticien{valides.length > 1 ? 's' : ''} validé{valides.length > 1 ? 's' : ''}
             </p>
           </div>
@@ -121,7 +121,7 @@ export default function Admin() {
               onClick={() => setOnglet(o.id)}
               className="px-4 py-3 text-sm font-medium transition border-b-2 -mb-px whitespace-nowrap"
               style={{
-                color: onglet === o.id ? '#6b21a8' : '#a8a29e',
+                color: onglet === o.id ? '#6b21a8' : '#78716c',
                 borderBottomColor: onglet === o.id ? '#6b21a8' : 'transparent',
               }}
             >
@@ -146,7 +146,7 @@ export default function Admin() {
         {chargement ? (
           <div className="text-center py-16">
             <p className="text-4xl mb-4">🌿</p>
-            <p className="text-sm" style={{ color: '#a8a29e' }}>Chargement...</p>
+            <p className="text-sm" style={{ color: '#78716c' }}>Chargement...</p>
           </div>
         ) : (
           <div className="flex flex-col gap-4">
@@ -171,7 +171,7 @@ export default function Admin() {
                       <div>
                         <p className="font-medium" style={{ color: '#1c1917' }}>{praticien.nom || '—'}</p>
                         <p className="text-sm" style={{ color: '#6b21a8' }}>{praticien.specialite || '—'}</p>
-                        <p className="text-xs" style={{ color: '#a8a29e' }}>{praticien.email} · {praticien.ville}, {praticien.pays}</p>
+                        <p className="text-xs" style={{ color: '#78716c' }}>{praticien.email} · {praticien.ville}, {praticien.pays}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 flex-shrink-0">
@@ -181,7 +181,7 @@ export default function Admin() {
                       }}>
                         {praticien.valide === true ? '✅ Validé' : '⏳ En attente'}
                       </span>
-                      <span style={{ color: '#a8a29e' }}>{dossierOuvert === praticien.id ? '▲' : '▼'}</span>
+                      <span style={{ color: '#78716c' }}>{dossierOuvert === praticien.id ? '▲' : '▼'}</span>
                     </div>
                   </div>
 
@@ -324,7 +324,7 @@ export default function Admin() {
             }).length === 0 && (
               <div className="text-center py-16">
                 <p className="text-4xl mb-4">🌿</p>
-                <p className="text-sm" style={{ color: '#a8a29e' }}>
+                <p className="text-sm" style={{ color: '#78716c' }}>
                   {onglet === 'dossiers' ? 'Aucun dossier en attente' : 'Aucun praticien trouvé'}
                 </p>
               </div>

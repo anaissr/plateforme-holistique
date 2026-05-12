@@ -164,7 +164,7 @@ export default function Home() {
               <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg" style={{ backgroundColor: '#f5f3ff' }}>✓</div>
               <div>
                 <p className="text-sm font-medium" style={{ color: '#1c1917' }}>Praticien vérifié</p>
-                <p className="text-xs" style={{ color: '#a8a29e' }}>Diplômes et assurance contrôlés</p>
+                <p className="text-xs" style={{ color: '#78716c' }}>Diplômes et assurance contrôlés</p>
               </div>
             </div>
           </div>
@@ -194,7 +194,7 @@ export default function Home() {
           ].map((stat) => (
             <div key={stat.label}>
               <div className="text-3xl font-light mb-1" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{stat.value}</div>
-              <div className="text-sm" style={{ color: '#a8a29e' }}>{stat.label}</div>
+              <div className="text-sm" style={{ color: '#78716c' }}>{stat.label}</div>
             </div>
           ))}
         </div>
@@ -211,7 +211,7 @@ export default function Home() {
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Pourquoi nous faire confiance ?
           </h2>
-          <p className="text-center text-sm mb-12" style={{ color: '#a8a29e' }}>
+          <p className="text-center text-sm mb-12" style={{ color: '#78716c' }}>
             Chaque praticien est soigneusement sélectionné pour vous garantir un accompagnement de qualité
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -243,7 +243,7 @@ export default function Home() {
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Les spécialités les plus recherchées
           </h2>
-          <p className="text-center text-sm mb-10" style={{ color: '#a8a29e' }}>
+          <p className="text-center text-sm mb-10" style={{ color: '#78716c' }}>
             En cabinet ou en visio — où que vous soyez
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -328,7 +328,7 @@ export default function Home() {
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             Des praticiens de confiance, partout dans le monde
           </h2>
-          <p className="text-center text-sm mb-10" style={{ color: '#a8a29e' }}>
+          <p className="text-center text-sm mb-10" style={{ color: '#78716c' }}>
             En visio ou en cabinet — trouvez celui qui vous correspond
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -348,7 +348,7 @@ export default function Home() {
                 <div className="p-4">
                   <p className="font-medium text-sm" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{p.nom}</p>
                   <p className="text-xs" style={{ color: '#6b21a8' }}>{p.specialite}</p>
-                  <p className="text-xs" style={{ color: '#a8a29e' }}>📍 {p.ville}</p>
+                  <p className="text-xs" style={{ color: '#78716c' }}>📍 {p.ville}</p>
                   <div className="flex items-center gap-1 mt-1">
                     <span className="text-xs">⭐</span>
                     <span className="text-xs font-medium" style={{ color: '#1c1917' }}>{p.note}</span>
@@ -404,7 +404,7 @@ export default function Home() {
                   <img src={t.photo} alt={t.name} className="w-10 h-10 rounded-full object-cover" loading="lazy" />
                   <div>
                     <div className="font-medium text-sm" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{t.name}</div>
-                    <div className="text-xs" style={{ color: '#a8a29e' }}>{t.role}</div>
+                    <div className="text-xs" style={{ color: '#78716c' }}>{t.role}</div>
                   </div>
                 </div>
               </div>
@@ -439,7 +439,7 @@ export default function Home() {
                   {b.emoji}
                 </div>
                 <h3 className="font-medium text-sm" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>{b.titre}</h3>
-                <p className="text-xs leading-relaxed" style={{ color: '#a8a29e' }}>{b.desc}</p>
+                <p className="text-xs leading-relaxed" style={{ color: '#78716c' }}>{b.desc}</p>
               </div>
             ))}
           </div>
@@ -450,14 +450,14 @@ export default function Home() {
           >
             Créer mon profil gratuitement
           </button>
-          <p className="text-xs mt-3" style={{ color: '#a8a29e' }}>
+          <p className="text-xs mt-3" style={{ color: '#78716c' }}>
             Gratuit pendant 12 mois · Aucun engagement · Profil en ligne sous 72h
           </p>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="py-10 px-8 text-sm" style={{ backgroundColor: '#1c1917', color: '#a8a29e' }}>
+      <footer className="py-10 px-8 text-sm" style={{ backgroundColor: '#1c1917', color: '#78716c' }}>
         <div className="max-w-5xl mx-auto flex justify-between items-center">
           <div className="text-white font-medium" style={{ fontFamily: 'var(--font-lora)' }}>🌿 Holistia</div>
           <div className="flex gap-6">

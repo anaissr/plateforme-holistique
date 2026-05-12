@@ -284,7 +284,7 @@ const problemeUrl = typeof window !== 'undefined'
       <div className="w-full h-1.5" style={{ backgroundColor: '#e7e5e4' }}>
         <div className="h-full transition-all duration-500" style={{ width: `${progression}%`, backgroundColor: '#6b21a8' }} />
       </div>
-      <div className="text-center py-2 text-xs" style={{ color: '#a8a29e' }}>
+      <div className="text-center py-2 text-xs" style={{ color: '#78716c' }}>
         Question {etape + 1} sur {questions.length}
       </div>
 
@@ -293,7 +293,7 @@ const problemeUrl = typeof window !== 'undefined'
           <h2 className="text-2xl font-light mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
             {question.question}
           </h2>
-          <p className="text-sm" style={{ color: '#a8a29e' }}>{question.sous_titre}</p>
+          <p className="text-sm" style={{ color: '#78716c' }}>{question.sous_titre}</p>
           {question.type === 'multi' && (
             <p className="text-xs mt-1 font-medium" style={{ color: '#6b21a8' }}>Plusieurs choix possibles</p>
           )}
@@ -369,7 +369,7 @@ const problemeUrl = typeof window !== 'undefined'
               className="px-8 py-3 rounded-2xl text-sm font-medium transition"
               style={{
                 backgroundColor: selectionMulti.length > 0 ? '#6b21a8' : '#e7e5e4',
-                color: selectionMulti.length > 0 ? '#ffffff' : '#a8a29e',
+                color: selectionMulti.length > 0 ? '#ffffff' : '#78716c',
               }}
             >
               Continuer
@@ -379,7 +379,7 @@ const problemeUrl = typeof window !== 'undefined'
 
         {etape > 0 && (
           <div className="text-center mt-6">
-            <button onClick={() => setEtape(etape - 1)} className="text-sm underline" style={{ color: '#a8a29e' }}>
+            <button onClick={() => setEtape(etape - 1)} className="text-sm underline" style={{ color: '#78716c' }}>
               Question précédente
             </button>
           </div>

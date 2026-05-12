@@ -27,7 +27,7 @@ export default function ArticleBurnOut() {
       {/* HERO */}
       <section className="px-6 py-16 text-center" style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}>
         <span className="inline-block text-xs px-4 py-1.5 rounded-full mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
-          🔥 Santé mentale & travail
+          🔥 Santé mentale
         </span>
         <h1 className="text-3xl font-light text-white mb-4 max-w-3xl mx-auto leading-snug" style={{ fontFamily: 'var(--font-lora)' }}>
           Burn-out : reconnaître les signaux et se reconstruire grâce aux médecines douces
@@ -50,17 +50,41 @@ export default function ArticleBurnOut() {
       <article className="max-w-2xl mx-auto px-6 py-14" style={{ color: '#44403c' }}>
 
         <p className="text-lg leading-relaxed mb-8" style={{ color: '#57534e' }}>
-          Le burn-out n'est pas une simple fatigue. C'est un épuisement total — physique, émotionnel et mental — qui s'installe progressivement après des mois, parfois des années, de surmenage. En France, 2,5 millions de personnes seraient en état de burn-out sévère selon l'Observatoire de la vie au travail. Et pourtant, il reste souvent invisible jusqu'à ce que le corps s'arrête de lui-même.
+          Le burn-out n'est pas une simple fatigue. C'est un épuisement total — physique, émotionnel et mental — qui s'installe progressivement après des mois, parfois des années, de sur-sollicitation. Il peut être lié au travail, à la vie personnelle — parentalité épuisante, aidance, relation toxique — ou à la combinaison des deux. En France, 2,5 millions de personnes seraient en état de burn-out sévère selon l'Observatoire de la vie au travail. Et pourtant, il reste souvent invisible jusqu'à ce que le corps s'arrête de lui-même.
         </p>
+
+        <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
+          Les 5 étapes vers le burn-out
+        </h2>
+        <p className="leading-relaxed mb-4">
+          Le burn-out ne survient jamais du jour au lendemain. Il suit un chemin prévisible — ce qui veut dire qu'il peut être intercepté à chaque étape, à condition de savoir le reconnaître.
+        </p>
+        <div className="flex flex-col gap-4 my-6">
+          {[
+            { num: '1', titre: "L'enthousiasme idéaliste", texte: "Tout commence souvent par un engagement fort — dans un projet, une relation, un rôle. On donne beaucoup, on s'investit sans compter. L'énergie semble inépuisable." },
+            { num: '2', titre: 'La stagnation', texte: "Les efforts ne suffisent plus à maintenir l'enthousiasme. On commence à sacrifier ses besoins personnels — sommeil, loisirs, liens sociaux — pour maintenir le rythme." },
+            { num: '3', titre: 'La frustration', texte: "Le sentiment d'inefficacité s'installe. On s'irrite facilement, on remet en question son engagement. Les premiers symptômes physiques apparaissent : maux de tête, tensions, infections répétées." },
+            { num: '4', titre: "L'apathie", texte: "La résignation s'installe. On fait le minimum pour survivre. Le cynisme et le détachement émotionnel protègent d'une douleur devenue trop grande. C'est le signal d'alarme le plus clair." },
+            { num: '5', titre: "L'effondrement", texte: "Le corps dit stop. Incapacité à fonctionner, pleurs incontrôlables, impossibilité de se lever. L'arrêt n'est plus un choix, c'est une nécessité." },
+          ].map(e => (
+            <div key={e.num} className="flex gap-4 items-start">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0 text-white" style={{ backgroundColor: '#6b21a8' }}>{e.num}</div>
+              <div>
+                <p className="font-medium mb-1" style={{ color: '#1c1917' }}>{e.titre}</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#78716c' }}>{e.texte}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
           Les signaux d'alarme à ne pas ignorer
         </h2>
         <p className="leading-relaxed mb-4">
-          Le burn-out se construit dans le silence. On continue, on s'adapte, on se dit que ça va aller. Et puis un matin, on ne peut plus se lever. Les signaux précurseurs sont souvent là depuis longtemps : irritabilité croissante, cynisme envers son travail ou ses collègues, sentiment d'inefficacité malgré les efforts, troubles du sommeil, infections à répétition, palpitations, maux de tête chroniques.
+          Le burn-out se construit dans le silence. On continue, on s'adapte, on se dit que ça va aller. Et puis un matin, on ne peut plus se lever. Les signaux précurseurs sont souvent là depuis longtemps : irritabilité croissante, cynisme, sentiment d'inefficacité malgré les efforts, troubles du sommeil, infections à répétition, palpitations, maux de tête chroniques.
         </p>
         <p className="leading-relaxed mb-4">
-          La différence avec la dépression ? Le burn-out est initialement lié au travail et à une perte de ressources liée à la sur-sollicitation. Mais s'il n'est pas pris en charge, il peut évoluer vers un tableau dépressif complet. D'où l'importance d'agir tôt.
+          La différence avec la dépression ? Le burn-out est lié à un épuisement des ressources face à une sur-sollicitation chronique. Mais s'il n'est pas pris en charge, il peut évoluer vers un tableau dépressif complet. D'où l'importance d'agir tôt.
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>

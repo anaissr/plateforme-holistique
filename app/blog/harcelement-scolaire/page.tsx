@@ -68,6 +68,19 @@ export default function ArticleHarcelement() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
+          L'approche systémique : agir sur le système, pas seulement sur l'enfant
+        </h2>
+        <p className="leading-relaxed mb-4">
+          Le harcèlement scolaire ne concerne jamais un enfant isolé — il prend racine dans un système : la classe, l'établissement, la famille, parfois les dynamiques numériques. C'est précisément ce que l'approche systémique prend en charge. Plutôt que de traiter l'enfant victime comme « le problème », le thérapeute systémique s'intéresse aux interactions entre tous les acteurs — enfant, parents, fratrie, école — pour identifier ce qui maintient la situation et ce qui peut la faire évoluer.
+        </p>
+        <p className="leading-relaxed mb-4">
+          Cette approche est particulièrement efficace lorsque le harcèlement dure depuis longtemps et a commencé à modifier les équilibres familiaux : surprotection des parents, retrait scolaire progressif, tensions entre frères et sœurs. En quelques séances — souvent moins qu'une thérapie individuelle — l'approche systémique aide la famille à retrouver ses propres ressources et à créer un environnement qui soutient activement l'enfant plutôt que de le fragiliser davantage.
+        </p>
+        <p className="leading-relaxed mb-4">
+          Certains praticiens formés à l'approche de Palo Alto proposent également des interventions directes sur le comportement — des stratégies concrètes pour que l'enfant change sa façon de réagir face aux harceleurs, cassant ainsi la répétition du schéma. Des résultats mesurables sont souvent visibles en 4 à 6 séances.
+        </p>
+
+        <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
           La sophrologie : retrouver un espace de sécurité intérieure
         </h2>
         <p className="leading-relaxed mb-4">

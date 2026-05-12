@@ -68,7 +68,7 @@ export default function ArticleHarcelement() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
-          L'approche systémique : agir sur le système, pas seulement sur l'enfant
+          <a href="/specialites/approche-systemique" style={{ color: '#3b0764', textDecoration: 'none' }}>L'approche systémique</a> : agir sur le système, pas seulement sur l'enfant
         </h2>
         <p className="leading-relaxed mb-4">
           Le harcèlement scolaire ne concerne jamais un enfant isolé — il prend racine dans un système : la classe, l'établissement, la famille, parfois les dynamiques numériques. C'est précisément ce que l'approche systémique prend en charge. Plutôt que de traiter l'enfant victime comme « le problème », le thérapeute systémique s'intéresse aux interactions entre tous les acteurs — enfant, parents, fratrie, école — pour identifier ce qui maintient la situation et ce qui peut la faire évoluer.
@@ -81,7 +81,7 @@ export default function ArticleHarcelement() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
-          L'EMDR : traiter les traumatismes à leur racine
+          <a href="/specialites/emdr" style={{ color: '#3b0764', textDecoration: 'none' }}>L'EMDR</a> : traiter les traumatismes à leur racine
         </h2>
         <p className="leading-relaxed mb-4">
           Le harcèlement prolongé peut laisser des traces traumatiques au sens clinique du terme. L'EMDR (Eye Movement Desensitization and Reprocessing) est une thérapie validée par l'OMS pour le traitement du stress post-traumatique, et elle est aujourd'hui utilisée avec succès chez les enfants et les adolescents.
@@ -91,7 +91,7 @@ export default function ArticleHarcelement() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
-          La psychomotricité : réhabiter son corps
+          <a href="/specialites/psychomotricite" style={{ color: '#3b0764', textDecoration: 'none' }}>La psychomotricité</a> : réhabiter son corps
         </h2>
         <p className="leading-relaxed mb-4">
           Le harcèlement attaque souvent l'image corporelle — la façon dont l'enfant se perçoit physiquement, la honte, l'envie de disparaître. La psychomotricité travaille sur le tonus, l'espace, le schéma corporel et la relation à l'autre à travers le jeu et le mouvement. Pour les enfants qui ont du mal à verbaliser, c'est une porte d'entrée précieuse.

@@ -88,7 +88,7 @@ export default function ArticleBurnOut() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
-          La naturopathie : reconstruire le terrain
+          <a href="/specialites/naturopathie" style={{ color: '#3b0764', textDecoration: 'none' }}>La naturopathie</a> : reconstruire le terrain
         </h2>
         <p className="leading-relaxed mb-4">
           Lors d'un burn-out, le corps a souvent été vidé de ses ressources : le cortisol (hormone du stress) a été sur-sollicité, le sommeil est perturbé, le microbiote intestinal peut être déséquilibré, certaines vitamines et minéraux sont en carence (magnésium, vitamine D, B12, fer).
@@ -98,7 +98,7 @@ export default function ArticleBurnOut() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
-          La sophrologie : réapprendre à s'arrêter
+          <a href="/specialites/sophrologie" style={{ color: '#3b0764', textDecoration: 'none' }}>La sophrologie</a> : réapprendre à s'arrêter
         </h2>
         <p className="leading-relaxed mb-4">
           Les personnes qui font un burn-out ont souvent une relation compliquée avec le repos — elles ne savent plus s'arrêter, ou culpabilisent de ne rien faire. La sophrologie travaille sur la relation au corps et à l'instant présent, à travers des techniques de détente profonde, de conscience corporelle et de reprogrammation mentale.
@@ -108,7 +108,7 @@ export default function ArticleBurnOut() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
-          L'hypnothérapie : accéder aux ressources inconscientes
+          <a href="/specialites/hypnotherapie" style={{ color: '#3b0764', textDecoration: 'none' }}>L'hypnothérapie</a> : accéder aux ressources inconscientes
         </h2>
         <p className="leading-relaxed mb-4">
           Le burn-out s'accompagne souvent de croyances limitantes profondément ancrées : « je dois être parfait », « m'arrêter c'est échouer », « les autres comptent sur moi ». Ces schémas ont souvent des racines anciennes que la thérapie classique met du temps à dénouer.
@@ -118,7 +118,7 @@ export default function ArticleBurnOut() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
-          La psychothérapie : se prioriser
+          <a href="/specialites/psychopraticien" style={{ color: '#3b0764', textDecoration: 'none' }}>La psychothérapie</a> : se prioriser
         </h2>
         <p className="leading-relaxed mb-4">
           Le burn-out révèle souvent quelque chose de plus profond : une difficulté à se mettre en premier, des croyances tenaces sur la valeur personnelle liée à la performance, une peur du vide ou du silence. La psychothérapie — qu'elle soit d'orientation analytique, humaniste, cognitive ou systémique — offre un espace pour explorer ces couches sans jugement et reconnecter avec ses besoins réels.

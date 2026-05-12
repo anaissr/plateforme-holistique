@@ -58,11 +58,42 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Holistia',
+      url: 'https://plateforme-holistique.vercel.app',
+      description: 'Plateforme de mise en relation avec des praticiens vérifiés en médecines douces et holistiques — naturopathie, sophrologie, ostéopathie, hypnothérapie et bien d\'autres.',
+      areaServed: { '@type': 'Place', name: 'Francophonie' },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Holistia',
+      url: 'https://plateforme-holistique.vercel.app',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://plateforme-holistique.vercel.app/recherche?q={search_term_string}',
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+  ]
+
   return (
     <html
       lang="fr"
       className={`${lora.variable} ${inter.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

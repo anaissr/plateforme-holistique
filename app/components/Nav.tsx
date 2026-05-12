@@ -27,6 +27,7 @@ export default function Nav() {
         onClick={() => { window.location.href = '/' }}
         className="text-2xl font-semibold"
         style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}
+        aria-label="Retour à l'accueil Holistia"
       >
         🌿 Holistia
       </button>
@@ -96,6 +97,8 @@ export default function Nav() {
       <button
         className="md:hidden flex flex-col gap-1.5 p-2"
         onClick={() => setMenuOuvert(!menuOuvert)}
+        aria-label={menuOuvert ? 'Fermer le menu' : 'Ouvrir le menu'}
+        aria-expanded={menuOuvert}
       >
         <span className="w-6 h-0.5 block transition-all" style={{ backgroundColor: '#6b21a8', transform: menuOuvert ? 'rotate(45deg) translateY(8px)' : 'none' }} />
         <span className="w-6 h-0.5 block transition-all" style={{ backgroundColor: '#6b21a8', opacity: menuOuvert ? 0 : 1 }} />

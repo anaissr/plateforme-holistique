@@ -17,35 +17,35 @@ const specialitesRotatives = [
 
 const photosRotatives = [
   {
-    url: 'https://plus.unsplash.com/premium_photo-1682088560562-550601ba7e45?w=900&auto=format&fit=crop&q=80',
+    url: 'https://plus.unsplash.com/premium_photo-1682088560562-550601ba7e45?w=800&auto=format&fit=crop&q=75&fm=webp',
     label: 'Psychomotricité',
   },
   {
-    url: 'https://images.unsplash.com/photo-1758691461932-d0aa0ebf6b31?w=900&auto=format&fit=crop&q=80',
+    url: 'https://images.unsplash.com/photo-1758691461932-d0aa0ebf6b31?w=800&auto=format&fit=crop&q=75&fm=webp',
     label: 'Séance holistique',
   },
   {
-    url: 'https://plus.unsplash.com/premium_photo-1665990294269-f1d6c35ab9d1?w=900&auto=format&fit=crop&q=80',
+    url: 'https://plus.unsplash.com/premium_photo-1665990294269-f1d6c35ab9d1?w=800&auto=format&fit=crop&q=75&fm=webp',
     label: 'Psychothérapie',
   },
   {
-    url: 'https://plus.unsplash.com/premium_photo-1661724579910-96f4dba073ac?w=900&auto=format&fit=crop&q=80',
+    url: 'https://plus.unsplash.com/premium_photo-1661724579910-96f4dba073ac?w=800&auto=format&fit=crop&q=75&fm=webp',
     label: 'Orthophonie',
   },
   {
-    url: 'https://images.unsplash.com/photo-1598555763574-dca77e10427e?w=900&auto=format&fit=crop&q=80',
+    url: 'https://images.unsplash.com/photo-1598555763574-dca77e10427e?w=800&auto=format&fit=crop&q=75&fm=webp',
     label: 'Médecine traditionnelle chinoise',
   },
   {
-    url: 'https://plus.unsplash.com/premium_photo-1683133816393-b04d94c65872?w=900&auto=format&fit=crop&q=80',
+    url: 'https://plus.unsplash.com/premium_photo-1683133816393-b04d94c65872?w=800&auto=format&fit=crop&q=75&fm=webp',
     label: 'Phytothérapie',
   },
   {
-    url: 'https://images.unsplash.com/photo-1699523229208-be1e1dd9252d?w=900&auto=format&fit=crop&q=80',
+    url: 'https://images.unsplash.com/photo-1699523229208-be1e1dd9252d?w=800&auto=format&fit=crop&q=75&fm=webp',
     label: 'Ostéopathie',
   },
   {
-    url: 'https://plus.unsplash.com/premium_photo-1661277699407-5608da8dabd2?w=900&auto=format&fit=crop&q=80',
+    url: 'https://plus.unsplash.com/premium_photo-1661277699407-5608da8dabd2?w=800&auto=format&fit=crop&q=75&fm=webp',
     label: 'Hypnothérapie',
   },
 ]
@@ -154,6 +154,8 @@ export default function Home() {
                 transition: 'opacity 0.6s ease',
                 minHeight: '580px',
               }}
+              loading={i === 0 ? undefined : 'lazy'}
+              fetchPriority={i === 0 ? 'high' : undefined}
             />
           ))}
 
@@ -168,12 +170,13 @@ export default function Home() {
           </div>
 
           <div className="absolute bottom-16 right-8 flex gap-2 z-20">
-            {photosRotatives.map((_, i) => (
-              <div
+            {photosRotatives.map((photo, i) => (
+              <button
                 key={i}
-                className="w-2 h-2 rounded-full transition-all cursor-pointer"
+                className="w-2 h-2 rounded-full transition-all"
                 style={{ backgroundColor: i === photoIndex ? '#6b21a8' : 'rgba(107,33,168,0.3)' }}
                 onClick={() => setPhotoIndex(i)}
+                aria-label={`Afficher photo ${photo.label}`}
               />
             ))}
           </div>
@@ -330,10 +333,10 @@ export default function Home() {
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
-              { photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=300&fit=crop&crop=face', nom: 'Sophie L.', specialite: 'Naturopathe', ville: 'Paris', note: '4.9' },
-              { photo: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=300&h=300&fit=crop&crop=face', nom: 'Amélie C.', specialite: 'Sophrologue', ville: 'Bangkok', note: '5.0' },
-              { photo: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face', nom: 'Marc D.', specialite: 'Ostéopathe', ville: 'Montréal', note: '4.8' },
-              { photo: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300&h=300&fit=crop&crop=face', nom: 'Pierre M.', specialite: 'Hypnothérapeute', ville: 'Lyon', note: '4.7' },
+              { photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=300&fit=crop&crop=face&fm=webp&q=75', nom: 'Sophie L.', specialite: 'Naturopathe', ville: 'Paris', note: '4.9' },
+              { photo: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=300&h=300&fit=crop&crop=face&fm=webp&q=75', nom: 'Amélie C.', specialite: 'Sophrologue', ville: 'Bangkok', note: '5.0' },
+              { photo: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face&fm=webp&q=75', nom: 'Marc D.', specialite: 'Ostéopathe', ville: 'Montréal', note: '4.8' },
+              { photo: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300&h=300&fit=crop&crop=face&fm=webp&q=75', nom: 'Pierre M.', specialite: 'Hypnothérapeute', ville: 'Lyon', note: '4.7' },
             ].map((p) => (
               <div
                 key={p.nom}
@@ -341,7 +344,7 @@ export default function Home() {
                 style={{ border: '1px solid #e7e5e4' }}
                 onClick={() => { window.location.href = '/praticien' }}
               >
-                <img src={p.photo} alt={p.nom} className="w-full h-40 object-cover object-top" />
+                <img src={p.photo} alt={p.nom} className="w-full h-40 object-cover object-top" loading="lazy" />
                 <div className="p-4">
                   <p className="font-medium text-sm" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{p.nom}</p>
                   <p className="text-xs" style={{ color: '#6b21a8' }}>{p.specialite}</p>
@@ -384,13 +387,13 @@ export default function Home() {
                 text: 'En 3 questions, Holistia m\'a orientée vers une naturopathe en visio. Je n\'aurais jamais trouvé seule ce qu\'il me fallait vraiment.',
                 name: 'Sophie M.',
                 role: 'Patiente, consultée en visio',
-                photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
+                photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face&fm=webp&q=75',
               },
               {
                 text: 'Je me concentre enfin sur mes patients. Holistia s\'occupe de me faire connaître — mon agenda est plein en 2 mois.',
                 name: 'Claire D.',
                 role: 'Sophrologue, praticienne Holistia',
-                photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
+                photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face&fm=webp&q=75',
               },
             ].map((t) => (
               <div key={t.name} className="bg-white rounded-3xl p-8 text-left shadow-sm" style={{ border: '1px solid #ede9fe' }}>
@@ -398,7 +401,7 @@ export default function Home() {
                   "{t.text}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <img src={t.photo} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
+                  <img src={t.photo} alt={t.name} className="w-10 h-10 rounded-full object-cover" loading="lazy" />
                   <div>
                     <div className="font-medium text-sm" style={{ color: '#1c1917', fontFamily: 'var(--font-lora)' }}>{t.name}</div>
                     <div className="text-xs" style={{ color: '#a8a29e' }}>{t.role}</div>

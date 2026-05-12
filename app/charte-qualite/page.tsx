@@ -48,13 +48,16 @@ export default function CharteQualite() {
 
         <section className="bg-white rounded-3xl p-8 shadow-sm" style={{ border: '1px solid #e7e5e4' }}>
           <h2 className="text-xl font-light mb-6" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-            Les avis : notre engagement d&apos;authenticité
+            Les avis : une relation dans les deux sens
           </h2>
           <p className="text-sm leading-relaxed mb-4" style={{ color: '#57534e' }}>
-            Seuls les patients ayant pris rendez-vous via Holistia peuvent laisser un avis. Les avis anonymes, les avis non vérifiés et les avis d&apos;entourage sont exclus par construction.
+            Seuls les patients ayant pris rendez-vous via Holistia peuvent laisser un avis sur un praticien. Les avis anonymes, non vérifiés ou d&apos;entourage sont exclus par construction.
+          </p>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: '#57534e' }}>
+            Holistia ne supprime pas les avis négatifs. Un praticien peut répondre publiquement à un avis, mais ne peut pas le faire retirer sauf en cas de contenu illicite.
           </p>
           <p className="text-sm leading-relaxed" style={{ color: '#57534e' }}>
-            Holistia ne supprime pas les avis négatifs. Un praticien peut répondre publiquement à un avis, mais ne peut pas le faire retirer sauf en cas de contenu illicite.
+            La relation thérapeutique est une collaboration — pas une prestation à sens unique. C&apos;est pourquoi les praticiens peuvent également laisser une appréciation sur leurs patients : ponctualité, engagement dans le suivi, respect du cadre thérapeutique. Ces appréciations restent privées et visibles uniquement des autres praticiens de la plateforme, avec l&apos;accord du patient. Elles permettent de construire une communauté fondée sur le respect mutuel, où patients et praticiens s&apos;engagent ensemble dans le soin.
           </p>
         </section>
 

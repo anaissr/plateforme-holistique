@@ -25,10 +25,13 @@ export default function QuiSommesNous() {
         <section>
           <h2 className="text-2xl font-light mb-4" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Notre histoire</h2>
           <p className="text-sm leading-relaxed mb-4" style={{ color: '#57534e' }}>
-            Holistia est née d&apos;un constat simple : trouver un bon praticien en médecines douces relève trop souvent du bouche-à-oreille ou de la chance. Les praticiens sérieux — ceux qui ont suivi des formations longues, qui sont assurés, qui documentent leurs suivis — sont noyés dans un marché peu lisible.
+            Holistia est née d&apos;un constat simple : quand on ne va pas bien — ou quand un proche ne va pas bien — on ne sait souvent pas vers qui se tourner. Vers quel médecin ? Vers quelle spécialité ? Un ostéopathe ou un kinésithérapeute ? Un sophrologue ou un psychothérapeute ? Il existe des dizaines de pratiques, des centaines de praticiens, et aucune boussole pour s&apos;y retrouver.
+          </p>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: '#57534e' }}>
+            Les patients sont trop souvent laissés seuls face à leur désarroi. Ils cherchent, tâtonnent, abandonnent — ou trouvent quelqu&apos;un par hasard. Et les praticiens sérieux, ceux qui ont suivi des formations longues et rigoureuses, sont noyés dans un marché illisible.
           </p>
           <p className="text-sm leading-relaxed" style={{ color: '#57534e' }}>
-            Nous avons construit Holistia pour changer ça : une plateforme francophone où chaque praticien est vérifié, chaque avis est authentique, et chaque utilisateur peut trouver le bon accompagnement en quelques minutes — qu&apos;il soit à Paris, à Montréal, à Bangkok ou à Dakar.
+            Nous avons construit Holistia pour changer ça : aider chaque personne à voir clair, à trouver le bon accompagnement — et à être bien accompagnée tout au long du chemin.
           </p>
         </section>
 
@@ -36,8 +39,8 @@ export default function QuiSommesNous() {
           <h2 className="text-2xl font-light mb-4" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>Notre mission</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-              { emoji: '🔍', titre: 'Rendre lisible', desc: 'Plus de 30 spécialités, des milliers de praticiens — Holistia trie, vérifie et présente ce qui compte vraiment.' },
-              { emoji: '🤝', titre: 'Rendre accessible', desc: 'En cabinet ou en visio, partout dans le monde francophone, avec une orientation personnalisée si vous ne savez pas par où commencer.' },
+              { emoji: '🔍', titre: 'Rendre lisible', desc: 'Plus de 30 spécialités, des centaines de praticiens — Holistia vous aide à comprendre ce qui existe, ce qui correspond à votre situation, et pourquoi.' },
+              { emoji: '🤝', titre: 'Rendre accessible', desc: 'En cabinet ou en visio, partout dans le monde francophone. Et si vous ne savez pas par où commencer, notre outil d\'orientation est là pour vous guider.' },
               { emoji: '🛡', titre: 'Rendre fiable', desc: 'Diplômes vérifiés, assurance RC pro contrôlée, avis authentiques uniquement. La confiance n\'est pas négociable.' },
             ].map((v) => (
               <div key={v.titre} className="bg-white rounded-3xl p-6 shadow-sm" style={{ border: '1px solid #ede9fe' }}>
@@ -54,12 +57,13 @@ export default function QuiSommesNous() {
           <div className="flex flex-col gap-4">
             {[
               "Le corps et l'esprit forment un système — les soins qui les traitent ensemble ont leur place dans un parcours de santé.",
-              "Un praticien éthique sait ce qu'il ne peut pas traiter et oriente vers quelqu'un d'autre quand c'est nécessaire.",
-              "La qualité de la relation thérapeutique compte autant que la technique.",
-              "Les médecines complémentaires ne remplacent pas la médecine conventionnelle — elles la complètent.",
+              "La collaboration entre praticiens démultiplie les résultats. Un ostéopathe et un sophrologue qui travaillent ensemble sur le même patient font souvent plus que chacun séparément. C'est pourquoi Holistia favorise les échanges entre praticiens — avec diplôme d'État ou non — dès lors que leur formation est sérieuse et leur pratique éthique.",
+              "Un praticien éthique sait ce qu'il ne peut pas traiter et oriente vers quelqu'un d'autre quand c'est nécessaire. C'est une marque de professionnalisme, pas de faiblesse.",
+              "Les médecines complémentaires ne remplacent pas la médecine conventionnelle — elles la complètent. Holistia n'est pas une alternative au médecin. C'est un espace pour tout ce qui vient en plus.",
+              "Personne ne devrait rester seul face à ses maux ou à ceux de ses proches. Trouver de l'aide, c'est un droit — pas un luxe.",
             ].map((point) => (
               <div key={point} className="flex items-start gap-3 p-4 rounded-2xl" style={{ backgroundColor: '#f5f3ff', border: '1px solid #ede9fe' }}>
-                <span className="text-purple-600 flex-shrink-0">✦</span>
+                <span style={{ color: '#6b21a8', flexShrink: 0 }}>✦</span>
                 <p className="text-sm leading-relaxed" style={{ color: '#44403c' }}>{point}</p>
               </div>
             ))}

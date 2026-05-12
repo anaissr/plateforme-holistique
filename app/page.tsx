@@ -225,41 +225,57 @@ export default function Home() {
         </div>
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-2" style={{ color: '#6b21a8', fontFamily: 'var(--font-lora)' }}>
-            Les spécialités les plus recherchées
+            Explorez les spécialités et pratiques
           </h2>
           <p className="text-center text-sm mb-10" style={{ color: '#78716c' }}>
             En cabinet ou en visio — où que vous soyez
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[
-              { emoji: '🧘', label: 'Sophrologie' },
-              { emoji: '🌿', label: 'Naturopathie' },
-              { emoji: '🤲', label: 'Ostéopathie' },
-              { emoji: '🧠', label: 'Hypnothérapie' },
-              { emoji: '⚡', label: 'Kinésiologie' },
-              { emoji: '🌸', label: 'Acupuncture' },
-              { emoji: '💆', label: 'Réflexologie' },
-              { emoji: '🗣️', label: 'Thérapies brèves' },
-            ].map((spec) => (
-              <button
-                key={spec.label}
-                className="bg-white rounded-2xl py-6 flex flex-col items-center gap-3 transition hover:shadow-md"
-                style={{ border: '1px solid #e7e5e4' }}
-                onClick={() => { window.location.href = '/recherche' }}
-              >
-                <span className="text-3xl">{spec.emoji}</span>
-                <span className="text-base font-medium" style={{ color: '#57534e' }}>{spec.label}</span>
-              </button>
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <button
-              className="text-white px-8 py-3 rounded-2xl text-sm font-medium"
-              style={{ backgroundColor: '#6b21a8' }}
-              onClick={() => { window.location.href = '/specialites' }}
-            >
-              Voir toutes les spécialités
-            </button>
+          <div className="overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="flex gap-4" style={{ minWidth: 'max-content' }}>
+              {[
+                { emoji: '🌸', label: 'Acupuncture', slug: 'acupuncture' },
+                { emoji: '🔗', label: 'Approche systémique', slug: 'approche-systemique' },
+                { emoji: '🌿', label: 'Aromathérapie', slug: 'aromatherapie' },
+                { emoji: '🧘', label: 'Ayurveda', slug: 'ayurveda' },
+                { emoji: '🦴', label: 'Chiropractie', slug: 'chiropractie' },
+                { emoji: '🎯', label: 'Coaching', slug: 'coaching' },
+                { emoji: '🥗', label: 'Diététique-nutrition', slug: 'dietetique-nutrition' },
+                { emoji: '💫', label: 'EFT', slug: 'eft' },
+                { emoji: '👁️', label: 'EMDR', slug: 'emdr' },
+                { emoji: '🔧', label: 'Ergothérapie', slug: 'ergotherapie' },
+                { emoji: '🤲', label: 'Fasciathérapie', slug: 'fasciatherapie' },
+                { emoji: '💊', label: 'Homéopathie', slug: 'homeopathie' },
+                { emoji: '💭', label: 'Hypnothérapie', slug: 'hypnotherapie' },
+                { emoji: '⚡', label: 'Kinésiologie', slug: 'kinesiologie' },
+                { emoji: '🏃', label: 'Kinésithérapie', slug: 'kinesitherapie' },
+                { emoji: '☯️', label: 'Médecine chinoise', slug: 'medecine-chinoise' },
+                { emoji: '🌱', label: 'Naturopathie', slug: 'naturopathie' },
+                { emoji: '🗣️', label: 'Orthophonie', slug: 'orthophonie' },
+                { emoji: '🦴', label: 'Ostéopathie', slug: 'osteopathie' },
+                { emoji: '🌿', label: 'Phytothérapie', slug: 'phytotherapie' },
+                { emoji: '🧘', label: 'Pilates thérapeutique', slug: 'pilates-therapeutique' },
+                { emoji: '👣', label: 'Podologie', slug: 'podologie' },
+                { emoji: '🎮', label: 'Psychomotricité', slug: 'psychomotricite' },
+                { emoji: '🧠', label: 'Psychopraticien', slug: 'psychopraticien' },
+                { emoji: '💆', label: 'Réflexologie', slug: 'reflexologie' },
+                { emoji: '✨', label: 'Reiki', slug: 'reiki' },
+                { emoji: '💕', label: 'Sexologie', slug: 'sexologie' },
+                { emoji: '🧘', label: 'Sophrologie', slug: 'sophrologie' },
+                { emoji: '💑', label: 'Thérapie de couple', slug: 'therapie-de-couple' },
+                { emoji: '⚡', label: 'Thérapies brèves', slug: 'therapies-breves' },
+                { emoji: '🌅', label: 'Yoga thérapeutique', slug: 'yoga-therapeutique' },
+              ].map((spec) => (
+                <button
+                  key={spec.label}
+                  className="bg-white rounded-2xl py-5 px-4 flex flex-col items-center gap-3 transition hover:shadow-md flex-shrink-0"
+                  style={{ border: '1px solid #e7e5e4', width: '130px' }}
+                  onClick={() => { window.location.href = `/specialites/${spec.slug}` }}
+                >
+                  <span className="text-3xl">{spec.emoji}</span>
+                  <span className="text-xs font-medium text-center leading-snug" style={{ color: '#57534e' }}>{spec.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -276,27 +292,52 @@ export default function Home() {
             Vous ne savez pas par où commencer ?
           </h2>
           <p className="text-center text-sm mb-10" style={{ color: '#78716c' }}>
-            Décrivez votre situation — on vous oriente vers les bons praticiens
+            Décrivez votre situation — on vous oriente vers les pratiques et spécialités qui pourraient vous aider
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {[
-              { emoji: '😰', label: 'Stress et anxiété' },
-              { emoji: '😴', label: 'Troubles du sommeil' },
-              { emoji: '🦴', label: 'Douleurs chroniques' },
-              { emoji: '🤢', label: 'Troubles digestifs' },
-              { emoji: '🌸', label: 'Fertilité et PMA' },
-              { emoji: '🔋', label: 'Fatigue chronique' },
-            ].map((pb) => (
-              <button
-                key={pb.label}
-                className="bg-white rounded-2xl py-6 px-4 flex items-center gap-3 transition hover:shadow-md"
-                style={{ border: '1px solid #ede9fe' }}
-                onClick={() => { window.location.href = `/orientation?probleme=${encodeURIComponent(pb.label)}` }}
-              >
-                <span className="text-2xl">{pb.emoji}</span>
-                <span className="text-base font-medium" style={{ color: '#57534e' }}>{pb.label}</span>
-              </button>
-            ))}
+          <div className="overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="flex gap-3" style={{ minWidth: 'max-content' }}>
+              {[
+                { emoji: '😰', label: 'Stress et anxiété' },
+                { emoji: '😴', label: 'Troubles du sommeil' },
+                { emoji: '🦴', label: 'Douleurs chroniques' },
+                { emoji: '🤢', label: 'Troubles digestifs' },
+                { emoji: '🌸', label: 'Fertilité et PMA' },
+                { emoji: '🔋', label: 'Fatigue chronique' },
+                { emoji: '💔', label: 'Traumatismes' },
+                { emoji: '🔥', label: 'Burn-out' },
+                { emoji: '😨', label: 'Phobies' },
+                { emoji: '⚖️', label: 'Déséquilibres hormonaux' },
+                { emoji: '🧍', label: 'Troubles posturaux' },
+                { emoji: '⚡', label: 'Récupération sportive' },
+                { emoji: '🧒', label: 'Difficultés enfant' },
+                { emoji: '💑', label: 'Difficultés de couple' },
+                { emoji: '🌧️', label: 'Dépression' },
+                { emoji: '🧠', label: 'Troubles de l\'attention' },
+                { emoji: '🩹', label: 'Douleurs chroniques' },
+                { emoji: '🤰', label: 'Grossesse et post-partum' },
+                { emoji: '🧬', label: 'Maladies chroniques' },
+                { emoji: '💊', label: 'Réduction médicaments' },
+              ].map((pb) => (
+                <button
+                  key={pb.label}
+                  className="bg-white rounded-2xl py-4 px-5 flex items-center gap-3 transition hover:shadow-md flex-shrink-0"
+                  style={{ border: '1px solid #ede9fe' }}
+                  onClick={() => { window.location.href = `/orientation?probleme=${encodeURIComponent(pb.label)}` }}
+                >
+                  <span className="text-xl">{pb.emoji}</span>
+                  <span className="text-sm font-medium whitespace-nowrap" style={{ color: '#57534e' }}>{pb.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="text-center mt-8">
+            <button
+              className="text-white px-8 py-3 rounded-2xl text-sm font-medium"
+              style={{ backgroundColor: '#6b21a8' }}
+              onClick={() => { window.location.href = '/orientation' }}
+            >
+              💬 Me faire orienter →
+            </button>
           </div>
         </div>
       </section>

@@ -194,6 +194,12 @@ export default function Recherche() {
 
   const praticiensFiltres = praticiens.filter(p => {
     // specialite, mode, filtreAteliers sont déjà filtrés côté serveur
+    if (saisieSpecialite && !specialite) {
+      const q = normaliser(saisieSpecialite)
+      const nomMatch = normaliser(p.nom).includes(q)
+      const specMatch = normaliser(p.specialite).includes(q)
+      if (!nomMatch && !specMatch) return false
+    }
     if (pourQui && !p.public.some(pub => pub.toLowerCase().includes(pourQui.toLowerCase()))) return false
     if (problematiquesSelectionnees.length > 0) {
       return problematiquesSelectionnees.some(prob =>
@@ -235,11 +241,11 @@ export default function Recherche() {
           </h1>
           <div className="bg-white rounded-2xl p-4 flex flex-wrap gap-3 items-end shadow-lg">
             <div className="flex-1 min-w-36 relative">
-              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Spécialité</label>
+              <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Spécialité, maux, praticien…</label>
               <div className="flex items-center gap-2">
                 <input
                   type="text"
-                  placeholder="Ostéopathe, mal de dos, stress…"
+                  placeholder="Ostéopathe, mal de dos, Sophie L…"
                   value={saisieSpecialite}
                   onChange={(e) => { setSaisieSpecialite(e.target.value); if (specialite) setSpecialite(''); setShowSugg(true) }}
                   onFocus={() => setShowSugg(true)}

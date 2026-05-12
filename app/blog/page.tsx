@@ -20,7 +20,7 @@ const ARTICLES = [
     slug: 'burn-out',
     titre: 'Burn-out : reconnaître les signaux et se reconstruire grâce aux médecines douces',
     extrait: "Épuisement total, perte de sens, corps qui lâche — le burn-out ne s'arrête pas à la fatigue. Naturopathie, sophrologie, hypnothérapie : comment ces approches holistiques accompagnent une vraie reconstruction.",
-    categorie: 'Santé mentale & travail',
+    categorie: 'Santé mentale',
     date: '8 mai 2026',
     lecture: '7 min',
     photo: 'https://plus.unsplash.com/premium_photo-1678980766534-c8be07e3c92a?w=200&auto=format&fit=crop&q=80',

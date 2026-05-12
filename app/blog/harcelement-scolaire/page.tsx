@@ -81,16 +81,6 @@ export default function ArticleHarcelement() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
-          La sophrologie : retrouver un espace de sécurité intérieure
-        </h2>
-        <p className="leading-relaxed mb-4">
-          La sophrologie est particulièrement adaptée aux enfants dès 6 ans. À travers des exercices de respiration, de relaxation dynamique et de visualisation positive, le sophrologue aide l'enfant à reconnecter avec des sensations de calme et de confiance en lui. L'objectif n'est pas d'oublier ce qui s'est passé, mais de créer un espace intérieur sûr, depuis lequel il peut peu à peu retrouver une stabilité émotionnelle.
-        </p>
-        <p className="leading-relaxed mb-4">
-          Les techniques apprises en séance sont réutilisables à la maison — avant d'aller à l'école, la nuit si l'angoisse se réveille, ou dans les moments de tension. Les parents peuvent d'ailleurs être intégrés à la démarche.
-        </p>
-
-        <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
           L'EMDR : traiter les traumatismes à leur racine
         </h2>
         <p className="leading-relaxed mb-4">

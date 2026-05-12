@@ -118,13 +118,13 @@ export default function ArticleBurnOut() {
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>
-          Le coaching : réinventer sa relation au travail
+          La psychothérapie : se prioriser
         </h2>
         <p className="leading-relaxed mb-4">
-          Une fois la phase aiguë passée, vient le temps de la reconstruction et des questions de fond : est-ce que je veux reprendre ce travail ? Dans ces conditions ? Pour cette entreprise ? Qu'est-ce qui compte vraiment pour moi ? Un coach de vie ou un coach professionnel peut aider à clarifier les valeurs, explorer les options et construire un projet de vie plus aligné avec qui l'on est vraiment.
+          Le burn-out révèle souvent quelque chose de plus profond : une difficulté à se mettre en premier, des croyances tenaces sur la valeur personnelle liée à la performance, une peur du vide ou du silence. La psychothérapie — qu'elle soit d'orientation analytique, humaniste, cognitive ou systémique — offre un espace pour explorer ces couches sans jugement et reconnecter avec ses besoins réels.
         </p>
         <p className="leading-relaxed mb-4">
-          Attention : le coaching ne remplace pas la thérapie en phase de burn-out sévère. Il vient en complément, une fois que les ressources minimales sont reconstituées.
+          Se prioriser ne signifie pas abandonner ses responsabilités. Cela signifie apprendre à reconnaître ses limites, à dire non, à recevoir de l'aide, à exister autrement que par ce qu'on accomplit. C'est souvent le travail le plus difficile — et le plus transformateur — d'une reconstruction après un burn-out.
         </p>
 
         <h2 className="text-xl font-medium mt-10 mb-4" style={{ color: '#3b0764', fontFamily: 'var(--font-lora)' }}>

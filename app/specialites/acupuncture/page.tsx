@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Acupuncture : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un acupuncteur vérifié pour soulager la douleur, gérer le stress, améliorer la fertilité et rééquilibrer votre énergie selon la médecine traditionnelle chinoise.',
+  openGraph: {
+    title: 'Acupuncture : praticiens vérifiés et consultation en ligne',
+    description: "Douleurs, stress, fertilité — trouvez un acupuncteur vérifié disponible en cabinet ou en visio.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1598555763574-dca77e10427e?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Acupuncture ',
+      },
+    ],
+  },
 }
 
 export default function AcupuncturePage() {

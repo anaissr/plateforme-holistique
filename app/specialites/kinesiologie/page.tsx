@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     title: 'Kinésiologie : praticiens vérifiés et consultation en ligne',
     description: "Blocages émotionnels, stress, apprentissage, douleurs — trouvez un kinésiologue vérifié disponible en cabinet ou en visio.",
     type: 'website',
+    images: [
+      {
+        url: 'https://images.pexels.com/photos/5793809/pexels-photo-5793809.jpeg?auto=compress&cs=tinysrgb&w=1200',
+        width: 1200,
+        height: 630,
+        alt: 'Kinésiologie ',
+      },
+    ],
   },
 }
 

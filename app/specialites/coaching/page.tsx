@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     title: 'Coaching de vie : praticiens vérifiés et consultation en ligne',
     description: "Objectifs personnels ou professionnels, confiance en soi, reconversion — trouvez un coach de vie vérifié disponible en visio.",
     type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Coaching ',
+      },
+    ],
   },
 }
 

@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'EMDR : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un thérapeute EMDR vérifié pour traiter les traumatismes, le PTSD, les phobies et l anxiété grâce à une approche psychothérapeutique validée scientifiquement.',
+  openGraph: {
+    title: 'EMDR : praticiens vérifiés et consultation en ligne',
+    description: "Traumatismes, stress post-traumatique — trouvez un thérapeute EMDR vérifié disponible sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'EMDR ',
+      },
+    ],
+  },
 }
 
 export default function EmdrPage() {

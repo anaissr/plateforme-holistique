@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Thérapie de couple : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un thérapeute de couple vérifié pour améliorer votre communication, résoudre vos conflits et reconnecter avec votre partenaire. Consultation confidentielle.',
+  openGraph: {
+    title: 'Thérapie de couple : praticiens vérifiés et consultation en ligne',
+    description: "Communication, crise, séparation — trouvez un thérapeute de couple vérifié disponible en visio.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://plus.unsplash.com/premium_photo-1661277699407-5608da8dabd2?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Thérapie de couple ',
+      },
+    ],
+  },
 }
 
 export default function TherapieDeCouplePage() {

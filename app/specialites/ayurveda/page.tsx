@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     title: 'Ayurveda : praticiens vérifiés et consultation en ligne',
     description: "Bilan dosha, alimentation, rituels, massages — trouvez un praticien Ayurveda vérifié disponible en cabinet ou en visio.",
     type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Ayurveda ',
+      },
+    ],
   },
 }
 

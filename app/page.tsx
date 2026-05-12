@@ -504,11 +504,12 @@ export default function Home() {
           <div className="text-white font-medium" style={{ fontFamily: 'var(--font-lora)' }}>🌿 Holistia</div>
           <div className="flex gap-6">
             {[
+              { label: 'Qui sommes-nous', href: '/qui-sommes-nous' },
+              { label: 'Charte qualité', href: '/charte-qualite' },
               { label: 'Blog', href: '/blog' },
-              { label: 'Spécialités', href: '/specialites' },
-              { label: 'Orientation', href: '/orientation' },
-              { label: 'Ateliers', href: '/ateliers' },
-              { label: 'Praticiens', href: '/inscription' },
+              { label: 'CGU', href: '/cgu' },
+              { label: 'Confidentialité', href: '/confidentialite' },
+              { label: 'Mentions légales', href: '/mentions-legales' },
             ].map((link) => (
               <button key={link.label} className="hover:text-white transition" onClick={() => { window.location.href = link.href }}>{link.label}</button>
             ))}

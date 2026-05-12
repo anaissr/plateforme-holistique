@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Kinésithérapie : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un kinésithérapeute vérifié pour votre rééducation, vos douleurs chroniques ou votre récupération post-opératoire. Prise de RDV simple et rapide sur Holistia.',
+  openGraph: {
+    title: 'Kinésithérapie : praticiens vérifiés et consultation en ligne',
+    description: "Rééducation, douleurs, sport — trouvez un kinésithérapeute diplômé d'État vérifié sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://plus.unsplash.com/premium_photo-1683133816393-b04d94c65872?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Kinésithérapie ',
+      },
+    ],
+  },
 }
 
 export default function KinesitherapiePage() {

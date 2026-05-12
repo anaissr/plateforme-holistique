@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Aromathérapie : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un aromathérapeute vérifié pour utiliser les huiles essentielles en toute sécurité. Stress, sommeil, immunité, douleurs — une approche naturelle et efficace.',
+  openGraph: {
+    title: 'Aromathérapie : praticiens vérifiés et consultation en ligne',
+    description: "Stress, sommeil, immunité — trouvez un aromathérapeute vérifié disponible en cabinet ou en visio.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.pexels.com/photos/6694187/pexels-photo-6694187.jpeg?auto=compress&cs=tinysrgb&w=1200',
+        width: 1200,
+        height: 630,
+        alt: 'Aromathérapie ',
+      },
+    ],
+  },
 }
 
 export default function AromatherapiePage() {

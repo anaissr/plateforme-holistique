@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Pilates thérapeutique : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un praticien Pilates thérapeutique vérifié pour renforcer votre gainage, améliorer votre posture et vous rééduquer en douceur.',
+  openGraph: {
+    title: 'Pilates thérapeutique : praticiens vérifiés',
+    description: "Posture, dos, renforcement doux — trouvez un enseignant de pilates thérapeutique vérifié sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Pilates thérapeutique ',
+      },
+    ],
+  },
 }
 
 export default function PilatesTherapeutiquePage() {

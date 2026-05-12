@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'EFT : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un praticien EFT (Emotional Freedom Techniques) vérifié pour libérer stress, phobies, émotions bloquées et douleurs grâce aux tapotements.',
+  openGraph: {
+    title: 'EFT : praticiens vérifiés et consultation en ligne',
+    description: "Blocages émotionnels, stress, phobies — trouvez un praticien EFT vérifié disponible en visio.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'EFT ',
+      },
+    ],
+  },
 }
 
 export default function EftPage() {

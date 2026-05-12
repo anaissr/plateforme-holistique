@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Ergothérapie : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un ergothérapeute vérifié pour accompagner le handicap, développer l autonomie et adapter l environnement au quotidien. Enfants, adultes et seniors.',
+  openGraph: {
+    title: 'Ergothérapie : praticiens vérifiés et consultation en ligne',
+    description: "Autonomie, handicap, enfants — trouvez un ergothérapeute diplômé d'État vérifié sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Ergothérapie ',
+      },
+    ],
+  },
 }
 
 export default function ErgotherapiePage() {

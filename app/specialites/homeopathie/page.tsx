@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Homéopathie : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un homéopathe vérifié pour une approche globale de votre santé, le traitement du terrain, allergies, troubles fonctionnels et accompagnement des enfants.',
+  openGraph: {
+    title: 'Homéopathie : praticiens vérifiés et consultation en ligne',
+    description: "Soutien naturel, terrain, immunité — trouvez un homéopathe vérifié en cabinet ou en visio.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.pexels.com/photos/163186/globuli-medical-bless-you-homeopathy-163186.jpeg?auto=compress&cs=tinysrgb&w=1200',
+        width: 1200,
+        height: 630,
+        alt: 'Homéopathie ',
+      },
+    ],
+  },
 }
 
 export default function HomeopathiePage() {

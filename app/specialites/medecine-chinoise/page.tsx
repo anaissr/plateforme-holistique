@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     title: 'Médecine traditionnelle chinoise : praticiens vérifiés',
     description: "Acupuncture, diététique chinoise, phytothérapie chinoise, tuina — trouvez un praticien vérifié disponible en cabinet.",
     type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Médecine traditionnelle chinoise ',
+      },
+    ],
   },
 }
 

@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Yoga thérapeutique : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un professeur de yoga thérapeutique vérifié pour réduire votre stress, soulager les douleurs chroniques et retrouver équilibre corps-esprit.',
+  openGraph: {
+    title: 'Yoga thérapeutique : praticiens vérifiés et consultation en ligne',
+    description: "Corps, souffle, équilibre — trouvez un enseignant de yoga thérapeutique vérifié sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Yoga thérapeutique ',
+      },
+    ],
+  },
 }
 
 export default function YogaTherapeutiquePage() {

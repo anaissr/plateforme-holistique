@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Podologie : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un podologue vérifié pour vos pieds, la fabrication de semelles orthopédiques, le soin des plaies ou le suivi podologique diabétique.',
+  openGraph: {
+    title: 'Podologie : praticiens vérifiés et consultation en ligne',
+    description: "Pieds, semelles, posture — trouvez un podologue diplômé d'État vérifié sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.pexels.com/photos/6340559/pexels-photo-6340559.jpeg?auto=compress&cs=tinysrgb&w=1200',
+        width: 1200,
+        height: 630,
+        alt: 'Podologie ',
+      },
+    ],
+  },
 }
 
 export default function PodologiePage() {

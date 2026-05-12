@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     title: 'Psychopraticien : praticiens vérifiés et consultation en ligne',
     description: "Mal-être, difficultés relationnelles, anxiété, deuil — trouvez un psychopraticien vérifié disponible en cabinet ou en visio.",
     type: 'website',
+    images: [
+      {
+        url: 'https://plus.unsplash.com/premium_photo-1672292536640-20103a871b7e?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Psychopraticien ',
+      },
+    ],
   },
 }
 

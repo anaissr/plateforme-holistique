@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Phytothérapie : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un phytothérapeute vérifié pour utiliser les plantes médicinales en toute sécurité et soutenir votre santé naturellement. Tisanes, teintures et compléments.',
+  openGraph: {
+    title: 'Phytothérapie : praticiens vérifiés et consultation en ligne',
+    description: "Plantes médicinales, terrain, prévention — trouvez un phytothérapeute certifié sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.pexels.com/photos/5480049/pexels-photo-5480049.jpeg?auto=compress&cs=tinysrgb&w=1200',
+        width: 1200,
+        height: 630,
+        alt: 'Phytothérapie ',
+      },
+    ],
+  },
 }
 
 export default function PhytotherapiePage() {

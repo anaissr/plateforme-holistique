@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Orthophonie : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un orthophoniste vérifié pour accompagner troubles du langage, dyslexie, bégaiement, déglutition et rééducation vocale chez l enfant et l adulte.',
+  openGraph: {
+    title: 'Orthophonie : praticiens vérifiés et consultation en ligne',
+    description: "Langage, dyslexie, bégaiement — trouvez un orthophoniste diplômé d'État disponible sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://plus.unsplash.com/premium_photo-1661724579910-96f4dba073ac?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Orthophonie ',
+      },
+    ],
+  },
 }
 
 export default function OrthophoniePage() {

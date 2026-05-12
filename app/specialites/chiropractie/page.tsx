@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Chiropractie : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un chiropracteur vérifié pour soulager vos douleurs de dos, de nuque et articulaires. Manipulation vertébrale douce et sécurisée sur Holistia.',
+  openGraph: {
+    title: 'Chiropractie : praticiens vérifiés et consultation en ligne',
+    description: "Douleurs vertébrales, posture, mobilité — trouvez un chiropracteur vérifié près de chez vous.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1699523229208-be1e1dd9252d?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Chiropractie ',
+      },
+    ],
+  },
 }
 
 export default function ChiropractiePage() {

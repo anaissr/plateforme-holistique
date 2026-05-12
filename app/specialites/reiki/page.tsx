@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Reiki : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un praticien Reiki vérifié pour rééquilibrer votre énergie vitale, réduire le stress et soutenir votre bien-être global. Séances en cabinet ou en visio.',
+  openGraph: {
+    title: 'Reiki : praticiens vérifiés et consultation en ligne',
+    description: "Énergie, bien-être, équilibre — trouvez un praticien reiki certifié disponible en cabinet ou en visio.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Reiki ',
+      },
+    ],
+  },
 }
 
 export default function ReikiPage() {

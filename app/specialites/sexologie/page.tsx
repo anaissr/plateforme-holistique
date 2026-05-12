@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Sexologie : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un sexologue vérifié pour accompagner votre santé sexuelle, épanouissement intime, questions d identité et difficultés de couple. Consultation confidentielle.',
+  openGraph: {
+    title: 'Sexologie : praticiens vérifiés et consultation en ligne',
+    description: "Intimité, libido, troubles sexuels — trouvez un sexologue diplômé disponible en cabinet ou en visio.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Sexologie ',
+      },
+    ],
+  },
 }
 
 export default function SexologiePage() {

@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Diététique-Nutrition : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un diététicien-nutritionniste vérifié pour un rééquilibrage alimentaire personnalisé, la gestion du poids, les maladies chroniques et la nutrition sportive.',
+  openGraph: {
+    title: 'Diététique et nutrition : praticiens vérifiés',
+    description: "Poids, alimentation, microbiote — trouvez un diététicien ou nutritionniste vérifié sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Diététique et nutrition ',
+      },
+    ],
+  },
 }
 
 export default function DietetiqueNutritionPage() {

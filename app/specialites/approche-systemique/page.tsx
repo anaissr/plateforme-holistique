@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Approche systémique : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un thérapeute systémique vérifié pour accompagner conflits familiaux, difficultés relationnelles et changements de vie grâce à une thérapie brève et efficace.',
+  openGraph: {
+    title: 'Approche systémique : praticiens vérifiés',
+    description: "Relations, famille, harcèlement — trouvez un praticien en approche systémique vérifié sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Approche systémique ',
+      },
+    ],
+  },
 }
 
 export default function ApprocheSystemiquePage() {

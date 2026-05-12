@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     title: 'Thérapies brèves : praticiens vérifiés et consultation en ligne',
     description: "Phobies, anxiété, blocages, relations — des solutions concrètes en peu de séances avec des thérapeutes vérifiés.",
     type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Thérapies brèves ',
+      },
+    ],
   },
 }
 

@@ -4,6 +4,19 @@ import Nav from '@/app/components/Nav'
 export const metadata: Metadata = {
   title: 'Psychomotricité : praticiens vérifiés, tarifs, prise de RDV | Holistia',
   description: 'Trouvez un psychomotricien vérifié pour accompagner les troubles du développement, de la coordination et de la régulation émotionnelle chez l enfant et l adulte.',
+  openGraph: {
+    title: 'Psychomotricité : praticiens vérifiés et consultation en ligne',
+    description: "Enfants, coordination, dyspraxie — trouvez un psychomotricien diplômé d'État vérifié sur Holistia.",
+    type: 'website',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Psychomotricité ',
+      },
+    ],
+  },
 }
 
 export default function PsychomotricitePage() {

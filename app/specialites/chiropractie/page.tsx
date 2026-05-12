@@ -41,8 +41,6 @@ En France, les chiropracteurs sont reconnus par le ministère de la Santé depui
     satisfaction: 4.8,
     tarif_depuis: '60€',
     tarif_jusqua: '100€',
-    duree_seance: '30 à 45 min',
-    nb_seances: '4 à 8 séances',
     visio: false,
     praticiens_vedette: [
       {
@@ -119,8 +117,6 @@ En France, les chiropracteurs sont reconnus par le ministère de la Santé depui
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet', emoji: '🏥' },
             ].map((info) => (

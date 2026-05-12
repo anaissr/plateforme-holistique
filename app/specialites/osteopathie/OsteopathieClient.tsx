@@ -47,8 +47,6 @@ Complémentaire à la médecine conventionnelle, l ostéopathie est reconnue par
     satisfaction: 4.7,
     tarif_depuis: '70€',
     tarif_jusqua: '100€',
-    duree_seance: '45 min à 1h',
-    nb_seances: '1 à 3 séances en moyenne',
     visio: false,
     praticiens_vedette: [
       {
@@ -140,8 +138,6 @@ Complémentaire à la médecine conventionnelle, l ostéopathie est reconnue par
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet uniquement', emoji: '🏥' },
             ].map((info) => (

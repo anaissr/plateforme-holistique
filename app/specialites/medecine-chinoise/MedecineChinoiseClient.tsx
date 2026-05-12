@@ -37,8 +37,6 @@ Contrairement à la médecine occidentale qui traite les symptômes, la MTC cher
     satisfaction: 4.7,
     tarif_depuis: '65€',
     tarif_jusqua: '110€',
-    duree_seance: '45 min à 1h',
-    nb_seances: '4 à 10 séances selon la problématique',
     visio: false,
     praticiens_vedette: [
       {
@@ -118,8 +116,6 @@ Contrairement à la médecine occidentale qui traite les symptômes, la MTC cher
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet uniquement', emoji: '🏥' },
             ].map((info) => (

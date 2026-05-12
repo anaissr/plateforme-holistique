@@ -41,8 +41,6 @@ L approche phytothérapeutique est globale et préventive : il s agit de renforc
     satisfaction: 4.7,
     tarif_depuis: '50€',
     tarif_jusqua: '90€',
-    duree_seance: '45 à 60 min',
-    nb_seances: '2 à 5 séances',
     visio: true,
     praticiens_vedette: [
       {
@@ -119,8 +117,6 @@ L approche phytothérapeutique est globale et préventive : il s agit de renforc
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
             ].map((info) => (

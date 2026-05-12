@@ -41,8 +41,6 @@ L ergothérapie intervient dans de nombreux contextes : pédiatrie (troubles du 
     satisfaction: 4.7,
     tarif_depuis: '50€',
     tarif_jusqua: '90€',
-    duree_seance: '45 à 60 min',
-    nb_seances: '6 à 12 séances',
     visio: true,
     praticiens_vedette: [
       {
@@ -122,8 +120,6 @@ L ergothérapie intervient dans de nombreux contextes : pédiatrie (troubles du 
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet, domicile et visio', emoji: '🖥' },
             ].map((info) => (

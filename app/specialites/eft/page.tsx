@@ -41,8 +41,6 @@ L un des grands avantages de l EFT est qu une fois apprises, les techniques peuv
     satisfaction: 4.7,
     tarif_depuis: '60€',
     tarif_jusqua: '100€',
-    duree_seance: '60 min',
-    nb_seances: '4 à 8 séances',
     visio: true,
     praticiens_vedette: [
       {
@@ -119,8 +117,6 @@ L un des grands avantages de l EFT est qu une fois apprises, les techniques peuv
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
             ].map((info) => (

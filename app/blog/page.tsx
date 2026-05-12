@@ -8,6 +8,33 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: 'comment-choisir-son-naturopathe',
+    titre: 'Comment choisir son naturopathe — et éviter les pièges',
+    extrait: "Avec la prolifération des praticiens aux formations très disparates, choisir son naturopathe n'est pas anodin. Voici ce que vous devez vraiment savoir avant de prendre rendez-vous.",
+    categorie: 'Naturopathie',
+    date: '12 mai 2026',
+    lecture: '5 min',
+    photo: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=200&q=75',
+  },
+  {
+    slug: 'osteopathe-ou-kinesitherapeute',
+    titre: 'Ostéopathe ou kinésithérapeute : lequel consulter en premier ?',
+    extrait: "Ils traitent souvent les mêmes symptômes, mais leur approche est fondamentalement différente. Voici comment choisir — et pourquoi la vraie réponse dépend de ce que vous traversez maintenant.",
+    categorie: 'Ostéopathie',
+    date: '12 mai 2026',
+    lecture: '5 min',
+    photo: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=200&q=75',
+  },
+  {
+    slug: 'sophrologie-et-anxiete',
+    titre: 'Sophrologie et anxiété : ce que la science dit vraiment (et ce qu\'elle ne dit pas encore)',
+    extrait: "La sophrologie est devenue l'une des approches les plus prescrites par les médecins français pour l'anxiété. Mais qu'est-ce que la science dit vraiment — et pour qui ça fonctionne le mieux ?",
+    categorie: 'Sophrologie',
+    date: '12 mai 2026',
+    lecture: '6 min',
+    photo: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=200&q=75',
+  },
+  {
     slug: 'harcelement-scolaire',
     titre: 'Harcèlement scolaire : comment les approches holistiques peuvent aider votre enfant',
     extrait: "Le harcèlement scolaire laisse des traces profondes — anxiété, repli sur soi, troubles du sommeil. Approche systémique, EMDR, psychomotricité : ces thérapies complémentaires offrent des outils puissants pour aider les enfants à se reconstruire.",

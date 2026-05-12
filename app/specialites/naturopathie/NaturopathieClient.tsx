@@ -37,8 +37,6 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
     satisfaction: 4.8,
     tarif_depuis: '65€',
     tarif_jusqua: '120€',
-    duree_seance: '45 min à 1h30',
-    nb_seances: '3 à 6 séances en moyenne',
     visio: true,
     praticiens_vedette: [
       {
@@ -118,8 +116,6 @@ La naturopathie est particulièrement efficace pour les troubles chroniques que 
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
             ].map((info) => (

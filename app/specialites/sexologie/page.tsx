@@ -41,8 +41,6 @@ La sexologie traite également les questions d identité de genre et d orientati
     satisfaction: 4.9,
     tarif_depuis: '70€',
     tarif_jusqua: '120€',
-    duree_seance: '50 à 60 min',
-    nb_seances: '4 à 10 séances',
     visio: true,
     praticiens_vedette: [
       {
@@ -119,8 +117,6 @@ La sexologie traite également les questions d identité de genre et d orientati
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
             ].map((info) => (

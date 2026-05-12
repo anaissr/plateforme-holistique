@@ -41,8 +41,6 @@ Le Reiki est utilisé dans de nombreux contextes : accompagnement du stress et d
     satisfaction: 4.7,
     tarif_depuis: '50€',
     tarif_jusqua: '90€',
-    duree_seance: '60 min',
-    nb_seances: '3 à 6 séances',
     visio: true,
     praticiens_vedette: [
       {
@@ -119,8 +117,6 @@ Le Reiki est utilisé dans de nombreux contextes : accompagnement du stress et d
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
             ].map((info) => (

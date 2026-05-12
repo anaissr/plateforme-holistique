@@ -41,8 +41,6 @@ Chez l adulte, l orthophoniste prend en charge les séquelles de maladies neurol
     satisfaction: 4.8,
     tarif_depuis: '50€',
     tarif_jusqua: '80€',
-    duree_seance: '30 à 45 min',
-    nb_seances: '10 à 30 séances',
     visio: true,
     praticiens_vedette: [
       {
@@ -119,8 +117,6 @@ Chez l adulte, l orthophoniste prend en charge les séquelles de maladies neurol
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
             ].map((info) => (

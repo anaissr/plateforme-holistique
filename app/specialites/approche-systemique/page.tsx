@@ -41,8 +41,6 @@ La thérapie brève systémique (inspirée de la thérapie de Palo Alto) est par
     satisfaction: 4.8,
     tarif_depuis: '70€',
     tarif_jusqua: '120€',
-    duree_seance: '60 à 90 min',
-    nb_seances: '6 à 12 séances',
     visio: true,
     praticiens_vedette: [
       {
@@ -119,8 +117,6 @@ La thérapie brève systémique (inspirée de la thérapie de Palo Alto) est par
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
             ].map((info) => (

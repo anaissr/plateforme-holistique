@@ -41,8 +41,6 @@ Le Pilates thérapeutique est particulièrement indiqué pour les douleurs chron
     satisfaction: 4.8,
     tarif_depuis: '60€',
     tarif_jusqua: '100€',
-    duree_seance: '45 à 60 min',
-    nb_seances: '8 à 15 séances',
     visio: true,
     praticiens_vedette: [
       {
@@ -119,8 +117,6 @@ Le Pilates thérapeutique est particulièrement indiqué pour les douleurs chron
           ))}
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { label: 'Durée', value: specialite.duree_seance, emoji: '⏱' },
-              { label: 'Nb séances', value: specialite.nb_seances, emoji: '📅' },
               { label: 'Tarif', value: `${specialite.tarif_depuis} — ${specialite.tarif_jusqua}`, emoji: '💶' },
               { label: 'Format', value: 'Cabinet et visio', emoji: '🖥' },
             ].map((info) => (

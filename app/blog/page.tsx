@@ -14,7 +14,7 @@ const ARTICLES = [
     categorie: 'Naturopathie',
     date: '12 mai 2026',
     lecture: '5 min',
-    photo: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=200&q=75',
+    photo: 'https://images.unsplash.com/photo-1666858619985-701e36b3bc57?w=200&auto=format&fit=crop&q=60',
   },
   {
     slug: 'fasciatherapie-tout-comprendre',
@@ -23,7 +23,7 @@ const ARTICLES = [
     categorie: 'Fasciathérapie',
     date: '12 mai 2026',
     lecture: '5 min',
-    photo: 'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=200&q=75',
+    photo: 'https://images.pexels.com/photos/10893346/pexels-photo-10893346.jpeg?auto=compress&cs=tinysrgb&w=200',
   },
   {
     slug: 'psychomotricien-enfant',
@@ -41,7 +41,7 @@ const ARTICLES = [
     categorie: 'Ostéopathie',
     date: '12 mai 2026',
     lecture: '5 min',
-    photo: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=200&q=75',
+    photo: 'https://images.unsplash.com/photo-1699523229208-be1e1dd9252d?w=200&auto=format&fit=crop&q=60',
   },
   {
     slug: 'sophrologie-et-anxiete',

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: 'article',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1200&q=80',
+        url: 'https://images.unsplash.com/photo-1666858619985-701e36b3bc57?w=1200&auto=format&fit=crop&q=80',
         width: 1200,
         height: 630,
         alt: 'Comment choisir son naturopathe',
@@ -38,7 +38,7 @@ export default function ArticleNaturopathe() {
       {/* PHOTO */}
       <div className="max-w-2xl mx-auto px-6 pt-10">
         <img
-          src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=900&q=75"
+          src="https://images.unsplash.com/photo-1666858619985-701e36b3bc57?w=900&auto=format&fit=crop&q=60"
           alt="Choisir son naturopathe — plantes et bien-être naturel"
           className="w-full rounded-3xl object-cover"
           style={{ maxHeight: '340px' }}

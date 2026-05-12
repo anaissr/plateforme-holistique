@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: 'article',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&q=80',
+        url: 'https://images.unsplash.com/photo-1699523229208-be1e1dd9252d?w=1200&auto=format&fit=crop&q=80',
         width: 1200,
         height: 630,
         alt: 'Ostéopathe ou kinésithérapeute',
@@ -38,7 +38,7 @@ export default function ArticleOsteoKine() {
       {/* PHOTO */}
       <div className="max-w-2xl mx-auto px-6 pt-10">
         <img
-          src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=75"
+          src="https://images.unsplash.com/photo-1699523229208-be1e1dd9252d?w=900&auto=format&fit=crop&q=60"
           alt="Ostéopathie et kinésithérapie — soin du corps"
           className="w-full rounded-3xl object-cover"
           style={{ maxHeight: '340px' }}

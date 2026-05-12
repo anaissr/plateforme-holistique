@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: 'article',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=1200&q=80',
+        url: 'https://images.pexels.com/photos/10893346/pexels-photo-10893346.jpeg?w=1200',
         width: 1200,
         height: 630,
         alt: 'Fasciathérapie — soin des fascias',
@@ -38,7 +38,7 @@ export default function ArticleFasciatherapie() {
       {/* PHOTO */}
       <div className="max-w-2xl mx-auto px-6 pt-10">
         <img
-          src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=900&q=75"
+          src="https://images.pexels.com/photos/10893346/pexels-photo-10893346.jpeg?auto=compress&cs=tinysrgb&w=900"
           alt="Fasciathérapie — soin du tissu conjonctif"
           className="w-full rounded-3xl object-cover"
           style={{ maxHeight: '340px' }}

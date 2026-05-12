@@ -230,7 +230,8 @@ export default function Home() {
           <p className="text-center text-sm mb-10" style={{ color: '#78716c' }}>
             En cabinet ou en visio — où que vous soyez
           </p>
-          <div className="overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="relative">
+            <div className="overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="flex gap-4" style={{ minWidth: 'max-content' }}>
               {[
                 { emoji: '🌸', label: 'Acupuncture', slug: 'acupuncture' },
@@ -277,6 +278,18 @@ export default function Home() {
               ))}
             </div>
           </div>
+            <div className="absolute top-0 right-0 h-full w-20 pointer-events-none" style={{ background: 'linear-gradient(to left, #ffffff, transparent)' }} />
+          </div>
+          <p className="text-center text-xs mt-3 mb-2" style={{ color: '#a8a29e' }}>← faites défiler pour voir toutes les spécialités →</p>
+          <div className="text-center mt-4">
+            <button
+              className="text-white px-8 py-3 rounded-2xl text-sm font-medium"
+              style={{ backgroundColor: '#6b21a8' }}
+              onClick={() => { window.location.href = '/specialites' }}
+            >
+              Voir toutes les spécialités
+            </button>
+          </div>
         </div>
       </section>
 
@@ -294,7 +307,8 @@ export default function Home() {
           <p className="text-center text-sm mb-10" style={{ color: '#78716c' }}>
             Décrivez votre situation — on vous oriente vers les pratiques et spécialités qui pourraient vous aider
           </p>
-          <div className="overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="relative">
+            <div className="overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="flex gap-3" style={{ minWidth: 'max-content' }}>
               {[
                 { emoji: '😰', label: 'Stress et anxiété' },
@@ -330,7 +344,10 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="text-center mt-8">
+            <div className="absolute top-0 right-0 h-full w-20 pointer-events-none" style={{ background: 'linear-gradient(to left, #f5f3ff, transparent)' }} />
+          </div>
+          <p className="text-center text-xs mt-3 mb-2" style={{ color: '#a8a29e' }}>← faites défiler pour voir tous les maux →</p>
+          <div className="text-center mt-4">
             <button
               className="text-white px-8 py-3 rounded-2xl text-sm font-medium"
               style={{ backgroundColor: '#6b21a8' }}

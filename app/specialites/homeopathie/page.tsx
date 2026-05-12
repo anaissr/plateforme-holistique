@@ -10,7 +10,7 @@ export default function HomeopathiePage() {
   const specialite = {
     nom: 'Homéopathie',
     emoji: '💊',
-    photo: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://images.pexels.com/photos/163186/globuli-medical-bless-you-homeopathy-163186.jpeg?auto=compress&cs=tinysrgb&w=1400',
     accroche: 'Traiter le terrain et non le symptôme pour retrouver un équilibre de santé durable et naturel.',
     description_longue: `L homéopathie est une médecine fondée par Samuel Hahnemann au XVIIIe siècle, basée sur le principe de similitude : une substance qui provoque des symptômes chez une personne saine peut guérir ces mêmes symptômes chez une personne malade si elle est utilisée à très haute dilution. Ces dilutions homéopathiques, appelées remèdes, sont personnalisées en fonction du profil global du patient.
 

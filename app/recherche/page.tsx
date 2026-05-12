@@ -46,6 +46,46 @@ function prochainsCréneaux(agenda: Record<string, string[]>, n: number): string
   return result
 }
 
+const TOUTES_SPECIALITES = [
+  'Acupuncture', 'Approche systémique', 'Aromathérapie', 'Ayurveda',
+  'Chiropractie', 'Coaching', 'Diététique-nutrition', 'EFT', 'EMDR',
+  'Ergothérapie', 'Fasciathérapie', 'Homéopathie', 'Hypnothérapie',
+  'Kinésiologie', 'Kinésithérapie', 'Médecine traditionnelle chinoise',
+  'Naturopathie', 'Orthophonie', 'Ostéopathie', 'Phytothérapie',
+  'Pilates thérapeutique', 'Podologie', 'Psychomotricité', 'Psychopraticien',
+  'Réflexologie', 'Reiki', 'Sexologie', 'Sophrologie', 'Thérapie de couple',
+  'Thérapies brèves', 'Yoga thérapeutique',
+]
+
+const MOTS_CLES: Record<string, string[]> = {
+  'Ostéopathie': ['dos', 'douleur', 'colonne', 'posture', 'nourrisson', 'articulation', 'lombaires', 'cervicales', 'rééducation', 'manuelle'],
+  'Kinésithérapie': ['kiné', 'rééducation', 'blessure', 'sport', 'muscles', 'physiothérapie', 'physio'],
+  'Naturopathie': ['alimentation', 'détox', 'fatigue', 'microbiote', 'plantes', 'prévention', 'naturo'],
+  'Sophrologie': ['relaxation', 'stress', 'anxiété', 'sommeil', 'confiance', 'respiration', 'sophrologie'],
+  'Hypnothérapie': ['hypnose', 'phobies', 'tabac', 'fumer', 'peur', 'addictions', 'hypno'],
+  'Psychopraticien': ['psy', 'psychothérapie', 'dépression', 'angoisse', 'thérapie', 'émotions', 'burn-out'],
+  'EMDR': ['traumatisme', 'trauma', 'choc', 'ptsd', 'stress post-traumatique', 'agression'],
+  'EFT': ['tapotement', 'tapping', 'libération émotionnelle', 'blocage'],
+  'Réflexologie': ['pieds', 'zones réflexes', 'reflexo', 'massage', 'plantaire'],
+  'Coaching': ['objectifs', 'performance', 'reconversion', 'développement personnel', 'vie professionnelle', 'coach'],
+  'Diététique-nutrition': ['régime', 'poids', 'nutrition', 'minceur', 'alimentation saine', 'diète', 'diéto'],
+  'Acupuncture': ['aiguilles', 'méridiens', 'chinois', 'énergie', 'acuponcture'],
+  'Thérapies brèves': ['palo alto', 'brève', 'solution', 'rapide', 'efficace'],
+  'Kinésiologie': ['test musculaire', 'blocages', 'énergie', 'kinésio'],
+  'Phytothérapie': ['plantes', 'herbes', 'tisanes', 'végétaux', 'phyto'],
+  'Aromathérapie': ['huiles essentielles', 'lavande', 'aromato', 'diffuseur'],
+  'Médecine traditionnelle chinoise': ['MTC', 'chinois', 'tui na', 'qi', 'moxibustion'],
+  'Ayurveda': ['indien', 'doshas', 'vata', 'pitta', 'kapha', 'ayurvédique'],
+  'Approche systémique': ['famille', 'systémique', 'système', 'relation', 'harcèlement'],
+  'Thérapie de couple': ['couple', 'relation amoureuse', 'séparation', 'communication', 'conjugale'],
+  'Sexologie': ['sexuel', 'intimité', 'libido', 'trouble sexuel'],
+  'Chiropractie': ['chiro', 'vertèbres', 'ajustement', 'colonne vertébrale'],
+}
+
+function normaliser(s: string): string {
+  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+}
+
 const problematiquesListe = [
   { emoji: '😰', label: 'Stress et anxiété' },
   { emoji: '😴', label: 'Troubles du sommeil' },
@@ -113,6 +153,16 @@ export default function Recherche() {
   const [filtreAteliers, setFiltreAteliers] = useState(false)
   const [afficherTroubles, setAfficherTroubles] = useState(false)
   const [tri, setTri] = useState('')
+  const [saisieSpecialite, setSaisieSpecialite] = useState('')
+  const [showSugg, setShowSugg] = useState(false)
+
+  const suggestions = saisieSpecialite.length >= 2
+    ? TOUTES_SPECIALITES.filter(nom => {
+        const q = normaliser(saisieSpecialite)
+        if (normaliser(nom).includes(q)) return true
+        return (MOTS_CLES[nom] || []).some(mc => normaliser(mc).includes(q))
+      })
+    : []
 
   useEffect(() => {
     const charger = async () => {
@@ -183,52 +233,47 @@ export default function Recherche() {
             Trouvez votre praticien
           </h1>
           <div className="bg-white rounded-2xl p-4 flex flex-wrap gap-3 items-end shadow-lg">
-            <div className="flex-1 min-w-36">
+            <div className="flex-1 min-w-36 relative">
               <label className="text-xs font-medium block mb-1" style={{ color: '#78716c' }}>Spécialité</label>
-              <select value={specialite} onChange={(e) => setSpecialite(e.target.value)} className="w-full text-sm border-none outline-none bg-transparent" style={{ color: '#44403c' }}>
-                <option value="">Toutes les spécialités</option>
-                <optgroup label="Corps et toucher">
-                  <option>Acupuncture</option>
-                  <option>Chiropractie</option>
-                  <option>Ergothérapie</option>
-                  <option>Fasciathérapie</option>
-                  <option>Kinésiologie</option>
-                  <option>Ostéopathie</option>
-                  <option>Pilates thérapeutique</option>
-                  <option>Podologie</option>
-                  <option>Psychomotricité</option>
-                  <option>Réflexologie</option>
-                  <option>Yoga thérapeutique</option>
-                </optgroup>
-                <optgroup label="Parole et émotion">
-                  <option>Coaching</option>
-                  <option>EFT</option>
-                  <option>EMDR</option>
-                  <option>Hypnothérapie</option>
-                  <option>Orthophonie</option>
-                  <option>Psychologie clinique</option>
-                  <option>Psychopraticien</option>
-                  <option>Sexologie</option>
-                  <option>Sophrologie</option>
-                  <option>Thérapie de couple</option>
-                  <option>Thérapies brèves</option>
-                </optgroup>
-                <optgroup label="Énergie et tradition">
-                  <option>Acupuncture</option>
-                  <option>Ayurveda</option>
-                  <option>Homéopathie</option>
-                  <option>Médecine traditionnelle chinoise</option>
-                  <option>Reiki</option>
-                </optgroup>
-                <optgroup label="Alimentation et plantes">
-                  <option>Aromathérapie</option>
-                  <option>Ayurveda</option>
-                  <option>Diététique-nutrition</option>
-                  <option>Médecine traditionnelle chinoise</option>
-                  <option>Naturopathie</option>
-                  <option>Phytothérapie</option>
-                </optgroup>
-              </select>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  placeholder="Ostéopathe, mal de dos, stress…"
+                  value={saisieSpecialite}
+                  onChange={(e) => { setSaisieSpecialite(e.target.value); if (specialite) setSpecialite(''); setShowSugg(true) }}
+                  onFocus={() => setShowSugg(true)}
+                  onBlur={() => setTimeout(() => setShowSugg(false), 150)}
+                  className="w-full text-sm border-none outline-none bg-transparent"
+                  style={{ color: '#44403c' }}
+                />
+                {saisieSpecialite && (
+                  <button
+                    onClick={() => { setSaisieSpecialite(''); setSpecialite('') }}
+                    className="text-lg leading-none flex-shrink-0"
+                    style={{ color: '#78716c' }}
+                    aria-label="Effacer"
+                  >×</button>
+                )}
+              </div>
+              {showSugg && suggestions.length > 0 && (
+                <div
+                  className="absolute top-full left-0 z-50 bg-white rounded-xl shadow-xl mt-1 overflow-y-auto"
+                  style={{ border: '1px solid #e7e5e4', minWidth: '220px', maxHeight: '240px' }}
+                >
+                  {suggestions.map(s => (
+                    <button
+                      key={s}
+                      className="w-full text-left px-4 py-2.5 text-sm transition"
+                      style={{ color: '#44403c' }}
+                      onMouseDown={() => { setSpecialite(s); setSaisieSpecialite(s); setShowSugg(false) }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#f5f3ff')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="w-px h-8" style={{ backgroundColor: '#e7e5e4' }} />
             <div className="flex-1 min-w-36">
@@ -376,7 +421,7 @@ export default function Recherche() {
                   </p>
                   {praticiens.length > 0 && (
                     <button
-                      onClick={() => { setProblematiquesSelectionnees([]); setSpecialite(''); setPourQui(''); setMode(''); setFiltreAteliers(false) }}
+                      onClick={() => { setProblematiquesSelectionnees([]); setSpecialite(''); setSaisieSpecialite(''); setPourQui(''); setMode(''); setFiltreAteliers(false) }}
                       className="text-white px-6 py-3 rounded-2xl text-sm font-medium"
                       style={{ backgroundColor: '#6b21a8' }}
                     >

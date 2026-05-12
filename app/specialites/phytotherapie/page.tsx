@@ -10,7 +10,7 @@ export default function PhytotherapiePage() {
   const specialite = {
     nom: 'Phytothérapie',
     emoji: '🌱',
-    photo: 'https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://images.pexels.com/photos/5480049/pexels-photo-5480049.jpeg?auto=compress&cs=tinysrgb&w=1400',
     accroche: 'Utiliser la sagesse des plantes médicinales pour soutenir la santé et renforcer l organisme naturellement.',
     description_longue: `La phytothérapie est l utilisation des plantes et de leurs extraits à des fins thérapeutiques. C est l une des plus anciennes médecines du monde — les plantes constituent la base de nombreux médicaments modernes. La phytothérapie contemporaine s appuie à la fois sur les savoirs traditionnels et sur les données scientifiques actuelles pour recommander les plantes les plus adaptées à chaque situation.
 

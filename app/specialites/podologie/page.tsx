@@ -10,7 +10,7 @@ export default function PodologiePage() {
   const specialite = {
     nom: 'Podologie',
     emoji: '🦶',
-    photo: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e0e?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://images.pexels.com/photos/6340559/pexels-photo-6340559.jpeg?auto=compress&cs=tinysrgb&w=1400',
     accroche: 'Prenez soin de vos pieds et retrouvez confort et mobilité grâce à un suivi podologique personnalisé.',
     description_longue: `La podologie est une discipline paramédicale consacrée à la santé des pieds. Le podologue, professionnel de santé diplômé d'État, prend en charge les affections médicales et biomécani­ques du pied : cors, durillons, ongles incarnés, verrues plantaires, hallux valgus, pieds plats ou creux. Il réalise aussi des soins de pédicurie médicale pour les patients à risque.
 

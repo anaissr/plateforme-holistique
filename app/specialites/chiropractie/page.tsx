@@ -10,7 +10,7 @@ export default function ChiropractiePage() {
   const specialite = {
     nom: 'Chiropractie',
     emoji: '🦴',
-    photo: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://images.unsplash.com/photo-1699523229208-be1e1dd9252d?w=1400&h=500&fit=crop&q=75&fm=webp',
     accroche: 'Retrouvez un dos en bonne santé grâce aux ajustements vertébraux et à la thérapie manuelle chiropractique.',
     description_longue: `La chiropractie est une profession de santé réglementée qui se spécialise dans le diagnostic, le traitement et la prévention des troubles neuro-musculo-squelettiques. Le chiropracteur utilise principalement la manipulation vertébrale (ou ajustement chiropractique) pour corriger les dysfonctions articulaires et soulager les douleurs associées.
 

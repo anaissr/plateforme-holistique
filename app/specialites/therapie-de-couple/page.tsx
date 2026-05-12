@@ -10,7 +10,7 @@ export default function TherapieDeCouplePage() {
   const specialite = {
     nom: 'Thérapie de couple',
     emoji: '💑',
-    photo: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://plus.unsplash.com/premium_photo-1661277699407-5608da8dabd2?w=1400&h=500&fit=crop&q=75&fm=webp',
     accroche: 'Retrouver la connexion, la confiance et la communication pour construire ensemble une relation plus épanouissante.',
     description_longue: `La thérapie de couple est un espace thérapeutique sécurisé où deux partenaires peuvent explorer leurs difficultés relationnelles avec l aide d un professionnel formé à la psychologie des relations. Le thérapeute ne prend pas parti pour l un ou l autre, mais facilite un dialogue constructif et aide le couple à comprendre ses dynamiques dysfonctionnelles pour en sortir.
 

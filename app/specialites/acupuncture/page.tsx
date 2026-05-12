@@ -10,7 +10,7 @@ export default function AcupuncturePage() {
   const specialite = {
     nom: 'Acupuncture',
     emoji: '🪡',
-    photo: 'https://images.unsplash.com/photo-1554244933-d876deb6b2ff?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://images.unsplash.com/photo-1598555763574-dca77e10427e?w=1400&h=500&fit=crop&q=75&fm=webp',
     accroche: 'Rééquilibrer l énergie vitale du corps par la stimulation de points précis pour soulager et prévenir.',
     description_longue: `L acupuncture est une pratique thérapeutique millénaire issue de la médecine traditionnelle chinoise (MTC). Elle repose sur la théorie des méridiens — des voies d énergie (le Qi) qui parcourent le corps. En stimulant des points précis le long de ces méridiens à l aide de fines aiguilles, l acupuncteur vise à rééquilibrer la circulation de l énergie et à restaurer l harmonie du corps et de l esprit.
 

@@ -38,12 +38,20 @@ export default function Kinesiologie() {
       <Nav />
 
       {/* HERO */}
-      <section className="px-6 py-16 text-center relative" style={{ background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)' }}>
+      <section className="text-center relative" style={{ minHeight: '420px' }}>
+        <img
+          src="https://images.pexels.com/photos/5793809/pexels-photo-5793809.jpeg?auto=compress&cs=tinysrgb&w=1400"
+          alt="Kinésiologie"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(59,7,100,0.88) 0%, rgba(107,33,168,0.75) 100%)' }} />
         <div className="absolute bottom-0 left-0 w-full overflow-hidden" style={{ marginBottom: '-1px' }}>
           <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', height: '60px', width: '100%' }}>
             <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="#faf9f7" />
           </svg>
         </div>
+        <div className="relative z-10 px-6 py-16">
         <div className="text-6xl mb-4">⚡</div>
         <span className="inline-block text-xs px-4 py-1.5 rounded-full mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#e9d5ff' }}>
           87 praticiens vérifiés · À partir de 60€
@@ -61,6 +69,7 @@ export default function Kinesiologie() {
         >
           Trouver un kinésiologue près de moi
         </button>
+        </div>
       </section>
 
       {/* STATS */}

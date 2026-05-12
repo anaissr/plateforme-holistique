@@ -17,36 +17,16 @@ const specialitesRotatives = [
 
 const photosRotatives = [
   {
-    url: 'https://plus.unsplash.com/premium_photo-1682088560562-550601ba7e45?w=800&auto=format&fit=crop&q=75&fm=webp',
-    label: 'Psychomotricité',
+    url: 'https://images.unsplash.com/photo-1489710437720-ebb67ec84dd2?w=800&auto=format&fit=crop&q=75&fm=webp',
+    label: 'Bien-être et méditation',
   },
   {
-    url: 'https://images.unsplash.com/photo-1758691461932-d0aa0ebf6b31?w=800&auto=format&fit=crop&q=75&fm=webp',
-    label: 'Séance holistique',
+    url: 'https://plus.unsplash.com/premium_photo-1713720410252-fdaa29cdb496?w=800&auto=format&fit=crop&q=75&fm=webp',
+    label: 'Accompagnement holistique',
   },
   {
-    url: 'https://plus.unsplash.com/premium_photo-1665990294269-f1d6c35ab9d1?w=800&auto=format&fit=crop&q=75&fm=webp',
-    label: 'Psychothérapie',
-  },
-  {
-    url: 'https://plus.unsplash.com/premium_photo-1661724579910-96f4dba073ac?w=800&auto=format&fit=crop&q=75&fm=webp',
-    label: 'Orthophonie',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1598555763574-dca77e10427e?w=800&auto=format&fit=crop&q=75&fm=webp',
-    label: 'Médecine traditionnelle chinoise',
-  },
-  {
-    url: 'https://plus.unsplash.com/premium_photo-1683133816393-b04d94c65872?w=800&auto=format&fit=crop&q=75&fm=webp',
-    label: 'Phytothérapie',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1699523229208-be1e1dd9252d?w=800&auto=format&fit=crop&q=75&fm=webp',
-    label: 'Ostéopathie',
-  },
-  {
-    url: 'https://plus.unsplash.com/premium_photo-1661277699407-5608da8dabd2?w=800&auto=format&fit=crop&q=75&fm=webp',
-    label: 'Hypnothérapie',
+    url: 'https://images.unsplash.com/photo-1539920951450-2b2d59cff66d?w=800&auto=format&fit=crop&q=75&fm=webp',
+    label: 'Yoga thérapeutique',
   },
 ]
 

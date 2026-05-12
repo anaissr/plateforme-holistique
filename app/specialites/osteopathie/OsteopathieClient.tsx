@@ -6,7 +6,7 @@ export default function Osteopathie() {
   const specialite = {
     nom: 'Ostéopathie',
     emoji: '🤲',
-    photo: 'https://images.unsplash.com/photo-1591343395082-e120087004b4?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://plus.unsplash.com/premium_photo-1663075848781-6ae8daf22936?w=1400&h=500&fit=crop&q=75&fm=webp',
     accroche: 'Soulagez vos douleurs et retrouvez votre mobilité grâce au toucher thérapeutique.',
     description_longue: `L ostéopathie est une médecine manuelle qui considère le corps dans sa globalité. Elle repose sur le principe que la structure et la fonction du corps sont interdépendantes — lorsqu une zone perd sa mobilité, l ensemble de l organisme peut en être affecté.
 

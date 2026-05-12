@@ -10,7 +10,7 @@ export default function AromatherapiePage() {
   const specialite = {
     nom: 'Aromathérapie',
     emoji: '🌸',
-    photo: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://images.pexels.com/photos/6694187/pexels-photo-6694187.jpeg?auto=compress&cs=tinysrgb&w=1400',
     accroche: 'Exploiter les propriétés thérapeutiques des huiles essentielles pour prendre soin de votre santé naturellement.',
     description_longue: `L aromathérapie est l utilisation thérapeutique des huiles essentielles (HE) — des extraits concentrés de plantes aromatiques obtenus par distillation ou expression à froid. Chaque huile essentielle contient des centaines de molécules actives (terpènes, alcools, cétones, esters...) qui agissent sur le système nerveux, l immunité, le système hormonal et les agents infectieux.
 

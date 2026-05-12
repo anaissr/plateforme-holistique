@@ -39,7 +39,7 @@ export default function Psychopraticien() {
 
       <section className="relative" style={{ minHeight: '420px' }}>
         <img
-          src="https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=1600&h=600&fit=crop&crop=center"
+          src="https://plus.unsplash.com/premium_photo-1672292536640-20103a871b7e?w=1400&h=500&fit=crop&q=75&fm=webp"
           alt="Psychopraticien"
           className="absolute inset-0 w-full h-full object-cover"
         />

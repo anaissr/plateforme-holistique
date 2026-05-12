@@ -10,7 +10,7 @@ export default function OrthophoniePage() {
   const specialite = {
     nom: 'Orthophonie',
     emoji: '🗨️',
-    photo: 'https://images.unsplash.com/photo-1588776814546-daab30f310ce?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://plus.unsplash.com/premium_photo-1661724579910-96f4dba073ac?w=1400&h=500&fit=crop&q=75&fm=webp',
     accroche: 'Rééduquer et accompagner la communication, le langage, la parole et les apprentissages à tout âge.',
     description_longue: `L orthophonie est une profession de santé paramédicale consacrée à la prévention, l évaluation et la rééducation des troubles de la communication, du langage oral et écrit, de la parole, de la voix et des fonctions oro-myo-faciales (mastication, déglutition). L orthophoniste est un professionnel de santé diplômé d'État qui exerce sur prescription médicale.
 

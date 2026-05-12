@@ -10,7 +10,7 @@ export default function KinesitherapiePage() {
   const specialite = {
     nom: 'Kinésithérapie',
     emoji: '💪',
-    photo: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1400&h=500&fit=crop&crop=center',
+    photo: 'https://plus.unsplash.com/premium_photo-1683133816393-b04d94c65872?w=1400&h=500&fit=crop&q=75&fm=webp',
     accroche: 'Rééducation, soulagement des douleurs et récupération grâce au mouvement thérapeutique.',
     description_longue: `La kinésithérapie est une discipline paramédicale qui utilise le mouvement, la mobilisation manuelle et des techniques physiques pour traiter les affections musculo-squelettiques, neurologiques et respiratoires. Le kinésithérapeute, aussi appelé masseur-kinésithérapeute, est un professionnel de santé diplômé d'État qui intervient sur prescription médicale ou en accès direct selon les cas.
 

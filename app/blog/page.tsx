@@ -10,7 +10,7 @@ const ARTICLES = [
   {
     slug: 'harcelement-scolaire',
     titre: 'Harcèlement scolaire : comment les approches holistiques peuvent aider votre enfant',
-    extrait: 'Le harcèlement scolaire laisse des traces profondes — anxiété, repli sur soi, troubles du sommeil. Sophrologie, EMDR, psychomotricité : ces thérapies complémentaires offrent des outils puissants pour aider les enfants à se reconstruire.',
+    extrait: "Le harcèlement scolaire laisse des traces profondes — anxiété, repli sur soi, troubles du sommeil. Approche systémique, EMDR, psychomotricité : ces thérapies complémentaires offrent des outils puissants pour aider les enfants à se reconstruire.",
     categorie: 'Enfants & adolescents',
     date: '2 mai 2026',
     lecture: '6 min',
@@ -19,7 +19,7 @@ const ARTICLES = [
   {
     slug: 'burn-out',
     titre: 'Burn-out : reconnaître les signaux et se reconstruire grâce aux médecines douces',
-    extrait: "Épuisement total, perte de sens, corps qui lâche — le burn-out ne s'arrête pas à la fatigue. Naturopathie, sophrologie, hypnothérapie : comment ces approches holistiques accompagnent une vraie reconstruction.",
+    extrait: "Épuisement total, perte de sens, corps qui lâche — le burn-out touche autant la vie personnelle que professionnelle. Naturopathie, hypnothérapie, psychothérapie : comment se reconstruire en profondeur.",
     categorie: 'Santé mentale',
     date: '8 mai 2026',
     lecture: '7 min',

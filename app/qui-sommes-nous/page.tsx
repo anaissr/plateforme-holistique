@@ -28,10 +28,13 @@ export default function QuiSommesNous() {
             Holistia est née d&apos;un constat simple : quand on ne va pas bien — ou quand un proche ne va pas bien — on ne sait souvent pas vers qui se tourner. Vers quel médecin ? Vers quelle spécialité ? Un ostéopathe ou un kinésithérapeute ? Un sophrologue ou un psychothérapeute ? Il existe des dizaines de pratiques, des centaines de praticiens, et aucune boussole pour s&apos;y retrouver.
           </p>
           <p className="text-sm leading-relaxed mb-4" style={{ color: '#57534e' }}>
-            Les patients sont trop souvent laissés seuls face à leur désarroi. Ils cherchent, tâtonnent, abandonnent — ou trouvent quelqu&apos;un par hasard. Et les praticiens sérieux, ceux qui ont suivi des formations longues et rigoureuses, sont noyés dans un marché illisible.
+            Les patients sont trop souvent laissés seuls face à leur désarroi. Ils cherchent, tâtonnent, abandonnent — ou trouvent quelqu&apos;un par hasard. Mais il y a quelque chose de plus profond encore : beaucoup de pratiques qui pourraient vraiment les aider leur sont tout simplement inconnues. La fasciathérapie, l&apos;EMDR, la kinésiologie, l&apos;approche systémique — ces disciplines existent, elles ont aidé des milliers de personnes, mais elles n&apos;ont pas la visibilité de la kinésithérapie ou de la sophrologie. Résultat : on continue à chercher dans le périmètre de ce qu&apos;on connaît déjà, parfois sans résultat.
+          </p>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: '#57534e' }}>
+            Holistia est là pour ça aussi : non seulement aider à choisir entre les pratiques connues, mais faire découvrir celles qu&apos;on n&apos;aurait pas pensé à chercher — et qui pourraient changer quelque chose. Et les praticiens sérieux, ceux qui ont suivi des formations longues et rigoureuses, méritent d&apos;être trouvés par les personnes qui ont besoin d&apos;eux.
           </p>
           <p className="text-sm leading-relaxed" style={{ color: '#57534e' }}>
-            Nous avons construit Holistia pour changer ça : aider chaque personne à voir clair, à trouver le bon accompagnement — et à être bien accompagnée tout au long du chemin.
+            Nous avons construit Holistia pour changer ça : aider chaque personne à voir clair, à découvrir ce qui pourrait vraiment l&apos;aider — et à être bien accompagnée tout au long du chemin.
           </p>
         </section>
 

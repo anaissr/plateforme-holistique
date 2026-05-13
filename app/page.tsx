@@ -75,7 +75,7 @@ export default function Home() {
           className="flex flex-col justify-center items-center text-center px-6 sm:px-12 py-14 sm:py-20 w-full lg:w-auto"
           style={{
             background: 'linear-gradient(135deg, #3b0764 0%, #6b21a8 100%)',
-            flex: '0 0 55%',
+            flex: '0 0 48%',
           }}
         >
           <p className="text-xs font-medium mb-3 uppercase tracking-widest" style={{ color: '#c4b5fd' }}>
@@ -126,7 +126,7 @@ export default function Home() {
         </div>
 
         {/* Colonne photo rotative — cachée sur mobile */}
-        <div className="relative hidden lg:block overflow-hidden" style={{ flex: '0 0 45%', minHeight: '580px' }}>
+        <div className="relative hidden lg:block overflow-hidden" style={{ flex: '0 0 52%', minHeight: '580px' }}>
           {photosRotatives.map((photo, i) => (
             <img
               key={photo.url}

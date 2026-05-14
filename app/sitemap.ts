@@ -11,13 +11,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const { data: praticiens } = await supabase
     .from('praticiens')
-    .select('id, updated_at')
+    .select('id, created_at')
     .eq('valide', true)
     .eq('actif', true)
 
   const praticienUrls: MetadataRoute.Sitemap = (praticiens || []).map((p) => ({
     url: `${BASE_URL}/praticien/${p.id}`,
-    lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
+    lastModified: p.created_at ? new Date(p.created_at) : new Date(),
     changeFrequency: 'weekly',
     priority: 0.8,
   }))
